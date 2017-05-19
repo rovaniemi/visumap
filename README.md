@@ -3,6 +3,8 @@
 [![Code Coverage](https://img.shields.io/codecov/c/github/rovaniemi/visumap/master.svg)](https://codecov.io/github/rovaniemi/visumap)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/rovaniemi/osm-graph-parser/blob/master/LICENSE)
 
+Illustrator for single-source shortest path problem using openstreetmap data in visualisation
+
 ### Prerequisites
 
 You will need a Java Runtime Environment (JRE) to run java programs. You can download it [here](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html).
