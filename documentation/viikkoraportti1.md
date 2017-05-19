@@ -1,5 +1,5 @@
 ## Mitä olen tehnyt tällä viikolla?
-Tein dataparseri [ohjelman](https://github.com/rovaniemi/osm-graph-parser/) valmiiksi, sekä tein sille testejä. Parseri parsii dataa openstreetmapin datasta verkko muotoon. 
+Tein dataparseri [ohjelman](https://github.com/rovaniemi/osm-graph-parser/) valmiiksi, sekä tein sille testejä. Ohjelma parsii dataa openstreetmapin datasta matemaattisen verkon muotoon. 
 
 ## Miten ohjelma on edistynyt?
 Sain alustettua parseriohjelman, sekä edistyttyä hyvin itse labran aiheen kanssa. 
