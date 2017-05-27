@@ -13,7 +13,6 @@ tasks.withType(JavaCompile) {
 	options.encoding = 'UTF-8'
 }
 
-
 repositories {
      mavenCentral()        
      maven { url "https://repo.spring.io/libs-release" }

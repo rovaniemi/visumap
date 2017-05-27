@@ -6,9 +6,9 @@ import pathfinder.Graph.Node;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-public class NodeTest {
+public class GraphBuilderTest {
 
-    public NodeTest(){
+    public GraphBuilderTest(){
 
     }
 
@@ -30,9 +30,5 @@ public class NodeTest {
 
     @Test
     public void equalsIfSame(){
-        Node node = new Node(1233,12.22,12.122);
-        Node node2 = new Node(1233,12.22,12.122);
-        assertEquals(node,node2);
     }
-
 }

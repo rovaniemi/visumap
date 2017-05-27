@@ -1,18 +1,27 @@
 package pathfinder.Graph;
 
-import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
-
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Graph {
 
-    private Node[] nodes;
+    /**
+     * Graph luokassa säilytetään tieto yhdestä verkosta minkä ohjelma omistaa.
+     */
+
+    private List<Weight>[] graph;
 
     public Graph(){
+        GraphBuilder graphBuilder = new GraphBuilder();
+        this.graph = graphBuilder.greateGraph("maps/tornio-pretty.json");
+    }
 
+    public List<Weight>[] getGraph() {
+        return graph;
+    }
+
+    public void setGraph(List<Weight>[] graph) {
+        this.graph = graph;
     }
 }

@@ -1,43 +1,67 @@
 package pathfinder.Graph;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-public class Node {
+/**
+ * Node luokka yhtä verkon solmua. Solmulla on myös koordinaatit sen paikasta reaalimaailmassa.
+ */
+
+public class Node{
 
     private long id;
     private double lat;
     private double lon;
-    private List<Node> nodes;
+    private Set<Weight> edges;
 
-    public Node(long id, double lat, double lon){
+    /**
+     * Node luokalle annettaan id, lat ja lon.
+     * @param id yksilöllinen tunnus.
+     * @param lat latitude arvo koordinaatistoon.
+     * @param lon longitude arvo koordinaatistoon.
+     */
+
+    public Node(long id, double lat, double lon) {
         this.id = id;
         this.lat = lat;
         this.lon = lon;
-        this.nodes = new ArrayList<>();
+        this.edges = new HashSet<>();
     }
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public double getLat() {
         return lat;
-    }
-
-    public void setLat(double lat) {
-        this.lat = lat;
     }
 
     public double getLon() {
         return lon;
     }
 
-    public void setLon(double lon) {
-        this.lon = lon;
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()){
+            return false;
+        }
+        Node node = (Node) o;
+        if (id != node.id){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) id;
+    }
+
+    public Set<Weight> getEdges() {
+        return edges;
+    }
+
+    public void setEdges(Set<Weight> edges) {
+        this.edges = edges;
     }
 }
