@@ -9,7 +9,6 @@
 *.ear
 
 # Project files
-*.json
 *.osm
 map/
 
