@@ -15,7 +15,7 @@ public class Dijkstra {
         long[] dist = initialiseDistance(start, graph.length);
         PriorityQueue<Weight> priorityQueue = new PriorityQueue<>();
 
-        priorityQueue.add(new Weight(start,0));
+        priorityQueue.add(new Weight(start,0l));
 
         while(!priorityQueue.isEmpty()){
             Weight weight = priorityQueue.poll();
@@ -36,7 +36,7 @@ public class Dijkstra {
             }
         }
 
-        if (dist[goal] == Integer.MAX_VALUE){
+        if (dist[goal] == Long.MAX_VALUE){
             return -1;
         }
         return dist[goal];
@@ -44,8 +44,8 @@ public class Dijkstra {
 
     public long[] initialiseDistance(int start, int length){
         long[] dist = new long[length + 1];
-        for (int i = 0; i < dist.length; i++) {
-            dist[i] = Integer.MAX_VALUE;
+        for (int i = 1; i <= length; i++) {
+            dist[i] = Long.MAX_VALUE;
         }
         dist[start] = 0;
         return dist;

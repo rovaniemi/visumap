@@ -21,11 +21,10 @@ public class Weight implements Comparable<Weight>{
     }
 
     @Override
-    public int compareTo(Weight o){
-        if(this.weight.equals(o.getWeight())){
+    public int compareTo(Weight o) {
+        if(weight.equals(o.weight))
             return id.compareTo(o.id);
-        }
-        return this.weight.compareTo(o.weight);
+        return weight.compareTo(o.weight);
     }
 
     @Override
