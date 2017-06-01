@@ -45,10 +45,10 @@ public class GraphBuilder {
         List<Node> nodes = readData(fileName);
         List<Weight>[] weights = new ArrayList[nodes.size()];
         for (int i = 0; i < nodes.size(); i++) {
+            weights[i] = new ArrayList<>();
             if(nodes.get(i).getId() == i){
                 Iterator j = nodes.get(i).getEdges().iterator();
                 while (j.hasNext()){
-                    weights[i] = new ArrayList<>();
                     weights[i].add((Weight) j.next());
                 }
             }
@@ -56,8 +56,8 @@ public class GraphBuilder {
         return weights;
     }
 
-    public Map<Long, Node> greateNodesMap(String fileName) {
-        Map<Long, Node> nodes = new HashMap<>();
+    public Map<Integer, Node> greateNodeMap(String fileName) {
+        Map<Integer, Node> nodes = new HashMap<>();
         List<Node> nodeList = readData(fileName);
         for (int i = 0; i < nodeList.size(); i++) {
             nodes.put(nodeList.get(i).getId(), nodeList.get(i));

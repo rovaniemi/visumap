@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class Node{
 
-    private long id;
+    private int id;
     private double lat;
     private double lon;
     private Set<Weight> edges;
@@ -21,14 +21,14 @@ public class Node{
      * @param lon longitude arvo koordinaatistoon.
      */
 
-    public Node(long id, double lat, double lon) {
+    public Node(int id, double lat, double lon) {
         this.id = id;
         this.lat = lat;
         this.lon = lon;
         this.edges = new HashSet<>();
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 

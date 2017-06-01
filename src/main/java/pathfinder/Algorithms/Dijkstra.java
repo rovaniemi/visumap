@@ -1,14 +1,10 @@
 package pathfinder.Algorithms;
 
 import pathfinder.Graph.Weight;
-
-import java.util.Arrays;
 import java.util.List;
 import java.util.PriorityQueue;
 
 public class Dijkstra {
-
-    private List<Weight>[] graph;
 
     public Dijkstra(){
 
@@ -48,7 +44,9 @@ public class Dijkstra {
 
     public long[] initialiseDistance(int start, int length){
         long[] dist = new long[length + 1];
-        Arrays.stream(dist).forEach(e -> e = Integer.MAX_VALUE);
+        for (int i = 0; i < dist.length; i++) {
+            dist[i] = Integer.MAX_VALUE;
+        }
         dist[start] = 0;
         return dist;
     }
