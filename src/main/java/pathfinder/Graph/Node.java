@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Node luokka yhtä verkon solmua. Solmulla on myös koordinaatit sen paikasta reaalimaailmassa.
+ * Node -luokka esittää yhtä verkon solmua. Solmulla on myös koordinaatit sen paikasta reaalimaailmassa.
  */
 
 public class Node{
@@ -15,7 +15,7 @@ public class Node{
     private Set<Weight> edges;
 
     /**
-     * Node luokalle annettaan id, lat ja lon.
+     * Node -luokalle annettaan id, lat ja lon.
      * @param id yksilöllinen tunnus.
      * @param lat latitude arvo koordinaatistoon.
      * @param lon longitude arvo koordinaatistoon.

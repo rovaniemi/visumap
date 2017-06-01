@@ -3,22 +3,30 @@ package pathfinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import pathfinder.Graph.Graph;
 
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
+import java.util.Map;
 
 @RestController
 public class PathfindController {
 
-    private Graph graph;
+    private final String API_VERSION = "0.1v";
+
+    private static Router router;
 
     public PathfindController(){
-        this.graph = new Graph();
+        this.router = new Router();
     }
 
-    @RequestMapping("/graph")
-    public long getGraph(@RequestParam(value="i", defaultValue="0") int i){
-        return graph.getGraph()[221].get(0).getWeight(); //1197
+    @RequestMapping(value = "/sortest/" + API_VERSION + "/")
+    public String getSortestPath(@RequestParam Map<String,String> params){
+        String algorithm = params.get("algorithm");
+        Double startNodeLat = Double.parseDouble(params.get("sLat"));
+        Double startNodeLon = Double.parseDouble(params.get("sLon"));
+        Double goalLat = Double.parseDouble(params.get("gLat"));
+        Double goalLon = Double.parseDouble(params.get("gLon"));
+        String city = params.get("city");
+        return "";
     }
 }

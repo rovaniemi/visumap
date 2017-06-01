@@ -1,13 +1,13 @@
 package pathfinder.Graph;
 
-public class Weight {
+public class Weight implements Comparable<Weight>{
 
     /**
-     * Weight luokka esittää verkon solmujen välisiä painoja.
+     * Weight -luokka esittää verkon solmujen välisiä painoja.
      */
 
-    private long id;
-    private long weight;
+    private Integer id;
+    private Long weight;
 
     /**
      * Weight luokalle määritellään aina id, sekä paino.
@@ -15,14 +15,22 @@ public class Weight {
      * @param weight solmujen välinen etäisyys.
      */
 
-    public Weight(long id, long weight) {
+    public Weight(int id, long weight) {
         this.id = id;
         this.weight = weight;
     }
 
     @Override
+    public int compareTo(Weight o){
+        if(this.weight.equals(o.getWeight())){
+            return id.compareTo(o.id);
+        }
+        return this.weight.compareTo(o.weight);
+    }
+
+    @Override
     public int hashCode() {
-        return (int) id;
+        return id;
     }
 
     @Override
@@ -37,7 +45,7 @@ public class Weight {
         return true;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 

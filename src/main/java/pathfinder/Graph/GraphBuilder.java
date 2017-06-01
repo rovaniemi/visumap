@@ -5,9 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class GraphBuilder {
 
@@ -56,5 +54,14 @@ public class GraphBuilder {
             }
         }
         return weights;
+    }
+
+    public Map<Long, Node> greateNodesMap(String fileName) {
+        Map<Long, Node> nodes = new HashMap<>();
+        List<Node> nodeList = readData(fileName);
+        for (int i = 0; i < nodeList.size(); i++) {
+            nodes.put(nodeList.get(i).getId(), nodeList.get(i));
+        }
+        return nodes;
     }
 }
