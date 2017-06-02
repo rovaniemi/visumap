@@ -1,5 +1,6 @@
 package pathfinder;
 
+import pathfinder.Algorithms.AStar;
 import pathfinder.Algorithms.Dijkstra;
 import pathfinder.Graph.GraphBuilder;
 import pathfinder.Graph.Node;
@@ -8,6 +9,13 @@ import pathfinder.Graph.Weight;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+
+/**
+ * Router luokka hoitaa oikean tyyppisen kyselyn tuottamisen käyttäjälle,
+ * eli valitsee oikean json -tiedoston mistä verkko luodaan, sekä valitsee käytettävän algoritmin.
+ */
+
 
 public class Router {
 
@@ -60,7 +68,8 @@ public class Router {
                 long distance = dijkstra.dijkstra(this.graphs.get(city), trueStartNode.getId(),trueGoalNode.getId());
                 return "" + distance;
             } else if (algorithm.equals(ASTAR)){
-                // Astar
+                AStar aStar = new AStar();
+                aStar.astar(this.nodes.get(city),this.graphs.get(city),trueStartNode.getId(),trueGoalNode.getId());
             }
         } else {
             return "Invalid city";

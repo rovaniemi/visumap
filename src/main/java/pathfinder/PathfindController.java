@@ -11,7 +11,7 @@ import java.util.Map;
 @RestController
 public class PathfindController {
 
-    private final String API_VERSION = "0.1v";
+    private final String API_VERSION = "0.1V";
 
     private static Router router;
 
