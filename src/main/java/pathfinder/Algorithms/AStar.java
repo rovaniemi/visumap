@@ -21,16 +21,14 @@ public class AStar {
      */
 
     public long astar(Map<Integer, Node> nodes, List<Weight>[] graph, int start, int goal){
-        System.out.println(start);
-        System.out.println(goal);
         long[] toStart = new long[graph.length];
         long[] toGoal = new long[graph.length];
         int[] path = new int[graph.length];
 
         for (int i = 0; i < graph.length; i++) {
             toStart[i] = Long.MAX_VALUE;
-            toGoal[i] = distance(nodes.get(goal).getLat(),nodes.get(goal).getLon(),nodes.get(i).getLat(),nodes.get(i).getLon());
-            path[i] = Integer.MAX_VALUE;
+            toGoal[i] = 0;//distance(nodes.get(goal).getLat(),nodes.get(goal).getLon(),nodes.get(i).getLat(),nodes.get(i).getLon());
+            path[i] = -1;
         }
 
         PriorityQueue<NodeC> priorityQueue = new PriorityQueue<>();
@@ -41,16 +39,20 @@ public class AStar {
         toStart[start] = 0;
         Set<Integer> set = new HashSet<>();
         while(!set.contains(goal)){
-
             NodeC node = priorityQueue.poll();
             int nodeid = node.getId();
             set.add(nodeid);
             for (int i = 0; i < graph[nodeid].size(); i++) {
-                if(toStart[nodeid] > toStart[graph[nodeid].get(i).getId()] + graph[nodeid].get(i).getWeight() && !set.contains(graph[nodeid].get(i).getId())){
-                    toStart[nodeid] = toStart[graph[nodeid].get(i).getId()] + graph[nodeid].get(i).getWeight();
+                Weight nextNode = graph[nodeid].get(i);
+                if(toStart[nodeid] > toStart[nextNode.getId()] + nextNode.getWeight()){
+                    toStart[nodeid] = toStart[nextNode.getId()] + nextNode.getWeight();
+                    priorityQueue.remove(new Node(nodeid,1,1));
+                    priorityQueue.add(new NodeC(nodeid,toStart[nodeid],toGoal[nodeid]));
                     path[nodeid] = graph[nodeid].get(i).getId();
+
                 }
             }
+
         }
         return shortestPath(nodes, path, start, goal);
     }
@@ -67,14 +69,13 @@ public class AStar {
         long distance = 0;
         int next = goal;
         while(true){
-            distance += distance(nodes.get(next).getLat(),nodes.get(next).getLon(),nodes.get(path[next]).getLat(),nodes.get(path[next]).getLon());
-            if(next == Integer.MAX_VALUE){
+            if(next == -1){
                 break;
             }
+            distance += distance(nodes.get(next).getLat(),nodes.get(next).getLon(),nodes.get(path[next]).getLat(),nodes.get(path[next]).getLon());
             if(next == start) {
                 return distance;
             }
-            System.out.println(next);
             next = path[next];
         }
         return distance;
@@ -125,6 +126,22 @@ public class AStar {
         @Override
         public int compareTo(NodeC o) {
             return (int)((toStart + toGoal) - (o.toStart - o.toGoal));
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            NodeC nodeC = (NodeC) o;
+
+            if (id != nodeC.id) return false;
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            return this.id;
         }
 
         public Integer getId() {

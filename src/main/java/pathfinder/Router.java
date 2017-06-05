@@ -44,19 +44,19 @@ public class Router {
     }
 
     private void initializeGraphs(GraphBuilder graphBuilder){
-        this.graphs.put("tornio", graphBuilder.greateGraph(PATH + TORNIO));
-        /* this.graphs.put("rovaniemi", graphBuilder.greateGraph(PATH + ROVANIEMI));
-        this.graphs.put("helsinki", graphBuilder.greateGraph(PATH + HELSINKI));
-        this.graphs.put("ivalo", graphBuilder.greateGraph(PATH + IVALO));
-        this.graphs.put("turku", graphBuilder.greateGraph(PATH + TURKU)); */
+        this.graphs.put("tornio", graphBuilder.createGraph(PATH + TORNIO));
+        /* this.graphs.put("rovaniemi", graphBuilder.createGraph(PATH + ROVANIEMI));
+        this.graphs.put("helsinki", graphBuilder.createGraph(PATH + HELSINKI));
+        this.graphs.put("ivalo", graphBuilder.createGraph(PATH + IVALO));
+        this.graphs.put("turku", graphBuilder.createGraph(PATH + TURKU)); */
     }
 
     private void initializeNodes(GraphBuilder graphBuilder){
-        this.nodes.put("tornio", graphBuilder.greateNodeMap(PATH + TORNIO));
-        /* this.nodes.put("rovaniemi", graphBuilder.greateNodeMap(PATH + ROVANIEMI));
-        this.nodes.put("helsinki", graphBuilder.greateNodeMap(PATH + HELSINKI));
-        this.nodes.put("ivalo", graphBuilder.greateNodeMap(PATH + IVALO));
-        this.nodes.put("turku", graphBuilder.greateNodeMap(PATH + TURKU)); */
+        this.nodes.put("tornio", graphBuilder.createNodeMap(PATH + TORNIO));
+        /* this.nodes.put("rovaniemi", graphBuilder.createNodeMap(PATH + ROVANIEMI));
+        this.nodes.put("helsinki", graphBuilder.createNodeMap(PATH + HELSINKI));
+        this.nodes.put("ivalo", graphBuilder.createNodeMap(PATH + IVALO));
+        this.nodes.put("turku", graphBuilder.createNodeMap(PATH + TURKU)); */
     }
 
     public String visualizeAlgorithm(String city, String algorithm, Node start, Node goal){

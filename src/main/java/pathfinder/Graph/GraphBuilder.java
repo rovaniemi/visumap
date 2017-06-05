@@ -41,7 +41,7 @@ public class GraphBuilder {
      * @return metodi palauttaa vieruslista esityksen verkosta.
      */
 
-    public List<Weight>[] greateGraph(String fileName){
+    public List<Weight>[] createGraph(String fileName){
         List<Node> nodes = readData(fileName);
         List<Weight>[] weights = new ArrayList[nodes.size()];
         for (int i = 0; i < nodes.size(); i++) {
@@ -56,7 +56,7 @@ public class GraphBuilder {
         return weights;
     }
 
-    public Map<Integer, Node> greateNodeMap(String fileName) {
+    public Map<Integer, Node> createNodeMap(String fileName) {
         Map<Integer, Node> nodes = new HashMap<>();
         List<Node> nodeList = readData(fileName);
         for (int i = 0; i < nodeList.size(); i++) {
