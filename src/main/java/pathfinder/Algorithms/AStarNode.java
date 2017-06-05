@@ -2,7 +2,7 @@ package pathfinder.Algorithms;
 
 public class AStarNode implements Comparable<AStarNode>{
 
-    private Integer id;
+    private int id;
     private long toGoal;
     private long toStart;
 
@@ -14,19 +14,22 @@ public class AStarNode implements Comparable<AStarNode>{
 
     @Override
     public int compareTo(AStarNode o) {
-        return (int)((toStart + toGoal) - (o.toStart - o.toGoal));
+        return (int)((o.toStart - o.toGoal) - (toStart + toGoal));
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AStarNode aStarNode = (AStarNode) o;
-        return id.equals(aStarNode.id);
+        return id == ((AStarNode) o).getId();
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return id;
+    }
+
+    public int getId() {
+        return id;
     }
 }
