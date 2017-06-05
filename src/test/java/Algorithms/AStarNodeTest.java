@@ -58,16 +58,15 @@ public class AStarNodeTest {
         PriorityQueue<AStarNode> priorityQueue = new PriorityQueue<>();
         double goalLat = this.map.get(5).getLat();
         double goalLon = this.map.get(5).getLon();
-        AStarNode node = new AStarNode(1, 0, tool.distance(this.map.get(5).getLat(), this.map.get(5).getLon(), goalLat, goalLon));
+        AStarNode node = new AStarNode(1, 0, tool.distance(this.map.get(1).getLat(), this.map.get(1).getLon(), goalLat, goalLon));
         priorityQueue.add(node);
         for (int i = 2; i <= 5; i++) {
             AStarNode n = new AStarNode(i, Integer.MAX_VALUE, tool.distance(this.map.get(i).getLat(), this.map.get(i).getLon(), goalLat, goalLon));
-            System.out.println("indeksi ");
             priorityQueue.add(n);
         }
         assertEquals(1, priorityQueue.poll().getId());
         assertEquals(4, priorityQueue.poll().getId());
-        assertEquals(3, priorityQueue.poll().getId());
         assertEquals(2, priorityQueue.poll().getId());
+        assertEquals(3, priorityQueue.poll().getId());
     }
 }
