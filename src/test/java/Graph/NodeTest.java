@@ -35,4 +35,24 @@ public class NodeTest {
         assertEquals(node,node2);
     }
 
+    @Test
+    public void hashCodeIsId(){
+        for (int i = 0; i < 10000; i++) {
+            Node n = new Node(i, 12.222, 12.222);
+            assertEquals(i, n.hashCode());
+        }
+    }
+
+    @Test
+    public void equalsWorksFine(){
+        for (int i = 0; i < 10000; i++) {
+            Node n = new Node(i, 12.222, 12.222);
+            Node p = new Node(i, 12.222, 12.212);
+            Node s = new Node(i + 1, 12.222, 12.222);
+            assertEquals(n,p);
+            assertEquals(false, n.equals(null));
+            assertEquals(false, n.equals("" + i));
+            assertEquals(false, n.equals(s));
+        }
+    }
 }

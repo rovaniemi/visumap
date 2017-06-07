@@ -75,14 +75,13 @@ public class AStar {
         int next = goal;
         while(true){
             if(path[next] == -1){
-                break;
+                return -1;
             }
             distance += tool.distance(nodes.get(next).getLat(),nodes.get(next).getLon(),nodes.get(path[next]).getLat(),nodes.get(path[next]).getLon());
+            next = path[next];
             if(next == start) {
                 return distance;
             }
-            next = path[next];
         }
-        return distance;
     }
 }

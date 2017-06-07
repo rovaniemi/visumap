@@ -1,9 +1,11 @@
 import org.junit.*;
+import pathfinder.Algorithms.AStar;
 import pathfinder.Graph.Node;
 import pathfinder.Router;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -58,5 +60,36 @@ public class RouterTest {
         Node second = new Node( -2, 65.844018, 24.149615);
         String answer = router.visualizeAlgorithm("tornio", "astar", first, second);
         Assert.assertEquals("187043", answer);
+    }
+
+    @Test
+    public void everyAlgorithmGiveSameAnswer(){
+        Router router = new Router();
+        for (int i = 0; i < 100; i++) {
+            double minLat = 65.8087;
+            double maxLat = 65.8612;
+            double minLon = 24.0916;
+            double maxLon = 24.2152;
+            Node first = new Node(-1,ThreadLocalRandom.current().nextDouble(minLat, maxLat),ThreadLocalRandom.current().nextDouble(minLon, maxLon));
+            Node second = new Node( -2, ThreadLocalRandom.current().nextDouble(minLat, maxLat), ThreadLocalRandom.current().nextDouble(minLon, maxLon));
+            String dijkstra = router.visualizeAlgorithm("tornio", "dijkstra", first, second);
+            String astar = router.visualizeAlgorithm("tornio", "astar", first, second);
+            Assert.assertEquals(dijkstra, astar);
+        }
+    }
+
+    @Test
+    public void sameAnswerIfStartAndGoalNodeIsSame(){
+        Router router = new Router();
+        for (int i = 0; i < 100; i++) {
+            double minLat = 65.8087;
+            double maxLat = 65.8612;
+            double minLon = 24.0916;
+            double maxLon = 24.2152;
+            Node first = new Node(-1,ThreadLocalRandom.current().nextDouble(minLat, maxLat),ThreadLocalRandom.current().nextDouble(minLon, maxLon));
+            String dijkstra = router.visualizeAlgorithm("tornio", "dijkstra", first, first);
+            String astar = router.visualizeAlgorithm("tornio", "astar", first, first);
+            Assert.assertEquals(dijkstra, astar);
+        }
     }
 }

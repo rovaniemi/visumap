@@ -37,4 +37,24 @@ public class WeightTest {
         Weight weight2 = new Weight(1233,12222);
         assertNotEquals(weight,weight2);
     }
+
+    @Test
+    public void equalsWorksFine(){
+        for (int i = 0; i < 10000; i++) {
+            Weight n = new Weight(i, 12222);
+            Weight p = new Weight(i, 12222);
+            Weight s = new Weight(i + 1, 12222);
+            assertEquals(true, n.equals(p));
+            assertEquals(false, n.equals(null));
+            assertEquals(false, n.equals("" + i));
+            assertEquals(false, n.equals(s));
+        }
+    }
+
+    @Test
+    public void equalsWorksFinea(){
+        Weight n = new Weight(0, 12222);
+        Weight p = new Weight(0, 12222);
+        n.equals(p);
+    }
 }

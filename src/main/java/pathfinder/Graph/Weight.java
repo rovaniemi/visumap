@@ -22,8 +22,9 @@ public class Weight implements Comparable<Weight>{
 
     @Override
     public int compareTo(Weight o) {
-        if(weight.equals(o.weight))
+        if(weight.equals(o.weight)){
             return id.compareTo(o.id);
+        }
         return weight.compareTo(o.weight);
     }
 
