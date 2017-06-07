@@ -60,8 +60,4 @@ public class Node{
     public Set<Weight> getEdges() {
         return edges;
     }
-
-    public void setEdges(Set<Weight> edges) {
-        this.edges = edges;
-    }
 }
