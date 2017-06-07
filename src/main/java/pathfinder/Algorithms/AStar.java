@@ -2,14 +2,21 @@ package pathfinder.Algorithms;
 
 import pathfinder.Graph.Node;
 import pathfinder.Graph.Weight;
+import pathfinder.Tools.CoordinateDistance;
 
 import java.util.*;
 
 /**
- * Astar luokka hoitaa astar algoritmin lyhyimmän polun etsinnän, joku bugi vielä, ei toimi.
+ * Astar luokka hoitaa astar algoritmin lyhyimmän polun etsinnän.
  */
 
 public class AStar {
+
+    private CoordinateDistance tool;
+
+    public AStar(){
+        this.tool = new CoordinateDistance();
+    }
 
     /**
      * Astar hoitaa algoritmin ja palauttaa lyhyimmän polun.
@@ -26,33 +33,30 @@ public class AStar {
         int[] path = new int[graph.length];
 
         for (int i = 0; i < graph.length; i++) {
-            toStart[i] = Long.MAX_VALUE;
-            toGoal[i] = 0;//distance(nodes.get(goal).getLat(),nodes.get(goal).getLon(),nodes.get(i).getLat(),nodes.get(i).getLon());
+            toStart[i] = Integer.MAX_VALUE - (Integer.MAX_VALUE / 10);
+            toGoal[i] = tool.distance(nodes.get(i).getLat(),nodes.get(i).getLon(),nodes.get(goal).getLat(),nodes.get(goal).getLon());
             path[i] = -1;
         }
+        toStart[start] = 0;
 
-        PriorityQueue<NodeC> priorityQueue = new PriorityQueue<>();
+        PriorityQueue<AStarNode> priorityQueue = new PriorityQueue<>(AStarNode::compareTo);
         for (int i = 0; i < graph.length; i++) {
-            priorityQueue.add(new NodeC(i,toStart[i],toGoal[i]));
+            priorityQueue.add(new AStarNode(i,toStart[i],toGoal[i]));
         }
 
-        toStart[start] = 0;
         Set<Integer> set = new HashSet<>();
         while(!set.contains(goal)){
-            NodeC node = priorityQueue.poll();
+            AStarNode node = priorityQueue.poll();
             int nodeid = node.getId();
             set.add(nodeid);
             for (int i = 0; i < graph[nodeid].size(); i++) {
                 Weight nextNode = graph[nodeid].get(i);
-                if(toStart[nodeid] > toStart[nextNode.getId()] + nextNode.getWeight()){
-                    toStart[nodeid] = toStart[nextNode.getId()] + nextNode.getWeight();
-                    priorityQueue.remove(new Node(nodeid,1,1));
-                    priorityQueue.add(new NodeC(nodeid,toStart[nodeid],toGoal[nodeid]));
-                    path[nodeid] = graph[nodeid].get(i).getId();
-
+                if(toStart[nextNode.getId()] > toStart[nodeid] + nextNode.getWeight()){
+                    toStart[nextNode.getId()] = toStart[nodeid] + nextNode.getWeight();
+                    priorityQueue.add(new AStarNode(nextNode.getId(), toStart[nextNode.getId()],toGoal[nextNode.getId()]));
+                    path[nextNode.getId()] = nodeid;
                 }
             }
-
         }
         return shortestPath(nodes, path, start, goal);
     }
@@ -66,86 +70,22 @@ public class AStar {
      */
 
     private long shortestPath(Map<Integer, Node> nodes, int[] path, int start, int goal){
+        CoordinateDistance tool = new CoordinateDistance();
         long distance = 0;
+        System.out.println("start: " + start);
+        System.out.println("goal: " + goal);
         int next = goal;
         while(true){
-            if(next == -1){
+            System.out.println(next);
+            if(path[next] == -1){
                 break;
             }
-            distance += distance(nodes.get(next).getLat(),nodes.get(next).getLon(),nodes.get(path[next]).getLat(),nodes.get(path[next]).getLon());
+            distance += tool.distance(nodes.get(next).getLat(),nodes.get(next).getLon(),nodes.get(path[next]).getLat(),nodes.get(path[next]).getLon());
             if(next == start) {
                 return distance;
             }
             next = path[next];
         }
         return distance;
-    }
-
-    /**
-     * Distance -funktio hoitaa etäisyyden laskemisen kahden pisteen välillä.
-     * @param lat1 ensimmäisen pisteen lat.
-     * @param lon1 ensimmäisen pisteen lon.
-     * @param lat2 toisen pisteen lat.
-     * @param lon2 toisen pisteen lon.
-     * @return lyhin reitti senttimetreissä.
-     */
-
-    private long distance(double lat1, double lon1, double lat2, double lon2) {
-        double theta = lon1 - lon2;
-        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist *= 60 * 1.1515 * 1.609344 * 100000;
-        return (int) (dist);
-    }
-
-    private double deg2rad(double deg) {
-        return (deg * Math.PI / 180.0);
-    }
-
-    private double rad2deg(double rad) {
-        return (rad * 180 / Math.PI);
-    }
-
-    /**
-     * NoceC -luokka hoitaa keossa olevien olioiden luomisen ja niiden vertailun.
-     */
-
-    private class NodeC implements Comparable<NodeC>{
-
-        private Integer id;
-        private long toGoal;
-        private long toStart;
-
-        public NodeC(int id, long toStart, long toGoal) {
-            this.id = id;
-            this.toStart = toStart;
-            this.toGoal = toGoal;
-        }
-
-        @Override
-        public int compareTo(NodeC o) {
-            return (int)((toStart + toGoal) - (o.toStart - o.toGoal));
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            NodeC nodeC = (NodeC) o;
-
-            if (id != nodeC.id) return false;
-            return true;
-        }
-
-        @Override
-        public int hashCode() {
-            return this.id;
-        }
-
-        public Integer getId() {
-            return id;
-        }
     }
 }

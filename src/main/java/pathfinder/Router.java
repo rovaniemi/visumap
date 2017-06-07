@@ -5,6 +5,7 @@ import pathfinder.Algorithms.Dijkstra;
 import pathfinder.Graph.GraphBuilder;
 import pathfinder.Graph.Node;
 import pathfinder.Graph.Weight;
+import pathfinder.Tools.CoordinateDistance;
 
 import java.util.HashMap;
 import java.util.List;
@@ -65,11 +66,11 @@ public class Router {
             Node trueGoalNode = findNearestPoint(goal, this.nodes.get(city));
             if(algorithm.equals(DIJKSTRA)){
                 Dijkstra dijkstra = new Dijkstra();
-                long distance = dijkstra.dijkstra(this.graphs.get(city), trueStartNode.getId(),trueGoalNode.getId());
+                long distance = dijkstra.dijkstra(this.graphs.get(city), trueStartNode.getId(), trueGoalNode.getId());
                 return "" + distance;
             } else if (algorithm.equals(ASTAR)){
                 AStar aStar = new AStar();
-                aStar.astar(this.nodes.get(city),this.graphs.get(city),trueStartNode.getId(),trueGoalNode.getId());
+                return "" + aStar.astar(this.nodes.get(city),this.graphs.get(city),trueStartNode.getId(),trueGoalNode.getId());
             }
         } else {
             return "Invalid city";
@@ -81,29 +82,12 @@ public class Router {
         long minDistance = Long.MAX_VALUE;
         Node minNode = null;
         for (Node n:nodes.values()) {
-            long distance = distance(node.getLat(),node.getLon(),n.getLat(),n.getLon());
+            long distance = new CoordinateDistance().distance(node.getLat(),node.getLon(),n.getLat(),n.getLon());
             if(distance < minDistance){
                 minNode = n;
                 minDistance = distance;
             }
         }
         return minNode;
-    }
-
-    private long distance(double lat1, double lon1, double lat2, double lon2) {
-        double theta = lon1 - lon2;
-        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist *= 60 * 1.1515 * 1.609344 * 100000;
-        return (int) (dist);
-    }
-
-    private double deg2rad(double deg) {
-        return (deg * Math.PI / 180.0);
-    }
-
-    private double rad2deg(double rad) {
-        return (rad * 180 / Math.PI);
     }
 }

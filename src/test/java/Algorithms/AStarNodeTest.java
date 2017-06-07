@@ -65,6 +65,7 @@ public class AStarNodeTest {
             priorityQueue.add(n);
         }
         assertEquals(1, priorityQueue.poll().getId());
+        assertEquals(5, priorityQueue.poll().getId());
         assertEquals(4, priorityQueue.poll().getId());
         assertEquals(2, priorityQueue.poll().getId());
         assertEquals(3, priorityQueue.poll().getId());
