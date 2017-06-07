@@ -72,11 +72,8 @@ public class AStar {
     private long shortestPath(Map<Integer, Node> nodes, int[] path, int start, int goal){
         CoordinateDistance tool = new CoordinateDistance();
         long distance = 0;
-        System.out.println("start: " + start);
-        System.out.println("goal: " + goal);
         int next = goal;
         while(true){
-            System.out.println(next);
             if(path[next] == -1){
                 break;
             }
