@@ -43,7 +43,7 @@ public class NodeTest {
     }
 
     @Test
-    public void equalsWorksFine(){
+    public void equalsWorks(){
         for (int i = 0; i < 10000; i++) {
             Node n = new Node(i, 12.222, 12.222);
             Node p = new Node(i, 12.222, 12.212);

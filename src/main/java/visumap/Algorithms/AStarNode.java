@@ -32,8 +32,4 @@ public class AStarNode implements Comparable<AStarNode>{
     public int getId() {
         return id;
     }
-
-    public int getD(){
-        return (int) (toStart + toGoal);
-    }
 }

@@ -69,4 +69,25 @@ public class AStarNodeTest {
         assertEquals(2, priorityQueue.poll().getId());
         assertEquals(3, priorityQueue.poll().getId());
     }
+
+    @Test
+    public void hashCodeWorks(){
+        for (int i = 0; i < 10000; i++) {
+            AStarNode node = new AStarNode(i * 21, 12000, 120000);
+            assertEquals(i * 21, node.hashCode());
+        }
+    }
+
+    @Test
+    public void equalsWorks(){
+        for (int i = 0; i < 10000; i++) {
+            AStarNode w = new AStarNode(i, 10210, 10000);
+            AStarNode p = new AStarNode(i, 10210, 10000);
+            AStarNode c = new AStarNode(i + 2, 12022, 10000);
+            assertEquals(w, p);
+            assertNotEquals(w, c);
+            assertEquals(false, p.equals(null));
+            assertEquals(false, p.equals("" + i));
+        }
+    }
 }

@@ -75,7 +75,7 @@ public class Router {
         } else {
             return "Invalid city";
         }
-        return "";
+        return "Invalid algorithm";
     }
 
     public Node findNearestPoint(Node node, Map<Integer, Node> nodes){

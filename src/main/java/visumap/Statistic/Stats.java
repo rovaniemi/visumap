@@ -26,6 +26,7 @@ public class Stats {
     }
 
     public void addNodeE(Node node){
+        nodeCounter++;
         this.everyNode.add(node);
     }
 

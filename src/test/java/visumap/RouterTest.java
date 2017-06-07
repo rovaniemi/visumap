@@ -92,4 +92,22 @@ public class RouterTest {
             Assert.assertEquals(dijkstra, astar);
         }
     }
+
+    @Test
+    public void ifCityIsNotInMapReturnInvalidCity(){
+        Router router = new Router();
+        Node first = new Node(-1,65.858057,24.139239);
+        Node second = new Node( -2, 65.844018, 24.149615);
+        String answer = router.visualizeAlgorithm("aosdfij", "astar", first, second);
+        Assert.assertEquals("Invalid city", answer);
+    }
+
+    @Test
+    public void ifAlgorithIsNotValidReturnInvalidCity(){
+        Router router = new Router();
+        Node first = new Node(-1,65.858057,24.139239);
+        Node second = new Node( -2, 65.844018, 24.149615);
+        String answer = router.visualizeAlgorithm("tornio", "asdfasdf", first, second);
+        Assert.assertEquals("Invalid algorithm", answer);
+    }
 }
