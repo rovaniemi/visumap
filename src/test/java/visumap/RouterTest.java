@@ -62,10 +62,10 @@ public class RouterTest {
         Assert.assertEquals("187043", answer);
     }
 
-    /*@Test
+    @Test
     public void everyAlgorithmGiveSameAnswer(){
         Router router = new Router();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             double minLat = 65.8087;
             double maxLat = 65.8612;
             double minLon = 24.0916;
@@ -76,7 +76,7 @@ public class RouterTest {
             String astar = router.visualizeAlgorithm("tornio", "astar", first, second);
             Assert.assertEquals(dijkstra, astar);
         }
-    }*/
+    }
 
     @Test
     public void sameAnswerIfStartAndGoalNodeIsSame(){
