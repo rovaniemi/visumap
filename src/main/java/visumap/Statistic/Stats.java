@@ -11,18 +11,22 @@ import java.util.List;
 
 public class Stats {
 
+    private long startTime;
+    private boolean on;
     private List<Node> everyNode;
     private List<Node> shortestPath;
     private int nodeCounter;
-    private int runningTime;
-    private SystemTimeSupplier timeSupplier;
+    private final TimeSupplier timeSupplier;
 
-    public Stats(){
+    public Stats(TimeSupplier timeSupplier){
         this.everyNode = new ArrayList<>();
         this.shortestPath = new ArrayList<>();
-        this.runningTime = 0;
         this.nodeCounter = 0;
-        this.timeSupplier = new SystemTimeSupplier();
+        this.timeSupplier = timeSupplier;
+    }
+
+    public Stats(){
+        this(new SystemTimeSupplier());
     }
 
     public void addNodeE(Node node){
@@ -43,19 +47,27 @@ public class Stats {
         return this.shortestPath;
     }
 
-    public SystemTimeSupplier getTimeSupplier(){
-        return this.timeSupplier;
+    public void startTimeTracking() {
+        if (!this.on) {
+            this.startTime = timeSupplier.getNanoseconds();
+            this.on = true;
+        }
     }
 
-    public void addRunningTime(int runningTime){
-        this.runningTime = runningTime;
-    }
-
-    public int getRunningTime(){
-        return this.runningTime;
+    public long stopTimeTracking() {
+        long runningTime = 0;
+        if (this.on) {
+            runningTime = nanosecondsToMilliseconds(timeSupplier.getNanoseconds() - this.startTime);
+            this.on = false;
+        }
+        return runningTime;
     }
 
     public int getNodeCounter(){
         return this.nodeCounter;
+    }
+
+    public long nanosecondsToMilliseconds(Long nanoseconds) {
+        return nanoseconds / 1000000;
     }
 }

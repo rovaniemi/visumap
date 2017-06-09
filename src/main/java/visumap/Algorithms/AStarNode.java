@@ -19,8 +19,9 @@ public class AStarNode implements Comparable<AStarNode>{
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         return id == ((AStarNode) o).getId();
     }
 
@@ -31,5 +32,13 @@ public class AStarNode implements Comparable<AStarNode>{
 
     public int getId() {
         return id;
+    }
+
+    public long getToStart() {
+        return toStart;
+    }
+
+    public long getToGoal() {
+        return toGoal;
     }
 }

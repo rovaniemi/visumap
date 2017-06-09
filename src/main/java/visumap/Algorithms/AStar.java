@@ -2,6 +2,7 @@ package visumap.Algorithms;
 
 import visumap.Graph.Node;
 import visumap.Graph.Weight;
+import visumap.Statistic.Stats;
 import visumap.Tools.CoordinateDistance;
 
 import java.util.*;
@@ -13,9 +14,11 @@ import java.util.*;
 public class AStar {
 
     private CoordinateDistance tool;
+    private Stats stats;
 
     public AStar(){
         this.tool = new CoordinateDistance();
+        this.stats = new Stats();
     }
 
     /**
@@ -28,7 +31,6 @@ public class AStar {
      */
 
     public long astar(Map<Integer, Node> nodes, List<Weight>[] graph, int start, int goal){
-
         if(start == goal){
             return 0;
         }
@@ -63,7 +65,8 @@ public class AStar {
                 }
             }
         }
-        return shortestPath(nodes, path, start, goal);
+        long shortestPath = shortestPath(nodes, path, start, goal);
+        return shortestPath;
     }
 
     /**
@@ -78,6 +81,7 @@ public class AStar {
         CoordinateDistance tool = new CoordinateDistance();
         long distance = 0;
         int next = goal;
+
         while(true){
             if(path[next] == -1){
                 return -1;
@@ -88,5 +92,9 @@ public class AStar {
                 return distance;
             }
         }
+    }
+
+    public Stats getStats(){
+        return this.stats;
     }
 }

@@ -1,6 +1,7 @@
 package visumap.Algorithms;
 
 import visumap.Graph.Weight;
+import visumap.Statistic.Stats;
 
 import java.util.List;
 import java.util.PriorityQueue;
@@ -10,6 +11,12 @@ import java.util.PriorityQueue;
  */
 
 public class Dijkstra {
+
+    private Stats stats;
+
+    public Dijkstra(){
+        this.stats = new Stats();
+    }
 
     /**
      * Dijkstra funktio hoitaa algoritmin ja palauttaa lyhyimmän polun.
@@ -22,6 +29,11 @@ public class Dijkstra {
     public long dijkstra(List<Weight>[] graph, int start, int goal){
         boolean[] handled = new boolean[graph.length + 1];
         long[] dist = initialiseDistance(start, graph.length);
+        int[] path = new int[graph.length + 1];
+        for (int i = 0; i < graph.length; i++) {
+            path[i] = -1;
+        }
+
         PriorityQueue<Weight> priorityQueue = new PriorityQueue<>();
 
         priorityQueue.add(new Weight(start,0l));
@@ -65,5 +77,9 @@ public class Dijkstra {
         }
         dist[start] = 0;
         return dist;
+    }
+    
+    public Stats getStats(){
+        return this.stats;
     }
 }
