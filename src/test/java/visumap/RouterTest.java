@@ -2,6 +2,7 @@ package visumap;
 
 import org.junit.*;
 import visumap.Graph.Node;
+import visumap.Statistic.Stats;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,8 +50,8 @@ public class RouterTest {
         Router router = new Router();
         Node first = new Node(-1,65.858057,24.139239);
         Node second = new Node( -2, 65.844018, 24.149615);
-        String answer = router.visualizeAlgorithm("tornio", "dijkstra", first, second);
-        Assert.assertEquals("187043", answer);
+        Stats answer = router.visualizeAlgorithm("tornio", "dijkstra", first, second);
+        Assert.assertEquals(82, answer.getShortestPath().size());
     }
 
     @Test
@@ -58,23 +59,24 @@ public class RouterTest {
         Router router = new Router();
         Node first = new Node(-1,65.858057,24.139239);
         Node second = new Node( -2, 65.844018, 24.149615);
-        String answer = router.visualizeAlgorithm("tornio", "astar", first, second);
-        Assert.assertEquals("187043", answer);
+        Stats answer = router.visualizeAlgorithm("tornio", "astar", first, second);
+        Assert.assertEquals(82, answer.getShortestPath().size());
     }
 
     @Test
     public void everyAlgorithmGiveSameAnswer(){
         Router router = new Router();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             double minLat = 65.8087;
             double maxLat = 65.8612;
             double minLon = 24.0916;
             double maxLon = 24.2152;
             Node first = new Node(-1,ThreadLocalRandom.current().nextDouble(minLat, maxLat),ThreadLocalRandom.current().nextDouble(minLon, maxLon));
             Node second = new Node( -2, ThreadLocalRandom.current().nextDouble(minLat, maxLat), ThreadLocalRandom.current().nextDouble(minLon, maxLon));
-            String dijkstra = router.visualizeAlgorithm("tornio", "dijkstra", first, second);
-            String astar = router.visualizeAlgorithm("tornio", "astar", first, second);
-            Assert.assertEquals(dijkstra, astar);
+
+            Stats dijkstra = router.visualizeAlgorithm("tornio", "dijkstra", first, second);
+            Stats astar = router.visualizeAlgorithm("tornio", "astar", first, second);
+            Assert.assertEquals(dijkstra.getShortestPath(), astar.getShortestPath());
         }
     }
 
@@ -87,9 +89,9 @@ public class RouterTest {
             double minLon = 24.0916;
             double maxLon = 24.2152;
             Node first = new Node(-1,ThreadLocalRandom.current().nextDouble(minLat, maxLat),ThreadLocalRandom.current().nextDouble(minLon, maxLon));
-            String dijkstra = router.visualizeAlgorithm("tornio", "getShortestPath", first, first);
-            String astar = router.visualizeAlgorithm("tornio", "getShortestPath", first, first);
-            Assert.assertEquals(dijkstra, astar);
+            Stats dijkstra = router.visualizeAlgorithm("tornio", "getShortestPath", first, first);
+            Stats astar = router.visualizeAlgorithm("tornio", "getShortestPath", first, first);
+            Assert.assertEquals(dijkstra.getShortestPath(), astar.getShortestPath());
         }
     }
 
@@ -98,8 +100,8 @@ public class RouterTest {
         Router router = new Router();
         Node first = new Node(-1,65.858057,24.139239);
         Node second = new Node( -2, 65.844018, 24.149615);
-        String answer = router.visualizeAlgorithm("aosdfij", "getShortestPath", first, second);
-        Assert.assertEquals("Invalid city", answer);
+        Stats answer = router.visualizeAlgorithm("aosdfij", "getShortestPath", first, second);
+        Assert.assertEquals("Invalid city", answer.getMessage());
     }
 
     @Test
@@ -107,7 +109,7 @@ public class RouterTest {
         Router router = new Router();
         Node first = new Node(-1,65.858057,24.139239);
         Node second = new Node( -2, 65.844018, 24.149615);
-        String answer = router.visualizeAlgorithm("tornio", "asdfasdf", first, second);
-        Assert.assertEquals("Invalid algorithm", answer);
+        Stats answer = router.visualizeAlgorithm("tornio", "asdfasdf", first, second);
+        Assert.assertEquals("Invalid algorithm", answer.getMessage());
     }
 }

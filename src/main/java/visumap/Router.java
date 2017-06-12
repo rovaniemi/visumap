@@ -5,6 +5,7 @@ import visumap.Algorithms.Dijkstra;
 import visumap.Graph.GraphBuilder;
 import visumap.Graph.Node;
 import visumap.Graph.Weight;
+import visumap.Statistic.Stats;
 import visumap.Tools.CoordinateDistance;
 
 import java.util.HashMap;
@@ -60,22 +61,26 @@ public class Router {
         this.nodes.put("turku", graphBuilder.createNodeMap(PATH + TURKU)); */
     }
 
-    public String visualizeAlgorithm(String city, String algorithm, Node start, Node goal){
+    public Stats visualizeAlgorithm(String city, String algorithm, Node start, Node goal){
+        Stats stats = new Stats();
         if(this.graphs.containsKey(city)){
             Node trueStartNode = findNearestPoint(start, this.nodes.get(city));
             Node trueGoalNode = findNearestPoint(goal, this.nodes.get(city));
             if(algorithm.equals(DIJKSTRA)){
                 Dijkstra dijkstra = new Dijkstra();
-                long distance = dijkstra.getShortestPath(this.nodes.get(city), this.graphs.get(city), trueStartNode.getId(), trueGoalNode.getId());
-                return "" + distance;
+                dijkstra.getShortestPath(this.nodes.get(city), this.graphs.get(city), trueStartNode.getId(), trueGoalNode.getId());
+                stats = dijkstra.getStats();
             } else if (algorithm.equals(ASTAR)){
                 AStar aStar = new AStar();
-                return "" + aStar.getShortestPath(this.nodes.get(city),this.graphs.get(city),trueStartNode.getId(),trueGoalNode.getId());
+                aStar.getShortestPath(this.nodes.get(city),this.graphs.get(city),trueStartNode.getId(),trueGoalNode.getId());
+                stats = aStar.getStats();
+            } else {
+                stats.setMessage("Invalid algorithm");
             }
         } else {
-            return "Invalid city";
+            stats.setMessage("Invalid city");
         }
-        return "Invalid algorithm";
+        return stats;
     }
 
     public Node findNearestPoint(Node node, Map<Integer, Node> nodes){

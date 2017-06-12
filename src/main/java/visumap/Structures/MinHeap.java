@@ -49,8 +49,8 @@ public class MinHeap<T> {
     public T poll() {
         if (lastElement == -1) {
             return null;
-        } else if(lastElement < (this.heap.length - 3) / 2){
-            //reduceSize();
+        } else if(lastElement < (this.heap.length - 2) / 2){
+            reduceSize();
         }
         T out = heap[0];
         heap[0] = heap[lastElement];
@@ -124,20 +124,6 @@ public class MinHeap<T> {
                 return;
             }
         }
-    }
-
-    /**
-     * Apuoperaatio joka etsii keon viimeisimmän olion indeksin.
-     * @return viimeisimmän olion indeksi.
-     */
-
-    private int findLast() {
-        for (int i = 0; i < heap.length; i++) {
-            if (heap[i] == null) {
-                return i - 1;
-            }
-        }
-        return heap.length - 1;
     }
 
     /**

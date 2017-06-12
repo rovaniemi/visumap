@@ -59,6 +59,7 @@ public class AStar implements ShortestPathAlgorithm{
         while(!set.contains(goal)){
             AStarNode node = minHeap.poll();
             int nodeid = node.getId();
+            this.stats.addNodeE(nodes.get(nodeid));
             set.add(nodeid);
             for (int i = 0; i < graph[nodeid].size(); i++) {
                 Weight nextNode = graph[nodeid].get(i);
@@ -91,6 +92,7 @@ public class AStar implements ShortestPathAlgorithm{
                 return -1;
             }
             distance += tool.distance(nodes.get(next).getLat(),nodes.get(next).getLon(),nodes.get(path[next]).getLat(),nodes.get(path[next]).getLon());
+            this.stats.addNodeS(nodes.get(next));
             next = path[next];
             if(next == start) {
                 return distance;

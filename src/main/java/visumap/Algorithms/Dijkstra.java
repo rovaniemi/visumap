@@ -46,6 +46,7 @@ public class Dijkstra implements ShortestPathAlgorithm {
             for (Weight next:graph[id]) {
                 if(dist[next.getId()] > distance + next.getWeight()){
                     dist[next.getId()] = distance + next.getWeight();
+                    path[next.getId()] = id;
                     minHeap.add(new Weight(next.getId(),dist[next.getId()]));
                 }
             }
@@ -54,7 +55,23 @@ public class Dijkstra implements ShortestPathAlgorithm {
         if (dist[goal] == Long.MAX_VALUE){
             return -1;
         }
+        shortestPath(nodes,path,start,goal);
         return dist[goal];
+    }
+
+
+    private void shortestPath(Map<Integer, Node> nodes, int[] path, int start, int goal){
+        int next = goal;
+        while(true){
+            if(path[next] == -1){
+                return;
+            }
+            this.stats.addNodeS(nodes.get(next));
+            next = path[next];
+            if(next == start) {
+                return;
+            }
+        }
     }
 
     public Stats getStats(){

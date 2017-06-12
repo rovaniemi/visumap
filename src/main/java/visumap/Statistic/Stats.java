@@ -16,6 +16,7 @@ public class Stats {
     private List<Node> everyNode;
     private List<Node> shortestPath;
     private int nodeCounter;
+    private String message;
     private final TimeSupplier timeSupplier;
 
     public Stats(TimeSupplier timeSupplier){
@@ -23,6 +24,7 @@ public class Stats {
         this.shortestPath = new ArrayList<>();
         this.nodeCounter = 0;
         this.timeSupplier = timeSupplier;
+        this.message = "";
     }
 
     public Stats(){
@@ -70,4 +72,13 @@ public class Stats {
     public long nanosecondsToMilliseconds(Long nanoseconds) {
         return nanoseconds / 1000000;
     }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
 }

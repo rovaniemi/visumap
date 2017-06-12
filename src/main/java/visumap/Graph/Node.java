@@ -60,4 +60,9 @@ public class Node{
     public Set<Weight> getEdges() {
         return edges;
     }
+
+    @Override
+    public String toString(){
+        return "" + this.getId();
+    }
 }
