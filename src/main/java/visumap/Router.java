@@ -20,8 +20,8 @@ import java.util.Map;
 
 public class Router {
 
-    private static final String DIJKSTRA = "getShortestPath";
-    private static final String ASTAR = "getShortestPath";
+    private static final String DIJKSTRA = "dijkstra";
+    private static final String ASTAR = "astar";
     private static final String TORNIO = "tornio-pretty.json";
     private static final String ROVANIEMI = "rovaniemi.json";
     private static final String HELSINKI = "helsinki.json";

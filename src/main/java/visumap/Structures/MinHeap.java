@@ -12,6 +12,7 @@ public class MinHeap<T> {
 
     private Comparator c;
     private T[] heap;
+    private int lastElement;
 
     /**
      * Annetaan comparator
@@ -21,6 +22,7 @@ public class MinHeap<T> {
     public MinHeap(Comparator c) {
         this.heap = (T[])new Object[1];
         this.c = c;
+        lastElement = -1;
     }
 
     /**
@@ -29,11 +31,12 @@ public class MinHeap<T> {
      */
 
     public boolean add(T o) {
-        int last = findLast();
+        int last = lastElement;
         if (last + 1 > heap.length - 1) {
             increaseSize();
         }
         heap[last+1] = o;
+        lastElement++;
         upHeapify();
         return true;
     }
@@ -44,14 +47,15 @@ public class MinHeap<T> {
      */
 
     public T poll() {
-        if (findLast() == -1) {
+        if (lastElement == -1) {
             return null;
-        } else if(findLast() < (this.heap.length - 3) / 2){
+        } else if(lastElement < (this.heap.length - 3) / 2){
             reduceSize();
         }
         T out = heap[0];
-        heap[0] = heap[findLast()];
-        heap[findLast()] = null;
+        heap[0] = heap[lastElement];
+        heap[lastElement] = null;
+        lastElement--;
         downHeapify();
         return out;
     }
@@ -105,7 +109,7 @@ public class MinHeap<T> {
      */
 
     private void upHeapify() {
-        int i = findLast();
+        int i = lastElement;
         while (true) {
             if (i == 0) {
                 return;

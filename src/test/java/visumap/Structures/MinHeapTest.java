@@ -83,16 +83,53 @@ public class MinHeapTest {
     }
 
     @Test
-    public void addingTenThousandItems(){
+    public void testAddingMillionItems(){
         MinHeap<AStarNode> heap1 = new MinHeap(new AStarNodeComparator());
-        for (int i = 1; i <= 10000; i++) {
+        for (int i = 1; i <= 1000000; i++) {
             AStarNode node = new AStarNode(i,i,Integer.MAX_VALUE - i * 2);
             heap1.add(node);
         }
 
-        for (int i = 0; i < 10000; i++) {
-            assertEquals(10000 - i, heap1.poll().getId());
+        for (int i = 0; i < 1000000; i++) {
+            assertEquals(1000000 - i, heap1.poll().getId());
         }
         assertNull(heap1.poll());
+    }
+
+    @Test
+    public void performanceTest(){
+        MinHeap<AStarNode> heap1 = new MinHeap(new AStarNodeComparator());
+        PriorityQueue<AStarNode> heap2 = new PriorityQueue<>(new AStarNodeComparator());
+        long sum = 0;
+        for (int j = 0; j < 1000; j++) {
+            long start = System.currentTimeMillis();
+            for (int i = 1; i <= 10000; i++) {
+                AStarNode node = new AStarNode(i,i,Integer.MAX_VALUE - i * 2);
+                heap1.add(node);
+            }
+
+            for (int i = 0; i < 10000; i++) {
+                assertEquals(10000 - i, heap1.poll().getId());
+            }
+            long end = System.currentTimeMillis();
+            sum += end - start;
+        }
+        System.out.println("average: " + (double) (sum) / 1000);
+
+        sum = 0;
+        for (int j = 0; j < 1000; j++) {
+            long start = System.currentTimeMillis();
+            for (int i = 1; i <= 10000; i++) {
+                AStarNode node = new AStarNode(i,i,Integer.MAX_VALUE - i * 2);
+                heap2.add(node);
+            }
+
+            for (int i = 0; i < 10000; i++) {
+                assertEquals(10000 - i, heap2.poll().getId());
+            }
+            long end = System.currentTimeMillis();
+            sum += end - start;
+        }
+        System.out.println("average: " + (double) (sum) / 1000);
     }
 }
