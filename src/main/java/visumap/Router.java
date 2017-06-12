@@ -20,8 +20,8 @@ import java.util.Map;
 
 public class Router {
 
-    private static final String DIJKSTRA = "dijkstra";
-    private static final String ASTAR = "astar";
+    private static final String DIJKSTRA = "getShortestPath";
+    private static final String ASTAR = "getShortestPath";
     private static final String TORNIO = "tornio-pretty.json";
     private static final String ROVANIEMI = "rovaniemi.json";
     private static final String HELSINKI = "helsinki.json";
@@ -66,11 +66,11 @@ public class Router {
             Node trueGoalNode = findNearestPoint(goal, this.nodes.get(city));
             if(algorithm.equals(DIJKSTRA)){
                 Dijkstra dijkstra = new Dijkstra();
-                long distance = dijkstra.dijkstra(this.graphs.get(city), trueStartNode.getId(), trueGoalNode.getId());
+                long distance = dijkstra.getShortestPath(this.nodes.get(city), this.graphs.get(city), trueStartNode.getId(), trueGoalNode.getId());
                 return "" + distance;
             } else if (algorithm.equals(ASTAR)){
                 AStar aStar = new AStar();
-                return "" + aStar.astar(this.nodes.get(city),this.graphs.get(city),trueStartNode.getId(),trueGoalNode.getId());
+                return "" + aStar.getShortestPath(this.nodes.get(city),this.graphs.get(city),trueStartNode.getId(),trueGoalNode.getId());
             }
         } else {
             return "Invalid city";

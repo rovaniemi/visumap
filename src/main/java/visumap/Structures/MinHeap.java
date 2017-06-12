@@ -21,9 +21,6 @@ public class MinHeap<T> {
     public MinHeap(int size, Comparator c) {
         this.c = c;
         this.heap = (T[])new Object[size];
-        for (int i = 0; i < size; i++) {
-            heap[i] = null;
-        }
     }
 
     /**

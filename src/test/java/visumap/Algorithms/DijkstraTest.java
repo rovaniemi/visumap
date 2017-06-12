@@ -13,13 +13,13 @@ public class DijkstraTest {
 
     public void smallTest(int n, int[] where, int[] to, long[] distance, long realResult) {
         Dijkstra dijkstra = new Dijkstra();
-        long algorithmResult = dijkstra.dijkstra(greateList(n, where, to, distance), 1, n);
+        long algorithmResult = dijkstra.getShortestPath(null, greateList(n, where, to, distance), 1, n);
         assertTrue(realResult == algorithmResult);
     }
 
     public void bigTest(int n, int[] where, int[] to, long[] distance, long realResult) {
         Dijkstra dijkstra = new Dijkstra();
-        long algorithmResult = dijkstra.dijkstra(greateList(n, where, to, distance),1, n);
+        long algorithmResult = dijkstra.getShortestPath(null, greateList(n, where, to, distance),1, n);
         assertTrue(realResult == algorithmResult);
     }
 

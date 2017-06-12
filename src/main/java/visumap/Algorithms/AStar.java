@@ -8,10 +8,10 @@ import visumap.Tools.CoordinateDistance;
 import java.util.*;
 
 /**
- * Astar luokka hoitaa astar algoritmin lyhyimmän polun etsinnän.
+ * Astar luokka hoitaa getShortestPath algoritmin lyhyimmän polun etsinnän.
  */
 
-public class AStar {
+public class AStar implements ShortestPathAlgorithm{
 
     private CoordinateDistance tool;
     private Stats stats;
@@ -30,7 +30,7 @@ public class AStar {
      * @return lyhin reitti senttimetreissä.
      */
 
-    public long astar(Map<Integer, Node> nodes, List<Weight>[] graph, int start, int goal){
+    public long getShortestPath(Map<Integer, Node> nodes, List<Weight>[] graph, int start, int goal){
         if(start == goal){
             return 0;
         }

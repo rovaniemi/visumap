@@ -1,16 +1,18 @@
 package visumap.Algorithms;
 
+import visumap.Graph.Node;
 import visumap.Graph.Weight;
 import visumap.Statistic.Stats;
 
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 
 /**
- * Dijkstra luokka hoitaa dijkstra algoritmin lyhyimmän polun etsinnän.
+ * Dijkstra luokka hoitaa getShortestPath algoritmin lyhyimmän polun etsinnän.
  */
 
-public class Dijkstra {
+public class Dijkstra implements ShortestPathAlgorithm{
 
     private Stats stats;
 
@@ -26,7 +28,7 @@ public class Dijkstra {
      * @return lyhyin reitti senttimetreissä.
      */
 
-    public long dijkstra(List<Weight>[] graph, int start, int goal){
+    public long getShortestPath(Map<Integer, Node> nodes, List<Weight>[] graph, int start, int goal){
         boolean[] handled = new boolean[graph.length + 1];
         long[] dist = initialiseDistance(start, graph.length);
         int[] path = new int[graph.length + 1];

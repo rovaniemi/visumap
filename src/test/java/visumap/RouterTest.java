@@ -49,7 +49,7 @@ public class RouterTest {
         Router router = new Router();
         Node first = new Node(-1,65.858057,24.139239);
         Node second = new Node( -2, 65.844018, 24.149615);
-        String answer = router.visualizeAlgorithm("tornio", "dijkstra", first, second);
+        String answer = router.visualizeAlgorithm("tornio", "getShortestPath", first, second);
         Assert.assertEquals("187043", answer);
     }
 
@@ -58,7 +58,7 @@ public class RouterTest {
         Router router = new Router();
         Node first = new Node(-1,65.858057,24.139239);
         Node second = new Node( -2, 65.844018, 24.149615);
-        String answer = router.visualizeAlgorithm("tornio", "astar", first, second);
+        String answer = router.visualizeAlgorithm("tornio", "getShortestPath", first, second);
         Assert.assertEquals("187043", answer);
     }
 
@@ -72,8 +72,8 @@ public class RouterTest {
             double maxLon = 24.2152;
             Node first = new Node(-1,ThreadLocalRandom.current().nextDouble(minLat, maxLat),ThreadLocalRandom.current().nextDouble(minLon, maxLon));
             Node second = new Node( -2, ThreadLocalRandom.current().nextDouble(minLat, maxLat), ThreadLocalRandom.current().nextDouble(minLon, maxLon));
-            String dijkstra = router.visualizeAlgorithm("tornio", "dijkstra", first, second);
-            String astar = router.visualizeAlgorithm("tornio", "astar", first, second);
+            String dijkstra = router.visualizeAlgorithm("tornio", "getShortestPath", first, second);
+            String astar = router.visualizeAlgorithm("tornio", "getShortestPath", first, second);
             Assert.assertEquals(dijkstra, astar);
         }
     }
@@ -87,8 +87,8 @@ public class RouterTest {
             double minLon = 24.0916;
             double maxLon = 24.2152;
             Node first = new Node(-1,ThreadLocalRandom.current().nextDouble(minLat, maxLat),ThreadLocalRandom.current().nextDouble(minLon, maxLon));
-            String dijkstra = router.visualizeAlgorithm("tornio", "dijkstra", first, first);
-            String astar = router.visualizeAlgorithm("tornio", "astar", first, first);
+            String dijkstra = router.visualizeAlgorithm("tornio", "getShortestPath", first, first);
+            String astar = router.visualizeAlgorithm("tornio", "getShortestPath", first, first);
             Assert.assertEquals(dijkstra, astar);
         }
     }
@@ -98,7 +98,7 @@ public class RouterTest {
         Router router = new Router();
         Node first = new Node(-1,65.858057,24.139239);
         Node second = new Node( -2, 65.844018, 24.149615);
-        String answer = router.visualizeAlgorithm("aosdfij", "astar", first, second);
+        String answer = router.visualizeAlgorithm("aosdfij", "getShortestPath", first, second);
         Assert.assertEquals("Invalid city", answer);
     }
 
