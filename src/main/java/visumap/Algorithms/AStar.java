@@ -3,9 +3,14 @@ package visumap.Algorithms;
 import visumap.Graph.Node;
 import visumap.Graph.Weight;
 import visumap.Statistic.Stats;
+import visumap.Structures.MinHeap;
 import visumap.Tools.CoordinateDistance;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 
 /**
  * Astar luokka hoitaa getShortestPath algoritmin lyhyimmän polun etsinnän.
@@ -45,22 +50,21 @@ public class AStar implements ShortestPathAlgorithm{
             path[i] = -1;
         }
         toStart[start] = 0;
-
-        PriorityQueue<AStarNode> priorityQueue = new PriorityQueue<>(AStarNode::compareTo);
+        MinHeap<AStarNode> minHeap = new MinHeap<>(new AStarNodeComparator());
         for (int i = 0; i < graph.length; i++) {
-            priorityQueue.add(new AStarNode(i,toStart[i],toGoal[i]));
+            minHeap.add(new AStarNode(i,toStart[i],toGoal[i]));
         }
 
         Set<Integer> set = new HashSet<>();
         while(!set.contains(goal)){
-            AStarNode node = priorityQueue.poll();
+            AStarNode node = minHeap.poll();
             int nodeid = node.getId();
             set.add(nodeid);
             for (int i = 0; i < graph[nodeid].size(); i++) {
                 Weight nextNode = graph[nodeid].get(i);
                 if(toStart[nextNode.getId()] > toStart[nodeid] + nextNode.getWeight()){
                     toStart[nextNode.getId()] = toStart[nodeid] + nextNode.getWeight();
-                    priorityQueue.add(new AStarNode(nextNode.getId(), toStart[nextNode.getId()],toGoal[nextNode.getId()]));
+                    minHeap.add(new AStarNode(nextNode.getId(), toStart[nextNode.getId()],toGoal[nextNode.getId()]));
                     path[nextNode.getId()] = nodeid;
                 }
             }

@@ -2,6 +2,7 @@ package visumap.Algorithms;
 
 import org.junit.*;
 import visumap.Graph.Node;
+import visumap.Structures.MinHeap;
 import visumap.Tools.CoordinateDistance;
 
 import java.util.*;
@@ -52,22 +53,22 @@ public class AStarNodeTest {
     }
 
     @Test
-    public void priorityQueueWorks() {
+    public void minHeapWorks() {
         CoordinateDistance tool = new CoordinateDistance();
-        PriorityQueue<AStarNode> priorityQueue = new PriorityQueue<>();
+        MinHeap<AStarNode> minHeap = new MinHeap<>(new AStarNodeComparator());
         double goalLat = this.map.get(5).getLat();
         double goalLon = this.map.get(5).getLon();
         AStarNode node = new AStarNode(1, 0, tool.distance(this.map.get(1).getLat(), this.map.get(1).getLon(), goalLat, goalLon));
-        priorityQueue.add(node);
+        minHeap.add(node);
         for (int i = 2; i <= 5; i++) {
             AStarNode n = new AStarNode(i, Integer.MAX_VALUE, tool.distance(this.map.get(i).getLat(), this.map.get(i).getLon(), goalLat, goalLon));
-            priorityQueue.add(n);
+            minHeap.add(n);
         }
-        assertEquals(1, priorityQueue.poll().getId());
-        assertEquals(5, priorityQueue.poll().getId());
-        assertEquals(4, priorityQueue.poll().getId());
-        assertEquals(2, priorityQueue.poll().getId());
-        assertEquals(3, priorityQueue.poll().getId());
+        assertEquals(1, minHeap.poll().getId());
+        assertEquals(5, minHeap.poll().getId());
+        assertEquals(4, minHeap.poll().getId());
+        assertEquals(2, minHeap.poll().getId());
+        assertEquals(3, minHeap.poll().getId());
     }
 
     @Test

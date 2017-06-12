@@ -1,6 +1,6 @@
 package visumap.Algorithms;
 
-public class AStarNode implements Comparable<AStarNode>{
+public class AStarNode {
 
     private int id;
     private long toStart;
@@ -10,11 +10,6 @@ public class AStarNode implements Comparable<AStarNode>{
         this.id = id;
         this.toStart = toStart;
         this.toGoal = toGoal;
-    }
-
-    @Override
-    public int compareTo(AStarNode o) {
-        return (int)((toStart + toGoal) - (o.toStart + o.toGoal));
     }
 
     @Override

@@ -1,15 +1,15 @@
 package visumap.Structures;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import visumap.Algorithms.AStarNode;
 import visumap.Algorithms.AStarNodeComparator;
 import visumap.Graph.Node;
+import visumap.Graph.Weight;
+import visumap.Graph.WeightComparator;
 import visumap.Tools.CoordinateDistance;
 
+import javax.validation.constraints.AssertFalse;
+import javax.validation.constraints.AssertTrue;
 import java.util.*;
 
 import static org.junit.Assert.*;
@@ -97,39 +97,87 @@ public class MinHeapTest {
     }
 
     @Test
-    public void performanceTest(){
-        MinHeap<AStarNode> heap1 = new MinHeap(new AStarNodeComparator());
-        PriorityQueue<AStarNode> heap2 = new PriorityQueue<>(new AStarNodeComparator());
-        long sum = 0;
-        for (int j = 0; j < 1000; j++) {
-            long start = System.currentTimeMillis();
-            for (int i = 1; i <= 10000; i++) {
-                AStarNode node = new AStarNode(i,i,Integer.MAX_VALUE - i * 2);
-                heap1.add(node);
-            }
+    public void isEmptyWork(){
+        MinHeap<Weight> heap = new MinHeap<>(new WeightComparator());
+        for (int i = 0; i < 100; i++) {
+            heap.add(new Weight(i,i));
+        }
+        for (int i = 0; i < 100; i++) {
+            assertFalse(heap.isEmpty());
+            heap.poll();
+        }
+        assertTrue(heap.isEmpty());
+    }
 
+    @Test
+    public void minHeapIsNotTwoTimesSlowerThanPriorityQueue(){
+        MinHeap<AStarNode> minHeap = new MinHeap(new AStarNodeComparator());
+        PriorityQueue<AStarNode> priorityQueue = new PriorityQueue<>(new AStarNodeComparator());
+        int repeat = 1000;
+        long minHeapSum = 0;
+        long priorityQueueSum = 0;
+        for (int j = 0; j < repeat; j++) {
+            long start = System.currentTimeMillis();
             for (int i = 0; i < 10000; i++) {
-                assertEquals(10000 - i, heap1.poll().getId());
+                AStarNode node = new AStarNode(i,i,Integer.MAX_VALUE - i * 2);
+                minHeap.add(node);
+            }
+            for (int i = 0; i < 10000; i++) {
+                minHeap.poll();
             }
             long end = System.currentTimeMillis();
-            sum += end - start;
-        }
-        System.out.println("average: " + (double) (sum) / 1000);
-
-        sum = 0;
-        for (int j = 0; j < 1000; j++) {
-            long start = System.currentTimeMillis();
-            for (int i = 1; i <= 10000; i++) {
-                AStarNode node = new AStarNode(i,i,Integer.MAX_VALUE - i * 2);
-                heap2.add(node);
-            }
-
+            minHeapSum += end - start;
+            start = System.currentTimeMillis();
             for (int i = 0; i < 10000; i++) {
-                assertEquals(10000 - i, heap2.poll().getId());
+                AStarNode node = new AStarNode(i,i,Integer.MAX_VALUE - i * 2);
+                priorityQueue.add(node);
             }
-            long end = System.currentTimeMillis();
-            sum += end - start;
+            for (int i = 0; i < 10000; i++) {
+                priorityQueue.poll();
+            }
+            end = System.currentTimeMillis();
+            priorityQueueSum += end - start;
         }
-        System.out.println("average: " + (double) (sum) / 1000);
+        assertTrue((double) minHeapSum / priorityQueueSum < 2);
+    }
+
+    @Test
+    public void differentSizedHeap(){
+        for (int i = 0; i < 1000; i++) {
+            PriorityQueue<Weight> priorityQueue = new PriorityQueue<>(new WeightComparator());
+            MinHeap<Weight> weightMinHeap = new MinHeap<>(new WeightComparator());
+            for (int j = 0; j < i; j++) {
+                priorityQueue.add(new Weight(j,(i * 10000) + 1));
+                weightMinHeap.add(new Weight(j,(i * 10000) + 1));
+            }
+            for (int j = 0; j < i; j++) {
+                int p = weightMinHeap.poll().getId();
+                assertEquals(j,p);
+                assertEquals(priorityQueue.poll().getId(), p);
+            }
+        }
+        assertTrue(true);
+        for (int i = 0; i < 100; i++) {
+            MinHeap<Weight> weightMinHeap = new MinHeap<>(new WeightComparator());
+            PriorityQueue<Weight> priorityQueue = new PriorityQueue<>(new WeightComparator());
+            for (int j = 0; j < i * 2; j++) {
+                priorityQueue.add(new Weight(j,(i * 10000) + 1));
+                weightMinHeap.add(new Weight(j,(i * 10000) + 1));
+            }
+            for (int j = 0; j < i; j++) {
+                int p = weightMinHeap.poll().getId();
+                assertEquals(j,p);
+                assertEquals(priorityQueue.poll().getId(), p);
+            }
+            for (int j = 0; j < i; j++) {
+                priorityQueue.add(new Weight(j,(i * 10000) + 1));
+                weightMinHeap.add(new Weight(j,(i * 10000) + 1));
+            }
+            for (int j = 0; j < i * 2; j++) {
+                int p = weightMinHeap.poll().getId();
+                assertEquals(j,p);
+                assertEquals(priorityQueue.poll().getId(), p);
+            }
+        }
     }
 }

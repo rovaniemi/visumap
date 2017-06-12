@@ -48,13 +48,4 @@ public class WeightTest {
             assertEquals(false, p.equals("" + i));
         }
     }
-
-    @Test
-    public void compareToWorks(){
-        for (int i = 1; i < 1000; i++) {
-            Weight w = new Weight(i, 12010);
-            Weight p = new Weight(i - 1, 120102);
-            assertEquals(1, p.compareTo(w));
-        }
-    }
 }

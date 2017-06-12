@@ -1,6 +1,6 @@
 package visumap.Graph;
 
-public class Weight implements Comparable<Weight>{
+public class Weight{
 
     /**
      * Weight -luokka esittää verkon solmujen välisiä painoja.
@@ -18,14 +18,6 @@ public class Weight implements Comparable<Weight>{
     public Weight(int id, long weight) {
         this.id = id;
         this.weight = weight;
-    }
-
-    @Override
-    public int compareTo(Weight o) {
-        if(weight.equals(o.weight)){
-            return id.compareTo(o.id);
-        }
-        return weight.compareTo(o.weight);
     }
 
     @Override

@@ -50,7 +50,7 @@ public class MinHeap<T> {
         if (lastElement == -1) {
             return null;
         } else if(lastElement < (this.heap.length - 3) / 2){
-            reduceSize();
+            //reduceSize();
         }
         T out = heap[0];
         heap[0] = heap[lastElement];
@@ -67,37 +67,40 @@ public class MinHeap<T> {
     private void downHeapify() {
         int i = 0;
         while (true) {
+            if(left(i) < this.heap.length && right(i) < this.heap.length){
+                if (heap[left(i)] == null && heap[right(i)] == null) {
+                    return;
+                }
 
-            if (heap[left(i)] == null && heap[right(i)] == null) {
-                return;
-            }
+                if (heap[left(i)] == null) {
+                    if (c.compare(heap[i], heap[right(i)]) > 0) {
+                        swap(right(i), i);
+                        i = right(i);
+                        continue;
+                    } else {
+                        return;
+                    }
+                }
 
-            if (heap[left(i)] == null) {
-                if (c.compare(heap[i], heap[right(i)]) > 0) {
-                    swap(right(i), i);
-                    i = right(i);
+                if (heap[right(i)] == null) {
+                    if (c.compare(heap[i], heap[left(i)]) > 0) {
+                        swap(left(i), i);
+                        i = left(i);
+                        continue;
+                    } else {
+                        return;
+                    }
+                }
+
+                int minChild = c.compare(heap[left(i)], heap[right(i)]) < 0 ? left(i): right(i);
+
+                if (c.compare(heap[i], heap[minChild]) > 0) {
+                    swap(minChild, i);
+                    i = minChild;
                     continue;
                 } else {
                     return;
                 }
-            }
-
-            if (heap[right(i)] == null) {
-                if (c.compare(heap[i], heap[left(i)]) > 0) {
-                    swap(left(i), i);
-                    i = left(i);
-                    continue;
-                } else {
-                    return;
-                }
-            }
-
-            int minChild = c.compare(heap[left(i)], heap[right(i)]) < 0 ? left(i): right(i);
-
-            if (c.compare(heap[i], heap[minChild]) > 0) {
-                swap(minChild, i);
-                i = minChild;
-                continue;
             } else {
                 return;
             }
@@ -180,7 +183,7 @@ public class MinHeap<T> {
     }
 
     private void increaseSize(){
-        T[] newHeap = (T[])new Object[this.heap.length * 2];
+        T[] newHeap = (T[])new Object[(this.heap.length * 2)];
         for (int i = 0; i < this.heap.length; i++) {
             newHeap[i] = this.heap[i];
         }
@@ -193,5 +196,12 @@ public class MinHeap<T> {
             newHeap[i] = this.heap[i];
         }
         this.heap = newHeap;
+    }
+
+    public boolean isEmpty(){
+        if(this.lastElement <= -1){
+            return true;
+        }
+        return false;
     }
 }
