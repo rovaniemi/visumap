@@ -1,5 +1,6 @@
 package visumap.Structures;
 import java.util.Comparator;
+import java.util.Objects;
 
 /**
  * @author Rovaniemi.
@@ -13,14 +14,13 @@ public class MinHeap<T> {
     private T[] heap;
 
     /**
-     * Määritellään uusi keko.
-     * @param size keon koko.
+     * Annetaan comparator
      * @param c tietyn luokan comparator.
      */
 
-    public MinHeap(int size, Comparator c) {
+    public MinHeap(Comparator c) {
+        this.heap = (T[])new Object[1];
         this.c = c;
-        this.heap = (T[])new Object[size];
     }
 
     /**
@@ -30,8 +30,8 @@ public class MinHeap<T> {
 
     public boolean add(T o) {
         int last = findLast();
-        if (last == heap.length - 1) {
-            return false;
+        if (last + 1 > heap.length - 1) {
+            increaseSize();
         }
         heap[last+1] = o;
         upHeapify();
@@ -46,6 +46,8 @@ public class MinHeap<T> {
     public T poll() {
         if (findLast() == -1) {
             return null;
+        } else if(findLast() < (this.heap.length - 3) / 2){
+            reduceSize();
         }
         T out = heap[0];
         heap[0] = heap[findLast()];
@@ -171,5 +173,21 @@ public class MinHeap<T> {
 
     private int right(int i) {
         return 2 * i + 2;
+    }
+
+    private void increaseSize(){
+        T[] newHeap = (T[])new Object[this.heap.length * 2];
+        for (int i = 0; i < this.heap.length; i++) {
+            newHeap[i] = this.heap[i];
+        }
+        this.heap = newHeap;
+    }
+
+    private void reduceSize(){
+        T[] newHeap = (T[])new Object[this.heap.length / 2];
+        for (int i = 0; i < newHeap.length; i++) {
+            newHeap[i] = this.heap[i];
+        }
+        this.heap = newHeap;
     }
 }

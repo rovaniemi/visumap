@@ -51,7 +51,7 @@ public class MinHeapTest {
 
     @Before
     public void setUp() {
-        this.heap = new MinHeap(10, new AStarNodeComparator());
+        this.heap = new MinHeap(new AStarNodeComparator());
     }
 
     @After
@@ -80,5 +80,19 @@ public class MinHeapTest {
         assertEquals(4, heap.poll().getId());
         assertEquals(2, heap.poll().getId());
         assertEquals(3, heap.poll().getId());
+    }
+
+    @Test
+    public void addingTenThousandItems(){
+        MinHeap<AStarNode> heap1 = new MinHeap(new AStarNodeComparator());
+        for (int i = 1; i <= 10000; i++) {
+            AStarNode node = new AStarNode(i,i,Integer.MAX_VALUE - i * 2);
+            heap1.add(node);
+        }
+
+        for (int i = 0; i < 10000; i++) {
+            assertEquals(10000 - i, heap1.poll().getId());
+        }
+        assertNull(heap1.poll());
     }
 }
