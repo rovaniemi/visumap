@@ -1,9 +1,11 @@
 package visumap.Algorithms;
 
 import org.junit.Test;
+import visumap.Graph.Node;
 import visumap.Graph.Weight;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -13,13 +15,13 @@ public class DijkstraTest {
 
     public void smallTest(int n, int[] where, int[] to, long[] distance, long realResult) {
         Dijkstra dijkstra = new Dijkstra();
-        long algorithmResult = dijkstra.getShortestPath(null, greateList(n, where, to, distance), 1, n);
+        long algorithmResult = dijkstra.getShortestPath(new HashMap<>(), greateList(n, where, to, distance), 1, n);
         assertTrue(realResult == algorithmResult);
     }
 
     public void bigTest(int n, int[] where, int[] to, long[] distance, long realResult) {
         Dijkstra dijkstra = new Dijkstra();
-        long algorithmResult = dijkstra.getShortestPath(null, greateList(n, where, to, distance),1, n);
+        long algorithmResult = dijkstra.getShortestPath(new HashMap<>(), greateList(n, where, to, distance),1, n);
         assertTrue(realResult == algorithmResult);
     }
 
