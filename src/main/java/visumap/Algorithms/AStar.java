@@ -27,7 +27,7 @@ public class AStar implements ShortestPathAlgorithm{
     }
 
     /**
-     * Astar hoitaa algoritmin ja palauttaa lyhyimmän polun.
+     * getShortestPath hoitaa algoritmin ja palauttaa lyhyimmän polun.
      * @param goal maalisolmun id.
      * @param start lähtösolmun id.
      * @param graph vieruslista.

@@ -65,8 +65,9 @@ public class RouterTest {
 
     @Test
     public void everyAlgorithmGiveSameAnswer(){
+
         Router router = new Router();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 1000; i++) {
             double minLat = 65.8087;
             double maxLat = 65.8612;
             double minLon = 24.0916;

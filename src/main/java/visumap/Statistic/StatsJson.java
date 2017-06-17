@@ -4,6 +4,10 @@ import visumap.Graph.Node;
 
 import java.util.List;
 
+/**
+ * Collectori kaikelle datalle mitä json tiedostoon halutaan.
+ */
+
 public class StatsJson {
 
     private List<Node> everyNode;

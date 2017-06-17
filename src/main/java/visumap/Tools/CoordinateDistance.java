@@ -1,8 +1,14 @@
 package visumap.Tools;
 
+/**
+ * CoordinateDistance luokkaa käytetään ainoastaan kahden pisteen välisen etäisyyden laskemiseen.
+ */
+
 public class CoordinateDistance {
 
     public final static double AVERAGE_RADIUS_OF_EARTH_CM = 6371 * 1000 * 100;
+
+
 
     public int distance(double lat1, double lon1, double lat2, double lon2) {
 

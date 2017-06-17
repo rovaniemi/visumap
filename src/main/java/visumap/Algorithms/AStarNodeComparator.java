@@ -1,6 +1,9 @@
 package visumap.Algorithms;
-
 import java.util.Comparator;
+
+/**
+ * AstarNodeComparator luokka hoitaa kahden AStarNoden vertailun keskenään.
+ */
 
 public class AStarNodeComparator implements Comparator{
 

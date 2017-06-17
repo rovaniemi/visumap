@@ -56,6 +56,12 @@ public class GraphBuilder {
         return weights;
     }
 
+    /**
+     * greateNodeMap metodi rakentaa tiedostosta node mapin jossa on kaikki nodet.
+     * @param fileName json -tiedoston nimi.
+     * @return metodi palauttaa mapin jossa on kaikki nodet.
+     */
+
     public Map<Integer, Node> createNodeMap(String fileName) {
         Map<Integer, Node> nodes = new HashMap<>();
         List<Node> nodeList = readData(fileName);

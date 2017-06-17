@@ -33,6 +33,11 @@ public class Router {
     private Map<String, List<Weight>[]> graphs;
     private Map<String, Map<Integer, Node>> nodes;
 
+    /**
+     * Alustetaan map graphs, joka sisältää verkkoja aina kaupunkia kohtaan.
+     * Alustetaan map nodes, joka sisältää kaikki kaupungin nodet.
+     */
+
     public Router(){
         this.graphs = new HashMap<>();
         this.nodes = new HashMap<>();
@@ -61,6 +66,14 @@ public class Router {
         this.nodes.put("turku", graphBuilder.createNodeMap(PATH + TURKU)); */
     }
 
+    /**
+     * Luodaan Stats olio käyttäjän valitsemilla argumenteillä, ja palautetaan myöhemmin tästä oliosta json esitys.
+     * @param algorithm valittu algoritmi
+     * @param city valittu kaupunki
+     * @param goal valittu lopetuspiste
+     * @param start valittu aloituspiste
+     */
+
     public Stats visualizeAlgorithm(String city, String algorithm, Node start, Node goal){
         Stats stats = new Stats();
         if(this.graphs.containsKey(city)){
@@ -82,6 +95,13 @@ public class Router {
         }
         return stats;
     }
+
+    /**
+     * Etsitään pisteestä lähimpänä oleva node joka on verkossa.
+     * @param node piste minkä lähin piste halutaan.
+     * @param nodes kaikki verkossa olevat nodet.
+     * @return palauttaa verkossa olevan noden joka on lähimpänä satunnaista nodea.
+     */
 
     public Node findNearestPoint(Node node, Map<Integer, Node> nodes){
         long minDistance = Long.MAX_VALUE;

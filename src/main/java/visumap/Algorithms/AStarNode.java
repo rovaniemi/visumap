@@ -1,10 +1,20 @@
 package visumap.Algorithms;
 
+/**
+ * AStarNode on node jota käytetään Astarin yhteydessä.
+ */
+
 public class AStarNode {
 
     private int id;
     private long toStart;
     private long toGoal;
+
+    /**
+     * @param id node id
+     * @param toGoal matka maaliin
+     * @param toStart matka aloituspisteeseen
+     */
 
     public AStarNode (int id, long toStart, long toGoal) {
         this.id = id;

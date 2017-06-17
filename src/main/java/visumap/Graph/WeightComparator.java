@@ -1,7 +1,9 @@
 package visumap.Graph;
-
-
 import java.util.Comparator;
+
+/**
+ * WeightComparator luokka hoitaa kahden weightin vertailun keskenään.
+ */
 
 public class WeightComparator implements Comparator{
 

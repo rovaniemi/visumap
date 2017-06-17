@@ -2,7 +2,9 @@
 
 ### Yleisrakenne
 
-Ohjelman runkona toimii PathfindController -luokka, joka vastaanottaa käyttäjältä tulevan kyselyn. Luokka vastaa kyselyyn oikean tyyppisellä datalla käyttäen Router -luokkaa. Router -luokka rakentaa GraphBuilder luokan avulla karttadatasta Weightejä käyttävän verkon. Tämän jälkeen luokka antaa verkon algoritmien käyttöön. Algoritmit käyttävät hyväkseen Structure -paketin MinHeap -luokkaa ja Tools -paketin CoordinateDistance -luokkaa. Statistiikasta huolehtii Statistic -paketin alla olevat luokat.
+Ohjelma on kahdessa osassa. Backend vastaa algoritmeistä ja datan käsittelystä. Tämän jälkeen data lähetetään frontendiin joka visualisoi datan. Frontendin koodi löytyy [täätä](https://github.com/rovaniemi/visumap-front). Taas backend on [täätä](https://github.com/rovaniemi/visumap). 
+
+Backend ohjelman runkona toimii PathfindController -luokka, joka vastaanottaa käyttäjältä tulevan kyselyn. Luokka vastaa kyselyyn oikean tyyppisellä datalla käyttäen Router -luokkaa. Router -luokka rakentaa GraphBuilder luokan avulla karttadatasta Weightejä käyttävän verkon. Tämän jälkeen luokka antaa verkon algoritmien käyttöön. Algoritmit käyttävät hyväkseen Structure -paketin MinHeap -luokkaa ja Tools -paketin CoordinateDistance -luokkaa. Statistiikasta huolehtii Statistic -paketin alla olevat luokat.
 
 ## Saavutetut aika- ja tilavaativuudet
 
@@ -11,9 +13,9 @@ Algoritmien aikavaativuuksissa |E| tarkoittaa kaarien lukumäärää ja |V| tark
 Algoritmi | Aikavaativuus              | Tilavaativuus
 ----------|----------------------------|--------------
 Dijkstra  | O(\|E\| + \|V\| log \|V\|) | O(\|V\|) 
-A*        | O(\|E\|)                   | O(\|V\|^2)
+A*        | O(\|E\|)                   | O(\|V\|)
 
-Saavutin algoritmeille melkein asettamani tavoite aika- sekä tilavaativuudet.
+Saavutin algoritmeille melkein tavoite aika- sekä tilavaativuudet.
 
 ## Kartan ratkaiseminen breadth-first search algoritmilla
 

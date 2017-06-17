@@ -17,6 +17,15 @@ public class Dijkstra implements ShortestPathAlgorithm {
         this.stats = new Stats();
     }
 
+    /**
+     * getShortestPath hoitaa algoritmin ja palauttaa lyhyimmän polun.
+     * @param goal maalisolmun id.
+     * @param start lähtösolmun id.
+     * @param graph vieruslista.
+     * @param nodes nodemap, josta saa latituden ja longituden.
+     * @return lyhin reitti senttimetreissä.
+     */
+
     public long getShortestPath(Map<Integer, Node> nodes, List<Weight>[] graph, int start, int goal){
         boolean[] handled = new boolean[graph.length + 1];
         long[] dist = new long[graph.length + 1];
