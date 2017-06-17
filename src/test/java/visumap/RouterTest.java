@@ -76,7 +76,7 @@ public class RouterTest {
 
             Stats dijkstra = router.visualizeAlgorithm("tornio", "dijkstra", first, second);
             Stats astar = router.visualizeAlgorithm("tornio", "astar", first, second);
-            Assert.assertEquals(dijkstra.getShortestPath(), astar.getShortestPath());
+            Assert.assertEquals(dijkstra.shortestPath(), astar.shortestPath());
         }
     }
 

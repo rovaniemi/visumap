@@ -1,6 +1,9 @@
 package visumap.Statistic;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import visumap.Graph.Node;
+import visumap.Tools.CoordinateDistance;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +18,12 @@ public class Stats {
     private boolean on;
     private List<Node> everyNode;
     private List<Node> shortestPath;
-    private int nodeCounter;
     private String message;
     private final TimeSupplier timeSupplier;
 
     public Stats(TimeSupplier timeSupplier){
         this.everyNode = new ArrayList<>();
         this.shortestPath = new ArrayList<>();
-        this.nodeCounter = 0;
         this.timeSupplier = timeSupplier;
         this.message = "";
     }
@@ -32,7 +33,6 @@ public class Stats {
     }
 
     public void addNodeE(Node node){
-        nodeCounter++;
         this.everyNode.add(node);
     }
 
@@ -65,9 +65,6 @@ public class Stats {
         return runningTime;
     }
 
-    public int getNodeCounter(){
-        return this.nodeCounter;
-    }
 
     public long nanosecondsToMilliseconds(Long nanoseconds) {
         return nanoseconds / 1000000;
@@ -81,4 +78,21 @@ public class Stats {
         this.message = message;
     }
 
+    public long shortestPath(){
+        CoordinateDistance tool = new CoordinateDistance();
+        long distance = 0;
+        for (int i = 0; i < this.getShortestPath().size(); i++) {
+            if(i < this.getShortestPath().size() - 1){
+                Node n1 = this.getShortestPath().get(i);
+                Node n2 = this.getShortestPath().get(i + 1);
+                distance += tool.distance(n1.getLat(), n1.getLon(), n2.getLat(), n2.getLon());
+            }
+        }
+        return distance;
+    }
+
+    public String getJson(){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(new StatsJson(this.everyNode,this.shortestPath,this.message,shortestPath(),this.everyNode.size() + this.shortestPath.size())).toString();
+    }
 }

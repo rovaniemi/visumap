@@ -3,6 +3,7 @@ package visumap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import visumap.Graph.Node;
 
 import java.util.Map;
 
@@ -25,6 +26,6 @@ public class PathfindController {
         Double goalLat = Double.parseDouble(params.get("gLat"));
         Double goalLon = Double.parseDouble(params.get("gLon"));
         String city = params.get("city");
-        return "";
+        return this.router.visualizeAlgorithm(city,algorithm,new Node(-1,startNodeLat,startNodeLon),new Node(-1,goalLat,goalLon)).getJson();
     }
 }

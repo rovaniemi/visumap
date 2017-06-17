@@ -49,7 +49,6 @@ public class StatsTest {
             stats.addNodeE(new Node(i,12.12222,12.12222));
         }
         assertEquals(10000, stats.getEveryNode().size());
-        assertEquals(10000, stats.getNodeCounter());
     }
 
     @Test
@@ -63,7 +62,6 @@ public class StatsTest {
         }
         assertEquals(9900, stats.getEveryNode().size());
         assertEquals(100, stats.getShortestPath().size());
-        assertEquals(10000, stats.getNodeCounter());
     }
 
     @Test
