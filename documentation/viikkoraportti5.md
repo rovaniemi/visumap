@@ -15,9 +15,9 @@ En ehtinyt viime viikolla tehdä bfssää. Joten ensimmäisenä teen sen ja lis�
 
 Päivä | Aihe                                      | Tunnit
 ------|-------------------------------------------|-------
-04.06 | Korjasin astarin toimivaksi. | 3h
-05.06  | Kirjoitin yleisesti testejä.| 2h
-06.06 | Jatkoin frontin tekemistä.  | 2h
-07.06  | Tein stats luokan ja korjasin etäisyyden laskennan toimivaksi. | 2h
-08.06  | Kirjoitin testejä ja laitoin algoritmit kirjoittamaan tietoa stats luokkaan. | 2h
-09.06  | Kirjoitin raportit ja korjasin bugeja. Lisäsin myös aloittamani keon. | 3h
+12.06 | Korjasin viime viikolla tulleen palautteen mukaan heappia sekä refactoroin muita luokkia. | 6h
+13.06  | Kirjoitin yleisesti testejä.| 2h
+14.06 | Tein fronttia | 7h
+15.06  | Tein fronttia | 8h
+16.06  | Tein fronttia ja aloitin suorituskykytestauksen. | 6h
+17.06  | Kirjoitin dokumentaatiota | 3h
