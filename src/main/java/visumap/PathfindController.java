@@ -1,13 +1,13 @@
 package visumap;
 
 import org.springframework.web.bind.annotation.*;
-import visumap.Graph.Node;
+
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public class PathfindController {
 
-    private final String API_VERSION = "0.1V";
+    private final String API_VERSION = "0.1v";
 
     private static Router router;
 
@@ -21,12 +21,14 @@ public class PathfindController {
         ex.printStackTrace();
     }
 
-    @RequestMapping(value = "/shortest/" + API_VERSION + "/")
-    public String getShortestPath(@RequestBody int[] json){
-        return this.router.visualizeAlgorithm(json).getJson();
+    @RequestMapping(value = "/" + API_VERSION + "/shortest/")
+    public String getShortestPath(@RequestBody ShortestJsonRequest json){
+        String a = this.router.visualizeAlgorithm(json.algorithm, json.points);
+        System.out.println("pyyntö käsitelty");
+        return a;
     }
 
-    @RequestMapping(value = "/randompoints/" + API_VERSION + "/")
+    @RequestMapping(value = "/" + API_VERSION + "/randompoints/")
     public String getRandomPoints(){
         return this.router.randomPoints();
     }

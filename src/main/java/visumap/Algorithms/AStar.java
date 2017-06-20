@@ -92,7 +92,7 @@ public class AStar implements ShortestPathAlgorithm{
                 return -1;
             }
             distance += tool.distance(nodes.get(next).getLat(),nodes.get(next).getLon(),nodes.get(path[next]).getLat(),nodes.get(path[next]).getLon());
-            this.stats.addNodeS(nodes.get(next));
+            //this.stats.addNodeS(nodes.get(next));
             next = path[next];
             if(next == start) {
                 return distance;

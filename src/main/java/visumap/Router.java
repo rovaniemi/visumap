@@ -1,16 +1,12 @@
 package visumap;
 
 import com.google.gson.Gson;
+import visumap.Algorithms.AStar;
+import visumap.Algorithms.Dijkstra;
 import visumap.Graph.GraphBuilder;
-import visumap.Graph.Node;
 import visumap.Graph.Node2;
-import visumap.Statistic.NodeJson;
 import visumap.Statistic.Stats;
-import visumap.Tools.CoordinateDistance;
-
-import java.util.Map;
 import java.util.Random;
-
 
 /**
  * Router luokka hoitaa oikean tyyppisen kyselyn tuottamisen käyttäjälle,
@@ -22,23 +18,19 @@ public class Router {
 
     private static final String DIJKSTRA = "dijkstra";
     private static final String ASTAR = "astar";
-    private static final String FINLAND= "helsinki.json";
-    private static final String PATH = "maps/";
+    private static final String JSON = "maps/graph.json";
 
-    private Node2[] graph;
-
-    /**
-     * Alustetaan map graphs, joka sisältää verkkoja aina kaupunkia kohtaan.
-     * Alustetaan map nodes, joka sisältää kaikki kaupungin nodet.
-     */
+    private static Node2[] graph;
 
     public Router(){
-        this.graph = new GraphBuilder().createGraph(PATH + FINLAND);
+        this.graph = new GraphBuilder().createGraph(JSON);
     }
 
-    public Stats visualizeAlgorithm(int[] points){
-        if(points[0] >= graph.length || points[1] >= graph.length) return new Stats("Invalid points");
-        return new Stats();
+    public String visualizeAlgorithm(String algorithm, int[] points){
+        if( points[0] >= graph.length || points[1] >= graph.length ) return new Stats("Invalid points").getJson();
+        if( algorithm.equals(DIJKSTRA)) return new Dijkstra(graph,points[0], points[1]).getStats().getJson();
+        if( algorithm.equals(ASTAR)) return new AStar().getStats().getJson();
+        return new Stats("Invalid algorithm").getJson();
     }
 
     public String randomPoints(){

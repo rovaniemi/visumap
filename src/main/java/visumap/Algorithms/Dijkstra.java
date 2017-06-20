@@ -1,50 +1,48 @@
 package visumap.Algorithms;
 
-import visumap.Graph.Node;
-import visumap.Graph.Weight;
-import visumap.Graph.WeightComparator;
+import visumap.Graph.*;
 import visumap.Statistic.Stats;
 import visumap.Structures.MinHeap;
 
 import java.util.List;
 import java.util.Map;
 
-public class Dijkstra implements ShortestPathAlgorithm {
+public class Dijkstra {
 
     private Stats stats;
 
-    public Dijkstra(){
+    public Dijkstra(Node2[] nodes, int start, int goal){
         this.stats = new Stats();
+        getShortestPath(nodes, start, goal);
     }
 
     /**
      * getShortestPath hoitaa algoritmin ja palauttaa lyhyimmän polun.
      * @param goal maalisolmun id.
      * @param start lähtösolmun id.
-     * @param graph vieruslista.
      * @param nodes nodemap, josta saa latituden ja longituden.
      * @return lyhin reitti senttimetreissä.
      */
 
-    public long getShortestPath(Map<Integer, Node> nodes, List<Weight>[] graph, int start, int goal){
-        boolean[] handled = new boolean[graph.length + 1];
-        long[] dist = new long[graph.length + 1];
-        int[] path = new int[graph.length + 1];
+    public long getShortestPath(Node2[] nodes, int start, int goal){
+        boolean[] handled = new boolean[nodes.length + 1];
+        int[] dist = new int[nodes.length + 1];
+        int[] path = new int[nodes.length + 1];
 
-        for (int i = 0; i <= graph.length; i++) {
-            dist[i] = Long.MAX_VALUE;
+        for (int i = 0; i <= nodes.length; i++) {
+            dist[i] = Integer.MAX_VALUE;
             path[i] = -1;
         }
 
         dist[start] = 0;
 
-        MinHeap<Weight> minHeap = new MinHeap(new WeightComparator());
-        minHeap.add(new Weight(start, 0l));
+        MinHeap<Weight2> minHeap = new MinHeap(new DijkstraComparator());
+        minHeap.add(new Weight2(start, 0));
 
         while(!minHeap.isEmpty()){
-            Weight weight = minHeap.poll();
-            int id = weight.getId();
-            long distance = weight.getWeight();
+            Weight2 weight = minHeap.poll();
+            int id = weight.getI();
+            int distance = weight.getW();
 
             if(handled[id]){
                 continue;
@@ -52,11 +50,11 @@ public class Dijkstra implements ShortestPathAlgorithm {
 
             handled[id] = true;
 
-            for (Weight next:graph[id]) {
-                if(dist[next.getId()] > distance + next.getWeight()){
-                    dist[next.getId()] = distance + next.getWeight();
-                    path[next.getId()] = id;
-                    minHeap.add(new Weight(next.getId(),dist[next.getId()]));
+            for (Weight2 next:nodes[id].getE()) {
+                if(dist[next.getI()] > distance + next.getW()){
+                    dist[next.getI()] = distance + next.getW();
+                    path[next.getI()] = id;
+                    minHeap.add(new Weight2(next.getI(),dist[next.getI()]));
                 }
             }
         }
@@ -64,18 +62,19 @@ public class Dijkstra implements ShortestPathAlgorithm {
         if (dist[goal] == Long.MAX_VALUE){
             return -1;
         }
+
         shortestPath(nodes,path,start,goal);
         return dist[goal];
     }
 
 
-    private void shortestPath(Map<Integer, Node> nodes, int[] path, int start, int goal){
+    private void shortestPath(Node2[] nodes, int[] path, int start, int goal){
         int next = goal;
         while(true){
             if(path[next] == -1){
                 return;
             }
-            this.stats.addNodeS(nodes.get(next));
+            this.stats.addNodeS(nodes[next]);
             next = path[next];
             if(next == start) {
                 return;

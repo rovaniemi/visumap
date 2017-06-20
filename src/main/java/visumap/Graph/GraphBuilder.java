@@ -19,7 +19,7 @@ public class GraphBuilder {
             while (reader.hasNext()){
                 list.add(gson.fromJson(reader,Node.class));
                 if(i++ % 1000 == 0){
-                    System.out.println(i);
+                    System.out.println(i - 1);
                 }
             }
             reader.close();

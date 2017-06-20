@@ -3,6 +3,7 @@ package visumap.Statistic;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import visumap.Graph.Node;
+import visumap.Graph.Node2;
 import visumap.Tools.CoordinateDistance;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class Stats {
     private long startTime;
     private boolean on;
     private List<Node> everyNode;
-    private List<Node> shortestPath;
+    private List<Node2> shortestPath;
     private String message;
     private final TimeSupplier timeSupplier;
 
@@ -40,7 +41,7 @@ public class Stats {
         this.everyNode.add(node);
     }
 
-    public void addNodeS(Node node){
+    public void addNodeS(Node2 node){
         this.shortestPath.add(node);
     }
 
@@ -49,7 +50,7 @@ public class Stats {
         return this.everyNode;
     }
 
-    public List<Node> getShortestPath(){
+    public List<Node2> getShortestPath(){
         return this.shortestPath;
     }
 
@@ -87,9 +88,9 @@ public class Stats {
         long distance = 0;
         for (int i = 0; i < this.getShortestPath().size(); i++) {
             if(i < this.getShortestPath().size() - 1){
-                Node n1 = this.getShortestPath().get(i);
-                Node n2 = this.getShortestPath().get(i + 1);
-                distance += tool.distance(n1.getLat(), n1.getLon(), n2.getLat(), n2.getLon());
+                Node2 n1 = this.getShortestPath().get(i);
+                Node2 n2 = this.getShortestPath().get(i + 1);
+                distance += tool.distance(n1.getLa(), n1.getLo(), n2.getLa(), n2.getLo());
             }
         }
         return distance;
@@ -99,7 +100,7 @@ public class Stats {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         List<NodeJson> path = new ArrayList<>();
         for (int i = 0; i < this.shortestPath.size(); i++) {
-            path.add(new NodeJson(this.shortestPath.get(i).getLat(),this.shortestPath.get(i).getLon()));
+            path.add(new NodeJson(this.shortestPath.get(i).getLa(),this.shortestPath.get(i).getLo()));
         }
         return gson.toJson(new StatsJson(this.everyNode,path,this.message,shortestPath(),this.everyNode.size() + this.shortestPath.size())).toString();
     }
