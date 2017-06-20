@@ -2,7 +2,7 @@ package visumap;
 
 import org.junit.*;
 import visumap.Graph.Weight;
-import visumap.Graph.WeightComparator;
+import visumap.Algorithms.DijkstraComparator;
 import visumap.Structures.MinHeap;
 
 import java.util.PriorityQueue;
@@ -32,9 +32,9 @@ public class MinHeapPerformanceTest {
     public void tearDown() {
     }
 
-    @Test
+    //@Test
     public void performanceTest1(){
-        WeightComparator wComparator = new WeightComparator();
+        DijkstraComparator wComparator = new DijkstraComparator();
         PriorityQueue<Weight> priorityQueue = new PriorityQueue<>(wComparator);
         MinHeap<Weight> weightMinHeap = new MinHeap<>(wComparator);
 
@@ -63,9 +63,9 @@ public class MinHeapPerformanceTest {
         System.out.println((stop - start) / 10);
     }
 
-    @Test
+    //@Test
     public void performanceTest2(){
-        WeightComparator wComparator = new WeightComparator();
+        DijkstraComparator wComparator = new DijkstraComparator();
         PriorityQueue<Weight> priorityQueue = new PriorityQueue<>(wComparator);
         MinHeap<Weight> weightMinHeap = new MinHeap<>(wComparator);
 
@@ -100,3 +100,4 @@ public class MinHeapPerformanceTest {
         System.out.println((stop - start) / 100);
     }
 }
+

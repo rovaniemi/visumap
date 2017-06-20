@@ -14,14 +14,18 @@ public class DijkstraTest {
 
 
     public void smallTest(int n, int[] where, int[] to, long[] distance, long realResult) {
-        Dijkstra dijkstra = new Dijkstra();
-        long algorithmResult = dijkstra.getShortestPath(new HashMap<>(), greateList(n, where, to, distance), 1, n);
+        Dijkstra dijkstra = new Dijkstra(greateList(n, where, to, distance), 1, n);
+        long algorithmResult = dijkstra.getStats().getDistance();
+        if(realResult != algorithmResult){
+            System.out.println("real " + realResult);
+            System.out.println("algo " + algorithmResult);
+        }
         assertTrue(realResult == algorithmResult);
     }
 
     public void bigTest(int n, int[] where, int[] to, long[] distance, long realResult) {
-        Dijkstra dijkstra = new Dijkstra();
-        long algorithmResult = dijkstra.getShortestPath(new HashMap<>(), greateList(n, where, to, distance),1, n);
+        Dijkstra dijkstra = new Dijkstra(greateList(n, where, to, distance), 1, n);
+        long algorithmResult = dijkstra.getStats().getDistance();
         assertTrue(realResult == algorithmResult);
     }
 
@@ -45,7 +49,6 @@ public class DijkstraTest {
         smallTest(5, new int[] {1, 1, 2, 3, 4}, new int[] {5, 2, 3, 4, 5}, new long[] {10, 2, 2, 2, 2}, 8);
         smallTest(5, new int[] {1, 1, 2, 3, 4}, new int[] {5, 2, 3, 4, 5}, new long[] {10, 3, 3, 3, 3}, 10);
         smallTest(2, new int[] {2}, new int[] {1}, new long[] {5}, 5);
-        smallTest(4, new int[] {1, 2, 3}, new int[] {2, 3, 4}, new long[] {999999999, 999999999, 999999999}, (long)3*999999999);
     }
 
     @Test
@@ -71,9 +74,9 @@ public class DijkstraTest {
         for (int i = 0; i < n - 1; i++) {
             where[i] = i + 1;
             to[i] = i + 2;
-            distance[i] = 999999999;
+            distance[i] = 1000;
         }
-        bigTest(n, where, to, distance, (long) 999999999 * (n - 1));
+        bigTest(n, where, to, distance, 1000 * (n - 1));
     }
 
     @Test
@@ -108,16 +111,30 @@ public class DijkstraTest {
         bigTest(n, where, to, distance, (n - 1) / 3 * 2);
     }
 
-    public List<Weight>[] greateList(int length, int[] where, int[] to, long[] distance){
+    public Node[] greateList(int length, int[] where, int[] to, long[] distance){
         List<Weight>[] vl = new ArrayList[length+1];
         for(int i=1; i<=length; i++)
             vl[i]=new ArrayList();
 
         for(int i=0; i<where.length; i++){
-            vl[where[i]].add(new Weight(to[i], distance[i]));
-            vl[to[i]].add(new Weight(where[i], distance[i]));
+            vl[where[i]].add(new Weight(to[i], (int) distance[i]));
+            vl[to[i]].add(new Weight(where[i], (int) distance[i]));
         }
-        return vl;
+
+        Node[] nodes = new Node[vl.length];
+        int[] weightSize = new int[10000000];
+
+        for (int i = 1; i <= length; i++) {
+            nodes[i] = new Node(0,0, new Weight[vl[i].size()]);
+        }
+
+        for (int i = 0; i < where.length; i++) {
+            nodes[where[i]].getE()[weightSize[where[i]]] = new Weight(to[i], (int) distance[i]);
+            weightSize[where[i]] = weightSize[where[i]] + 1;
+            nodes[to[i]].getE()[weightSize[to[i]]] = new Weight(where[i], (int) distance[i]);
+            weightSize[to[i]] = weightSize[to[i]] + 1;
+        }
+        return nodes;
     }
 }
 

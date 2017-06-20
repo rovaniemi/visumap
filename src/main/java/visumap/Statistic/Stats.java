@@ -44,17 +44,13 @@ public class Stats {
         this.distance = distance;
     }
 
+    public long getDistance() {
+        return distance;
+    }
+
     public List<Node> getEveryNode(){
         shortestPath.stream().forEach(e -> this.everyNode.remove(e));
         return this.everyNode;
-    }
-
-    public List<Node> getShortestPath(){
-        return this.shortestPath;
-    }
-
-    public String getMessage() {
-        return message;
     }
 
     public String getJson(){

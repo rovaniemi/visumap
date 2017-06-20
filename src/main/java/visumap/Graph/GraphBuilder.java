@@ -15,12 +15,8 @@ public class GraphBuilder {
             JsonReader reader = new JsonReader(new InputStreamReader(new FileInputStream(fileName), "UTF-8"));
             Gson gson = createGson();
             reader.beginArray();
-            int i = 0;
             while (reader.hasNext()){
                 list.add(gson.fromJson(reader,Node.class));
-                if(i++ % 1000 == 0){
-                    System.out.println(i - 1);
-                }
             }
             reader.close();
         } catch (IOException e) {

@@ -27,7 +27,4 @@ public class GraphBuilderTest {
     public void tearDown() {
     }
 
-    @Test
-    public void equalsIfSame(){
-    }
 }

@@ -56,7 +56,7 @@ public class Dijkstra {
             }
         }
 
-        if (dist[goal] == Long.MAX_VALUE){
+        if (dist[goal] == Integer.MAX_VALUE){
             return -1;
         }
 

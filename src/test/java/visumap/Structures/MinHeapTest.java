@@ -5,7 +5,7 @@ import visumap.Algorithms.AStarNode;
 import visumap.Algorithms.AStarComparator;
 import visumap.Graph.Node;
 import visumap.Graph.Weight;
-import visumap.Graph.WeightComparator;
+import visumap.Algorithms.DijkstraComparator;
 import visumap.Tools.CoordinateDistance;
 
 import java.util.*;
@@ -32,11 +32,11 @@ public class MinHeapTest {
         this.graph[4].add(2);
         this.graph[4].add(5);
         this.map = new HashMap<>();
-        this.map.put(1, new Node(1, 60.209231, 24.952392));
-        this.map.put(2, new Node(2, 60.209325, 24.954199));
-        this.map.put(3, new Node(3, 60.208868, 24.952980));
-        this.map.put(4, new Node(4, 60.209376, 24.955820));
-        this.map.put(5, new Node(5, 60.209017, 24.955841));
+        this.map.put(1, new Node(60.209231, 24.952392, new Weight[20000]));
+        this.map.put(2, new Node(60.209325, 24.954199, new Weight[20000]));
+        this.map.put(3, new Node(60.208868, 24.952980, new Weight[20000]));
+        this.map.put(4, new Node(60.209376, 24.955820, new Weight[20000]));
+        this.map.put(5, new Node(60.209017, 24.955841, new Weight[20000]));
     }
 
     @BeforeClass
@@ -65,12 +65,12 @@ public class MinHeapTest {
     @Test
     public void testAddingMultipleItems() {
         CoordinateDistance tool = new CoordinateDistance();
-        double goalLat = this.map.get(5).getLat();
-        double goalLon = this.map.get(5).getLon();
-        AStarNode node = new AStarNode(1, 0, tool.distance(this.map.get(1).getLat(), this.map.get(1).getLon(), goalLat, goalLon));
+        double goalLat = this.map.get(5).getLa();
+        double goalLon = this.map.get(5).getLo();
+        AStarNode node = new AStarNode(1, 0, tool.distance(this.map.get(1).getLa(), this.map.get(1).getLo(), goalLat, goalLon));
         heap.add(node);
         for (int i = 2; i <= 5; i++) {
-            AStarNode n = new AStarNode(i, Integer.MAX_VALUE, tool.distance(this.map.get(i).getLat(), this.map.get(i).getLon(), goalLat, goalLon));
+            AStarNode n = new AStarNode(i, Integer.MAX_VALUE, tool.distance(this.map.get(i).getLa(), this.map.get(i).getLo(), goalLat, goalLon));
             heap.add(n);
         }
         assertEquals(1, heap.poll().getId());
@@ -96,7 +96,7 @@ public class MinHeapTest {
 
     @Test
     public void isEmptyWork(){
-        MinHeap<Weight> heap = new MinHeap<>(new WeightComparator());
+        MinHeap<Weight> heap = new MinHeap<>(new DijkstraComparator());
         for (int i = 0; i < 100; i++) {
             heap.add(new Weight(i,i));
         }
@@ -142,39 +142,39 @@ public class MinHeapTest {
     @Test
     public void differentSizedHeap(){
         for (int i = 0; i < 1000; i++) {
-            PriorityQueue<Weight> priorityQueue = new PriorityQueue<>(new WeightComparator());
-            MinHeap<Weight> weightMinHeap = new MinHeap<>(new WeightComparator());
+            PriorityQueue<Weight> priorityQueue = new PriorityQueue<>(new DijkstraComparator());
+            MinHeap<Weight> weightMinHeap = new MinHeap<>(new DijkstraComparator());
             for (int j = 0; j < i; j++) {
                 priorityQueue.add(new Weight(j,(i * 10000) + 1));
                 weightMinHeap.add(new Weight(j,(i * 10000) + 1));
             }
             for (int j = 0; j < i; j++) {
-                int p = weightMinHeap.poll().getId();
+                int p = weightMinHeap.poll().getI();
                 assertEquals(j,p);
-                assertEquals(priorityQueue.poll().getId(), p);
+                assertEquals(priorityQueue.poll().getI(), p);
             }
         }
         assertTrue(true);
         for (int i = 0; i < 100; i++) {
-            MinHeap<Weight> weightMinHeap = new MinHeap<>(new WeightComparator());
-            PriorityQueue<Weight> priorityQueue = new PriorityQueue<>(new WeightComparator());
+            MinHeap<Weight> weightMinHeap = new MinHeap<>(new DijkstraComparator());
+            PriorityQueue<Weight> priorityQueue = new PriorityQueue<>(new DijkstraComparator());
             for (int j = 0; j < i * 2; j++) {
                 priorityQueue.add(new Weight(j,(i * 10000) + 1));
                 weightMinHeap.add(new Weight(j,(i * 10000) + 1));
             }
             for (int j = 0; j < i; j++) {
-                int p = weightMinHeap.poll().getId();
+                int p = weightMinHeap.poll().getI();
                 assertEquals(j,p);
-                assertEquals(priorityQueue.poll().getId(), p);
+                assertEquals(priorityQueue.poll().getI(), p);
             }
             for (int j = 0; j < i; j++) {
                 priorityQueue.add(new Weight(j,(i * 10000) + 1));
                 weightMinHeap.add(new Weight(j,(i * 10000) + 1));
             }
             for (int j = 0; j < i * 2; j++) {
-                int p = weightMinHeap.poll().getId();
+                int p = weightMinHeap.poll().getI();
                 assertEquals(j,p);
-                assertEquals(priorityQueue.poll().getId(), p);
+                assertEquals(priorityQueue.poll().getI(), p);
             }
         }
     }

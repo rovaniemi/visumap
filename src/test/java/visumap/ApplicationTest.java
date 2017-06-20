@@ -26,8 +26,5 @@ public class ApplicationTest {
     @After
     public void tearDown() {
     }
-
-    @Test
-    public void equalsIfSame(){
-    }
+    
 }

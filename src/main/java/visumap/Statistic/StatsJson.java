@@ -18,13 +18,23 @@ public class StatsJson {
     private List<Node> everyNode;
 
     public StatsJson(long time, int size, long distance, String message, List<NodeJson> shortestPath, List<Node> everyNode ){
-
         this.time = time;
         this.size = size;
         this.distance = distance;
         this.message = message;
         this.shortestPath = shortestPath;
         this.everyNode = everyNode;
+    }
 
+    public int getSize() {
+        return size;
+    }
+
+    public long getDistance() {
+        return distance;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

@@ -27,7 +27,4 @@ public class AStarTest {
     public void tearDown() {
     }
 
-    @Test
-    public void equalsIfSame(){
-    }
 }

@@ -26,8 +26,4 @@ public class PathfindControllerTest {
     @After
     public void tearDown() {
     }
-
-    @Test
-    public void equalsIfSame(){
-    }
 }

@@ -2,8 +2,9 @@ package visumap.Graph;
 
 import org.junit.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import java.util.ArrayList;
+import java.util.List;
+import static org.junit.Assert.assertTrue;
 
 public class NodeTest {
 
@@ -28,30 +29,15 @@ public class NodeTest {
     }
 
     @Test
-    public void equalsIfSame(){
-        Node node = new Node(1233,12.22,12.122);
-        Node node2 = new Node(1233,12.22,12.122);
-        assertEquals(node,node2);
-    }
-
-    @Test
-    public void hashCodeIsId(){
+    public void getterAndSetterWorks(){
+        List<Node> nodes = new ArrayList<>();
         for (int i = 0; i < 10000; i++) {
-            Node n = new Node(i, 12.222, 12.222);
-            assertEquals(i, n.hashCode());
+            nodes.add(new Node(12.22, 12.33, new Weight[12]));
         }
-    }
-
-    @Test
-    public void equalsWorks(){
         for (int i = 0; i < 10000; i++) {
-            Node n = new Node(i, 12.222, 12.222);
-            Node p = new Node(i, 12.222, 12.212);
-            Node s = new Node(i + 1, 12.222, 12.222);
-            assertEquals(n,p);
-            assertEquals(false, n.equals(null));
-            assertEquals(false, n.equals("" + i));
-            assertEquals(false, n.equals(s));
+            assertTrue(nodes.get(i).getLa() == 12.22);
+            assertTrue(nodes.get(i).getLo() == 12.33);
+            assertTrue(nodes.get(i).getE().length == 12);
         }
     }
 

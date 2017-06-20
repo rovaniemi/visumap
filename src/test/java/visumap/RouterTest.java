@@ -1,8 +1,10 @@
 package visumap;
 
+import com.google.gson.Gson;
 import org.junit.*;
 import visumap.Graph.Node;
 import visumap.Statistic.Stats;
+import visumap.Statistic.StatsJson;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 public class RouterTest {
 
@@ -33,84 +36,71 @@ public class RouterTest {
     public void tearDown() {
     }
 
-    @Test
-    public void ifCoordinateIsSameNearestPointIsSame(){
-        Router router = new Router();
-        Map<Integer, Node> nodes = new HashMap<>();
-        Node node = new Node(1,65.2222,43.2121);
-        nodes.put(1, node);
-        nodes.put(2, new Node(2,64.2222,48.2121));
-        nodes.put(3, new Node(3,66.2222,44.2121));
-        nodes.put(4, new Node(4,65.2222,47.2121));
-        Assert.assertEquals(node, router.findNearestPoint(node, nodes));
-    }
+    // "id":"51150","la": "60.227325439453125", "lo" : "25.01201820373535"
+    // "id":"243784","la": "60.2126579284668", "lo" : "24.95928955078125"
+    // Google maps: 3.7km
 
     @Test
     public void distanceIsRightWithDijkstra(){
-        Router router = new Router();
-        Node first = new Node(-1,65.858057,24.139239);
-        Node second = new Node( -2, 65.844018, 24.149615);
-        Stats answer = router.visualizeAlgorithm("tornio", "dijkstra", first, second);
-        Assert.assertEquals(82, answer.getShortestPath().size());
+        Router router = new Router("maps/test");
+        Gson gson = new Gson();
+        StatsJson answer = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{51150,243784}), StatsJson.class);
+        assertTrue(360000 <= answer.getDistance() && answer.getDistance() <= 380000);
     }
 
+    // "id":"51150","la": "60.227325439453125", "lo" : "25.01201820373535"
+    // "id":"243784","la": "60.2126579284668", "lo" : "24.95928955078125"
+    // Google maps: 3.7km
     @Test
     public void distanceIsRightWithAstar(){
-        Router router = new Router();
-        Node first = new Node(-1,65.858057,24.139239);
-        Node second = new Node( -2, 65.844018, 24.149615);
-        Stats answer = router.visualizeAlgorithm("tornio", "astar", first, second);
-        Assert.assertEquals(82, answer.getShortestPath().size());
+        Router router = new Router("maps/test");
+        Gson gson = new Gson();
+        StatsJson answer = gson.fromJson(router.visualizeAlgorithm("astar",new int[]{51150,243784}), StatsJson.class);
+        assertTrue(360000 <= answer.getDistance() && answer.getDistance() <= 380000);
     }
 
     @Test
     public void everyAlgorithmGiveSameAnswer(){
-
-        Router router = new Router();
+        Router router = new Router("maps/test");
+        Gson gson = new Gson();
         for (int i = 0; i < 100; i++) {
-            double minLat = 65.8087;
-            double maxLat = 65.8612;
-            double minLon = 24.0916;
-            double maxLon = 24.2152;
-            Node first = new Node(-1,ThreadLocalRandom.current().nextDouble(minLat, maxLat),ThreadLocalRandom.current().nextDouble(minLon, maxLon));
-            Node second = new Node( -2, ThreadLocalRandom.current().nextDouble(minLat, maxLat), ThreadLocalRandom.current().nextDouble(minLon, maxLon));
-
-            Stats dijkstra = router.visualizeAlgorithm("tornio", "dijkstra", first, second);
-            Stats astar = router.visualizeAlgorithm("tornio", "astar", first, second);
-            Assert.assertEquals(dijkstra.shortestPath(), astar.shortestPath());
+            int[] points = gson.fromJson(router.randomPoints(), int[].class);
+            StatsJson dijkstra = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{points[0],points[1]}), StatsJson.class);
+            StatsJson astar = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{points[0],points[1]}), StatsJson.class);
+            Assert.assertEquals(dijkstra.getDistance(), astar.getDistance());
         }
     }
 
     @Test
     public void sameAnswerIfStartAndGoalNodeIsSame(){
-        Router router = new Router();
+        Router router = new Router("maps/test");
+        Gson gson = new Gson();
         for (int i = 0; i < 100; i++) {
-            double minLat = 65.8087;
-            double maxLat = 65.8612;
-            double minLon = 24.0916;
-            double maxLon = 24.2152;
-            Node first = new Node(-1,ThreadLocalRandom.current().nextDouble(minLat, maxLat),ThreadLocalRandom.current().nextDouble(minLon, maxLon));
-            Stats dijkstra = router.visualizeAlgorithm("tornio", "getShortestPath", first, first);
-            Stats astar = router.visualizeAlgorithm("tornio", "getShortestPath", first, first);
-            Assert.assertEquals(dijkstra.getShortestPath(), astar.getShortestPath());
+            StatsJson dijkstra = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{i,i}), StatsJson.class);
+            StatsJson astar = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{i,i}), StatsJson.class);
+            Assert.assertEquals(dijkstra.getDistance(), astar.getDistance());
         }
     }
 
     @Test
     public void ifCityIsNotInMapReturnInvalidCity(){
-        Router router = new Router();
-        Node first = new Node(-1,65.858057,24.139239);
-        Node second = new Node( -2, 65.844018, 24.149615);
-        Stats answer = router.visualizeAlgorithm("aosdfij", "getShortestPath", first, second);
-        Assert.assertEquals("Invalid city", answer.getMessage());
+        Router router = new Router("maps/test");
+        Gson gson = new Gson();
+        StatsJson answer = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{-1,243784}), StatsJson.class);
+        Assert.assertEquals("Invalid points", answer.getMessage());
+        answer = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{2,-1}), StatsJson.class);
+        Assert.assertEquals("Invalid points", answer.getMessage());
+        answer = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{200030004,243784}), StatsJson.class);
+        Assert.assertEquals("Invalid points", answer.getMessage());
+        answer = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{3,243784940}), StatsJson.class);
+        Assert.assertEquals("Invalid points", answer.getMessage());
     }
 
     @Test
     public void ifAlgorithIsNotValidReturnInvalidCity(){
-        Router router = new Router();
-        Node first = new Node(-1,65.858057,24.139239);
-        Node second = new Node( -2, 65.844018, 24.149615);
-        Stats answer = router.visualizeAlgorithm("tornio", "asdfasdf", first, second);
+        Router router = new Router("maps/test");
+        Gson gson = new Gson();
+        StatsJson answer = gson.fromJson(router.visualizeAlgorithm("dijkstdfra",new int[]{51150,243784}), StatsJson.class);
         Assert.assertEquals("Invalid algorithm", answer.getMessage());
     }
 }

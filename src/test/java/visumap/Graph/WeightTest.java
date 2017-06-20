@@ -2,8 +2,12 @@ package visumap.Graph;
 
 import org.junit.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 public class WeightTest {
 
@@ -28,24 +32,14 @@ public class WeightTest {
     }
 
     @Test
-    public void equalsIfSame(){
-        Weight weight = new Weight(123, 12020);
-        Weight weight1 = new Weight(123,120220);
-        assertEquals(weight,weight1);
-        Weight weight2 = new Weight(1233,12222);
-        assertNotEquals(weight,weight2);
-    }
-
-    @Test
-    public void equalsWorks(){
+    public void getterAndSetterWorks(){
+        List<Weight> weights = new ArrayList<>();
         for (int i = 0; i < 10000; i++) {
-            Weight w = new Weight(i, 10210);
-            Weight p = new Weight(i, 10210);
-            Weight c = new Weight(i + 2, 12022);
-            assertEquals(w, p);
-            assertNotEquals(w, c);
-            assertEquals(false, p.equals(null));
-            assertEquals(false, p.equals("" + i));
+            weights.add(new Weight(i, i * 1000));
+        }
+        for (int i = 0; i < 10000; i++) {
+            assertTrue(weights.get(i).getI() == i);
+            assertTrue(weights.get(i).getW() == i * 1000);
         }
     }
 }

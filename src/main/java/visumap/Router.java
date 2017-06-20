@@ -22,12 +22,16 @@ public class Router {
 
     private static Node[] graph;
 
+    public Router(String filename){
+        this.graph = new GraphBuilder().createGraph(filename);
+    }
+
     public Router(){
-        this.graph = new GraphBuilder().createGraph(JSON);
+        this(JSON);
     }
 
     public String visualizeAlgorithm(String algorithm, int[] points){
-        if( points[0] >= graph.length || points[1] >= graph.length ) return new Stats("Invalid points").getJson();
+        if( points[0] >= graph.length || points[0] < 0 || points[1] >= graph.length || points[1] < 0 ) return new Stats("Invalid points").getJson();
         if( algorithm.equals(DIJKSTRA)) return new Dijkstra(graph,points[0], points[1]).getStats().getJson();
         if( algorithm.equals(ASTAR)) return new AStar(graph,points[0], points[1]).getStats().getJson();
         return new Stats("Invalid algorithm").getJson();

@@ -2,13 +2,13 @@ package visumap.Algorithms;
 
 import org.junit.*;
 import visumap.Graph.Node;
+import visumap.Graph.Weight;
 import visumap.Structures.MinHeap;
 import visumap.Tools.CoordinateDistance;
 
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 public class AStarNodeTest {
 
@@ -29,11 +29,11 @@ public class AStarNodeTest {
         this.graph[4].add(2);
         this.graph[4].add(5);
         this.map = new HashMap<>();
-        this.map.put(1, new Node(1,60.209231, 24.952392));
-        this.map.put(2, new Node(2, 60.209325, 24.954199));
-        this.map.put(3, new Node(3, 60.208868, 24.952980));
-        this.map.put(4, new Node(4, 60.209376, 24.955820));
-        this.map.put(5, new Node(5, 60.209017, 24.955841));
+        this.map.put(1, new Node(60.209231, 24.952392, new Weight[12]));
+        this.map.put(2, new Node(60.209325, 24.954199, new Weight[12]));
+        this.map.put(3, new Node(60.208868, 24.952980, new Weight[12]));
+        this.map.put(4, new Node(60.209376, 24.955820, new Weight[12]));
+        this.map.put(5, new Node(60.209017, 24.955841, new Weight[12]));
     }
 
     @BeforeClass
@@ -56,12 +56,12 @@ public class AStarNodeTest {
     public void minHeapWorks() {
         CoordinateDistance tool = new CoordinateDistance();
         MinHeap<AStarNode> minHeap = new MinHeap<>(new AStarComparator());
-        double goalLat = this.map.get(5).getLat();
-        double goalLon = this.map.get(5).getLon();
-        AStarNode node = new AStarNode(1, 0, tool.distance(this.map.get(1).getLat(), this.map.get(1).getLon(), goalLat, goalLon));
+        double goalLat = this.map.get(5).getLa();
+        double goalLon = this.map.get(5).getLo();
+        AStarNode node = new AStarNode(1, 0, tool.distance(this.map.get(1).getLa(), this.map.get(1).getLo(), goalLat, goalLon));
         minHeap.add(node);
         for (int i = 2; i <= 5; i++) {
-            AStarNode n = new AStarNode(i, Integer.MAX_VALUE, tool.distance(this.map.get(i).getLat(), this.map.get(i).getLon(), goalLat, goalLon));
+            AStarNode n = new AStarNode(i, Integer.MAX_VALUE, tool.distance(this.map.get(i).getLa(), this.map.get(i).getLo(), goalLat, goalLon));
             minHeap.add(n);
         }
         assertEquals(1, minHeap.poll().getId());
@@ -69,26 +69,5 @@ public class AStarNodeTest {
         assertEquals(4, minHeap.poll().getId());
         assertEquals(2, minHeap.poll().getId());
         assertEquals(3, minHeap.poll().getId());
-    }
-
-    @Test
-    public void hashCodeWorks(){
-        for (int i = 0; i < 10000; i++) {
-            AStarNode node = new AStarNode(i * 21, 12000, 120000);
-            assertEquals(i * 21, node.hashCode());
-        }
-    }
-
-    @Test
-    public void equalsWorks(){
-        for (int i = 0; i < 10000; i++) {
-            AStarNode w = new AStarNode(i, 10210, 10000);
-            AStarNode p = new AStarNode(i, 10210, 10000);
-            AStarNode c = new AStarNode(i + 2, 12022, 10000);
-            assertEquals(w, p);
-            assertNotEquals(w, c);
-            assertEquals(false, p.equals(null));
-            assertEquals(false, p.equals("" + i));
-        }
     }
 }
