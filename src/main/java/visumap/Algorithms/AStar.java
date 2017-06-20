@@ -1,15 +1,12 @@
 package visumap.Algorithms;
 
 import visumap.Graph.Node;
-import visumap.Graph.Node2;
 import visumap.Graph.Weight;
-import visumap.Graph.Weight2;
 import visumap.Statistic.Stats;
 import visumap.Structures.MinHeap;
 import visumap.Tools.CoordinateDistance;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 
@@ -22,7 +19,7 @@ public class AStar implements ShortestPathAlgorithm{
     private CoordinateDistance tool;
     private Stats stats;
 
-    public AStar(Node2[] nodes, int start, int goal){
+    public AStar(Node[] nodes, int start, int goal){
         this.tool = new CoordinateDistance();
         this.stats = new Stats();
         getShortestPath(nodes, start, goal);
@@ -37,7 +34,7 @@ public class AStar implements ShortestPathAlgorithm{
      * @return lyhin reitti senttimetreissä.
      */
 
-    public long getShortestPath(Node2[] nodes, int start, int goal){
+    public long getShortestPath(Node[] nodes, int start, int goal){
 
         if(start == goal) return 0;
 
@@ -65,7 +62,7 @@ public class AStar implements ShortestPathAlgorithm{
             int nodeid = node.getId();
             set.add(nodeid);
             for (int i = 0; i < nodes[nodeid].getE().length; i++) {
-                Weight2 nextNode = nodes[nodeid].getE()[i];
+                Weight nextNode = nodes[nodeid].getE()[i];
                 if(toStart[nextNode.getI()] > toStart[nodeid] + nextNode.getW()){
                     toStart[nextNode.getI()] = toStart[nodeid] + nextNode.getW();
                     minHeap.add(new AStarNode(nextNode.getI(), toStart[nextNode.getI()],toGoal[nextNode.getI()]));
@@ -85,7 +82,7 @@ public class AStar implements ShortestPathAlgorithm{
      * @return lyhin reitti senttimetreissä.
      */
 
-    private long shortestPath(Node2[] nodes, int[] path, int start, int goal){
+    private long shortestPath(Node[] nodes, int[] path, int start, int goal){
         CoordinateDistance tool = new CoordinateDistance();
         long distance = 0;
         int next = goal;

@@ -1,10 +1,8 @@
 package visumap.Algorithms;
 
-import visumap.Graph.Node2;
+import visumap.Graph.Node;
 import visumap.Graph.Weight;
 import visumap.Statistic.Stats;
-
-import java.util.List;
 
 /**
  * Interface lyhimmän polun etsintä algoritmeille.
@@ -12,5 +10,5 @@ import java.util.List;
 
 public interface ShortestPathAlgorithm {
     public Stats getStats();
-    public long getShortestPath(Node2[] nodes, int start, int goal);
+    public long getShortestPath(Node[] nodes, int start, int goal);
 }

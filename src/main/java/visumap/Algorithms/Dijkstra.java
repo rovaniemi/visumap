@@ -4,14 +4,11 @@ import visumap.Graph.*;
 import visumap.Statistic.Stats;
 import visumap.Structures.MinHeap;
 
-import java.util.List;
-import java.util.Map;
-
 public class Dijkstra {
 
     private Stats stats;
 
-    public Dijkstra(Node2[] nodes, int start, int goal){
+    public Dijkstra(Node[] nodes, int start, int goal){
         this.stats = new Stats();
         getShortestPath(nodes, start, goal);
     }
@@ -24,7 +21,7 @@ public class Dijkstra {
      * @return lyhin reitti senttimetreissä.
      */
 
-    public long getShortestPath(Node2[] nodes, int start, int goal){
+    public long getShortestPath(Node[] nodes, int start, int goal){
         boolean[] handled = new boolean[nodes.length + 1];
         int[] dist = new int[nodes.length + 1];
         int[] path = new int[nodes.length + 1];
@@ -36,11 +33,11 @@ public class Dijkstra {
 
         dist[start] = 0;
 
-        MinHeap<Weight2> minHeap = new MinHeap(new DijkstraComparator());
-        minHeap.add(new Weight2(start, 0));
+        MinHeap<Weight> minHeap = new MinHeap(new DijkstraComparator());
+        minHeap.add(new Weight(start, 0));
 
         while(!minHeap.isEmpty()){
-            Weight2 weight = minHeap.poll();
+            Weight weight = minHeap.poll();
             int id = weight.getI();
             int distance = weight.getW();
 
@@ -50,11 +47,11 @@ public class Dijkstra {
 
             handled[id] = true;
 
-            for (Weight2 next:nodes[id].getE()) {
+            for (Weight next:nodes[id].getE()) {
                 if(dist[next.getI()] > distance + next.getW()){
                     dist[next.getI()] = distance + next.getW();
                     path[next.getI()] = id;
-                    minHeap.add(new Weight2(next.getI(),dist[next.getI()]));
+                    minHeap.add(new Weight(next.getI(),dist[next.getI()]));
                 }
             }
         }
@@ -68,7 +65,7 @@ public class Dijkstra {
     }
 
 
-    private void shortestPath(Node2[] nodes, int[] path, int start, int goal){
+    private void shortestPath(Node[] nodes, int[] path, int start, int goal){
         int next = goal;
         while(true){
             if(path[next] == -1){

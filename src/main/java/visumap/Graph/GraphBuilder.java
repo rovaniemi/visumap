@@ -9,8 +9,8 @@ import java.util.*;
 
 public class GraphBuilder {
 
-    private Node2[] readJson(String fileName){
-        List<Node2> list = new ArrayList<>(10806049);
+    private Node[] readJson(String fileName){
+        List<Node> list = new ArrayList<>(10806049);
         try {
             JsonReader reader = new JsonReader(new InputStreamReader(new FileInputStream(fileName), "UTF-8"));
             Gson gson = createGson();
@@ -26,7 +26,7 @@ public class GraphBuilder {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return (list.toArray(new Node2[list.size()]));
+        return (list.toArray(new Node[list.size()]));
     }
 
     private static Gson createGson() {
@@ -35,36 +35,36 @@ public class GraphBuilder {
                 .create();
     }
 
-    private static class NodeDeserializer implements JsonDeserializer<Node2> {
+    private static class NodeDeserializer implements JsonDeserializer<Node> {
         @Override
-        public Node2 deserialize(JsonElement json,
+        public Node deserialize(JsonElement json,
                                 Type type,
                                 JsonDeserializationContext context) throws JsonParseException {
             JsonObject jobject = json.getAsJsonObject();
 
             double la = jobject.get("la").getAsFloat();
             double lo = jobject.get("lo").getAsFloat();
-            Weight2[] e = readEdges(jobject.get("e").getAsJsonArray());
-            return new Node2(la, lo, e);
+            Weight[] e = readEdges(jobject.get("e").getAsJsonArray());
+            return new Node(la, lo, e);
         }
 
-        private static Weight2[] readEdges(JsonArray array) {
-            Weight2[] e = new Weight2[array.size()];
+        private static Weight[] readEdges(JsonArray array) {
+            Weight[] e = new Weight[array.size()];
             for (int j = 0; j < array.size(); j++) {
                 e[j] = readWeight(array.get(j).getAsJsonObject());
             }
             return e;
         }
 
-        private static Weight2 readWeight(JsonObject jsonObject) {
-            return new Weight2(
+        private static Weight readWeight(JsonObject jsonObject) {
+            return new Weight(
                     jsonObject.get("i").getAsInt(),
                     jsonObject.get("w").getAsInt()
             );
         }
     }
 
-    public Node2[] createGraph(String fileName){
+    public Node[] createGraph(String fileName){
         return readJson(fileName);
     }
 }

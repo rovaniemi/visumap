@@ -3,7 +3,6 @@ package visumap.Statistic;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import visumap.Graph.Node;
-import visumap.Graph.Node2;
 import visumap.Tools.CoordinateDistance;
 
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ public class Stats {
     private long startTime;
     private boolean on;
     private List<Node> everyNode;
-    private List<Node2> shortestPath;
+    private List<Node> shortestPath;
     private String message;
     private final TimeSupplier timeSupplier;
 
@@ -41,7 +40,7 @@ public class Stats {
         this.everyNode.add(node);
     }
 
-    public void addNodeS(Node2 node){
+    public void addNodeS(Node node){
         this.shortestPath.add(node);
     }
 
@@ -50,7 +49,7 @@ public class Stats {
         return this.everyNode;
     }
 
-    public List<Node2> getShortestPath(){
+    public List<Node> getShortestPath(){
         return this.shortestPath;
     }
 
@@ -88,8 +87,8 @@ public class Stats {
         long distance = 0;
         for (int i = 0; i < this.getShortestPath().size(); i++) {
             if(i < this.getShortestPath().size() - 1){
-                Node2 n1 = this.getShortestPath().get(i);
-                Node2 n2 = this.getShortestPath().get(i + 1);
+                Node n1 = this.getShortestPath().get(i);
+                Node n2 = this.getShortestPath().get(i + 1);
                 distance += tool.distance(n1.getLa(), n1.getLo(), n2.getLa(), n2.getLo());
             }
         }

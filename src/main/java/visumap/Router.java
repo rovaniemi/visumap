@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import visumap.Algorithms.AStar;
 import visumap.Algorithms.Dijkstra;
 import visumap.Graph.GraphBuilder;
-import visumap.Graph.Node2;
+import visumap.Graph.Node;
 import visumap.Statistic.Stats;
 import java.util.Random;
 
@@ -20,7 +20,7 @@ public class Router {
     private static final String ASTAR = "astar";
     private static final String JSON = "maps/graph.json";
 
-    private static Node2[] graph;
+    private static Node[] graph;
 
     public Router(){
         this.graph = new GraphBuilder().createGraph(JSON);

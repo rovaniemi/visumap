@@ -1,47 +1,20 @@
 package visumap.Graph;
 
-public class Weight{
+public class Weight {
 
-    /**
-     * Weight -luokka esittää verkon solmujen välisiä painoja.
-     */
+    private int i;
+    private int w;
 
-    private Integer id;
-    private Long weight;
-
-    /**
-     * Weight luokalle määritellään aina id, sekä paino.
-     * @param id solmun yksilöllinen tunnus.
-     * @param weight solmujen välinen etäisyys.
-     */
-
-    public Weight(int id, long weight) {
-        this.id = id;
-        this.weight = weight;
+    public Weight(int i, int w) {
+        this.i = i;
+        this.w = w;
     }
 
-    @Override
-    public int hashCode() {
-        return id;
+    public int getI() {
+        return i;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Weight w = (Weight) o;
-        if (this.id.intValue() != w.id.intValue()) {
-            return false;
-        }
-        return true;
-    }
-
-    public int getId() {
-        return id.intValue();
-    }
-
-    public long getWeight() {
-        return weight;
+    public int getW() {
+        return w;
     }
 }
