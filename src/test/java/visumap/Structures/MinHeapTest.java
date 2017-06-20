@@ -2,14 +2,12 @@ package visumap.Structures;
 
 import org.junit.*;
 import visumap.Algorithms.AStarNode;
-import visumap.Algorithms.AStarNodeComparator;
+import visumap.Algorithms.AStarComparator;
 import visumap.Graph.Node;
 import visumap.Graph.Weight;
 import visumap.Graph.WeightComparator;
 import visumap.Tools.CoordinateDistance;
 
-import javax.validation.constraints.AssertFalse;
-import javax.validation.constraints.AssertTrue;
 import java.util.*;
 
 import static org.junit.Assert.*;
@@ -51,7 +49,7 @@ public class MinHeapTest {
 
     @Before
     public void setUp() {
-        this.heap = new MinHeap(new AStarNodeComparator());
+        this.heap = new MinHeap(new AStarComparator());
     }
 
     @After
@@ -84,7 +82,7 @@ public class MinHeapTest {
 
     @Test
     public void testAddingMillionItems(){
-        MinHeap<AStarNode> heap1 = new MinHeap(new AStarNodeComparator());
+        MinHeap<AStarNode> heap1 = new MinHeap(new AStarComparator());
         for (int i = 1; i <= 1000000; i++) {
             AStarNode node = new AStarNode(i,i,Integer.MAX_VALUE - i * 2);
             heap1.add(node);
@@ -111,8 +109,8 @@ public class MinHeapTest {
 
     @Test
     public void minHeapIsNotTwoTimesSlowerThanPriorityQueue(){
-        MinHeap<AStarNode> minHeap = new MinHeap(new AStarNodeComparator());
-        PriorityQueue<AStarNode> priorityQueue = new PriorityQueue<>(new AStarNodeComparator());
+        MinHeap<AStarNode> minHeap = new MinHeap(new AStarComparator());
+        PriorityQueue<AStarNode> priorityQueue = new PriorityQueue<>(new AStarComparator());
         int repeat = 1000;
         long minHeapSum = 0;
         long priorityQueueSum = 0;

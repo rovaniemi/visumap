@@ -19,10 +19,14 @@ public class MinHeap<T> {
      * @param c tietyn luokan comparator.
      */
 
-    public MinHeap(Comparator c) {
-        this.heap = (T[])new Object[1];
+    public MinHeap(int initialCapazity, Comparator c) {
+        this.heap = (T[])new Object[initialCapazity];
         this.c = c;
         lastElement = -1;
+    }
+
+    public MinHeap(Comparator c) {
+        this(1, c);
     }
 
     /**

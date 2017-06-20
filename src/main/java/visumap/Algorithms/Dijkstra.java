@@ -60,6 +60,7 @@ public class Dijkstra {
             return -1;
         }
 
+        this.stats.setDistance(dist[goal]);
         shortestPath(nodes,path,start,goal);
         return dist[goal];
     }

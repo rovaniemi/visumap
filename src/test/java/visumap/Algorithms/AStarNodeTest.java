@@ -55,7 +55,7 @@ public class AStarNodeTest {
     @Test
     public void minHeapWorks() {
         CoordinateDistance tool = new CoordinateDistance();
-        MinHeap<AStarNode> minHeap = new MinHeap<>(new AStarNodeComparator());
+        MinHeap<AStarNode> minHeap = new MinHeap<>(new AStarComparator());
         double goalLat = this.map.get(5).getLat();
         double goalLon = this.map.get(5).getLon();
         AStarNode node = new AStarNode(1, 0, tool.distance(this.map.get(1).getLat(), this.map.get(1).getLon(), goalLat, goalLon));

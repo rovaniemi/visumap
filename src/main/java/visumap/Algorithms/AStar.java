@@ -50,7 +50,7 @@ public class AStar implements ShortestPathAlgorithm{
 
         toStart[start] = 0;
 
-        MinHeap<AStarNode> minHeap = new MinHeap<>(new AStarNodeComparator());
+        MinHeap<AStarNode> minHeap = new MinHeap<>(nodes.length, new AStarComparator());
 
         for (int i = 0; i < nodes.length; i++) {
             minHeap.add(new AStarNode(i,toStart[i],toGoal[i]));
@@ -71,6 +71,7 @@ public class AStar implements ShortestPathAlgorithm{
             }
         }
         long shortestPath = shortestPath(nodes, path, start, goal);
+        this.stats.setDistance(shortestPath);
         return shortestPath;
     }
 
