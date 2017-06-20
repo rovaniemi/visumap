@@ -1,13 +1,14 @@
 package visumap.Algorithms;
 
 import visumap.Graph.Node;
+import visumap.Graph.Node2;
 import visumap.Graph.Weight;
+import visumap.Graph.Weight2;
 import visumap.Statistic.Stats;
 import visumap.Structures.MinHeap;
 import visumap.Tools.CoordinateDistance;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -21,9 +22,10 @@ public class AStar implements ShortestPathAlgorithm{
     private CoordinateDistance tool;
     private Stats stats;
 
-    public AStar(){
+    public AStar(Node2[] nodes, int start, int goal){
         this.tool = new CoordinateDistance();
         this.stats = new Stats();
+        getShortestPath(nodes, start, goal);
     }
 
     /**
@@ -35,23 +37,25 @@ public class AStar implements ShortestPathAlgorithm{
      * @return lyhin reitti senttimetreissä.
      */
 
-    public long getShortestPath(Map<Integer, Node> nodes, List<Weight>[] graph, int start, int goal){
-        if(start == goal){
-            return 0;
-        }
+    public long getShortestPath(Node2[] nodes, int start, int goal){
 
-        long[] toStart = new long[graph.length];
-        long[] toGoal = new long[graph.length];
-        int[] path = new int[graph.length];
+        if(start == goal) return 0;
 
-        for (int i = 0; i < graph.length; i++) {
+        int[] toStart = new int[nodes.length];
+        int[] toGoal = new int[nodes.length];
+        int[] path = new int[nodes.length];
+
+        for (int i = 0; i < nodes.length; i++) {
             toStart[i] = Integer.MAX_VALUE - (Integer.MAX_VALUE / 10);
-            toGoal[i] = tool.distance(nodes.get(i).getLat(),nodes.get(i).getLon(),nodes.get(goal).getLat(),nodes.get(goal).getLon());
+            toGoal[i] = tool.distance(nodes[i].getLa(), nodes[i].getLo(), nodes[goal].getLa(),nodes[goal].getLo());
             path[i] = -1;
         }
+
         toStart[start] = 0;
+
         MinHeap<AStarNode> minHeap = new MinHeap<>(new AStarNodeComparator());
-        for (int i = 0; i < graph.length; i++) {
+
+        for (int i = 0; i < nodes.length; i++) {
             minHeap.add(new AStarNode(i,toStart[i],toGoal[i]));
         }
 
@@ -59,14 +63,13 @@ public class AStar implements ShortestPathAlgorithm{
         while(!set.contains(goal)){
             AStarNode node = minHeap.poll();
             int nodeid = node.getId();
-            this.stats.addNodeE(nodes.get(nodeid));
             set.add(nodeid);
-            for (int i = 0; i < graph[nodeid].size(); i++) {
-                Weight nextNode = graph[nodeid].get(i);
-                if(toStart[nextNode.getId()] > toStart[nodeid] + nextNode.getWeight()){
-                    toStart[nextNode.getId()] = toStart[nodeid] + nextNode.getWeight();
-                    minHeap.add(new AStarNode(nextNode.getId(), toStart[nextNode.getId()],toGoal[nextNode.getId()]));
-                    path[nextNode.getId()] = nodeid;
+            for (int i = 0; i < nodes[nodeid].getE().length; i++) {
+                Weight2 nextNode = nodes[nodeid].getE()[i];
+                if(toStart[nextNode.getI()] > toStart[nodeid] + nextNode.getW()){
+                    toStart[nextNode.getI()] = toStart[nodeid] + nextNode.getW();
+                    minHeap.add(new AStarNode(nextNode.getI(), toStart[nextNode.getI()],toGoal[nextNode.getI()]));
+                    path[nextNode.getI()] = nodeid;
                 }
             }
         }
@@ -82,7 +85,7 @@ public class AStar implements ShortestPathAlgorithm{
      * @return lyhin reitti senttimetreissä.
      */
 
-    private long shortestPath(Map<Integer, Node> nodes, int[] path, int start, int goal){
+    private long shortestPath(Node2[] nodes, int[] path, int start, int goal){
         CoordinateDistance tool = new CoordinateDistance();
         long distance = 0;
         int next = goal;
@@ -91,8 +94,8 @@ public class AStar implements ShortestPathAlgorithm{
             if(path[next] == -1){
                 return -1;
             }
-            distance += tool.distance(nodes.get(next).getLat(),nodes.get(next).getLon(),nodes.get(path[next]).getLat(),nodes.get(path[next]).getLon());
-            //this.stats.addNodeS(nodes.get(next));
+            distance += tool.distance(nodes[next].getLa(),nodes[next].getLo(),nodes[(path[next])].getLa(),nodes[(path[next])].getLo());
+            this.stats.addNodeS(nodes[next]);
             next = path[next];
             if(next == start) {
                 return distance;

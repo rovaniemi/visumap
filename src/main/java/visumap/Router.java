@@ -29,7 +29,7 @@ public class Router {
     public String visualizeAlgorithm(String algorithm, int[] points){
         if( points[0] >= graph.length || points[1] >= graph.length ) return new Stats("Invalid points").getJson();
         if( algorithm.equals(DIJKSTRA)) return new Dijkstra(graph,points[0], points[1]).getStats().getJson();
-        if( algorithm.equals(ASTAR)) return new AStar().getStats().getJson();
+        if( algorithm.equals(ASTAR)) return new AStar(graph,points[0], points[1]).getStats().getJson();
         return new Stats("Invalid algorithm").getJson();
     }
 
