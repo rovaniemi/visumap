@@ -9,6 +9,7 @@ description = "Illustrator for single-source shortest path problem using openstr
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
@@ -16,6 +17,12 @@ tasks.withType(JavaCompile) {
 test {
     maxHeapSize = "1024m"
     jvmArgs "-XX:MaxPermSize=256m"
+}
+
+repositories {
+    maven {
+        url("https://plugins.gradle.org/m2/")
+    }
 }
 
 dependencies {
