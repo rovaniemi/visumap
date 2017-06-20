@@ -21,15 +21,19 @@ public class Stats {
     private String message;
     private final TimeSupplier timeSupplier;
 
-    public Stats(TimeSupplier timeSupplier){
+    public Stats(TimeSupplier timeSupplier, String message){
         this.everyNode = new ArrayList<>();
         this.shortestPath = new ArrayList<>();
         this.timeSupplier = timeSupplier;
-        this.message = "";
+        this.message = message;
     }
 
     public Stats(){
-        this(new SystemTimeSupplier());
+        this(new SystemTimeSupplier(), "");
+    }
+
+    public Stats(String message){
+        this(new SystemTimeSupplier(), message);
     }
 
     public void addNodeE(Node node){
@@ -93,6 +97,10 @@ public class Stats {
 
     public String getJson(){
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.toJson(new StatsJson(this.everyNode,this.shortestPath,this.message,shortestPath(),this.everyNode.size() + this.shortestPath.size())).toString();
+        List<NodeJson> path = new ArrayList<>();
+        for (int i = 0; i < this.shortestPath.size(); i++) {
+            path.add(new NodeJson(this.shortestPath.get(i).getLat(),this.shortestPath.get(i).getLon()));
+        }
+        return gson.toJson(new StatsJson(this.everyNode,path,this.message,shortestPath(),this.everyNode.size() + this.shortestPath.size())).toString();
     }
 }

@@ -1,73 +1,70 @@
 package visumap.Graph;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.util.*;
 
 public class GraphBuilder {
 
-
-
-    public GraphBuilder(){
-
-    }
-
-    private List<Node> readData(String fileName){
-        List<Node> list = new ArrayList<>();
-        try(JsonReader jsonReader = new JsonReader(new InputStreamReader(new FileInputStream(fileName), "UTF-8"))) {
-            Gson gson = new GsonBuilder().create();
-            jsonReader.beginArray();
-            while (jsonReader.hasNext()){
-                Node node = gson.fromJson(jsonReader,Node.class);
-                list.add(node);
+    private Node2[] readJson(String fileName){
+        List<Node2> list = new ArrayList<>(10806049);
+        try {
+            JsonReader reader = new JsonReader(new InputStreamReader(new FileInputStream(fileName), "UTF-8"));
+            Gson gson = createGson();
+            reader.beginArray();
+            int i = 0;
+            while (reader.hasNext()){
+                list.add(gson.fromJson(reader,Node.class));
+                if(i++ % 1000 == 0){
+                    System.out.println(i);
+                }
             }
-        }
-        catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return list;
+        return (list.toArray(new Node2[list.size()]));
     }
 
-    /**
-     * greateGraph metodi rakentaa vieruslistan.
-     * @param fileName json -tiedoston nimi.
-     * @return metodi palauttaa vieruslista esityksen verkosta.
-     */
+    private static Gson createGson() {
+        return new GsonBuilder()
+                .registerTypeAdapter(Node.class, new NodeDeserializer())
+                .create();
+    }
 
-    public List<Weight>[] createGraph(String fileName){
-        List<Node> nodes = readData(fileName);
-        List<Weight>[] weights = new ArrayList[nodes.size()];
-        for (int i = 0; i < nodes.size(); i++) {
-            weights[i] = new ArrayList<>();
-            if(nodes.get(i).getId() == i){
-                Iterator j = nodes.get(i).getEdges().iterator();
-                while (j.hasNext()){
-                    weights[i].add((Weight) j.next());
-                }
+    private static class NodeDeserializer implements JsonDeserializer<Node2> {
+        @Override
+        public Node2 deserialize(JsonElement json,
+                                Type type,
+                                JsonDeserializationContext context) throws JsonParseException {
+            JsonObject jobject = json.getAsJsonObject();
+
+            double la = jobject.get("la").getAsFloat();
+            double lo = jobject.get("lo").getAsFloat();
+            Weight2[] e = readEdges(jobject.get("e").getAsJsonArray());
+            return new Node2(la, lo, e);
+        }
+
+        private static Weight2[] readEdges(JsonArray array) {
+            Weight2[] e = new Weight2[array.size()];
+            for (int j = 0; j < array.size(); j++) {
+                e[j] = readWeight(array.get(j).getAsJsonObject());
             }
+            return e;
         }
-        return weights;
+
+        private static Weight2 readWeight(JsonObject jsonObject) {
+            return new Weight2(
+                    jsonObject.get("i").getAsInt(),
+                    jsonObject.get("w").getAsInt()
+            );
+        }
     }
 
-    /**
-     * greateNodeMap metodi rakentaa tiedostosta node mapin jossa on kaikki nodet.
-     * @param fileName json -tiedoston nimi.
-     * @return metodi palauttaa mapin jossa on kaikki nodet.
-     */
-
-    public Map<Integer, Node> createNodeMap(String fileName) {
-        Map<Integer, Node> nodes = new HashMap<>();
-        List<Node> nodeList = readData(fileName);
-        for (int i = 0; i < nodeList.size(); i++) {
-            nodes.put(nodeList.get(i).getId(), nodeList.get(i));
-        }
-        return nodes;
+    public Node2[] createGraph(String fileName){
+        return readJson(fileName);
     }
 }

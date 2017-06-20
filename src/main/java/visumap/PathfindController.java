@@ -1,11 +1,8 @@
 package visumap;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import visumap.Graph.Node;
-
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public class PathfindController {
@@ -18,14 +15,19 @@ public class PathfindController {
         this.router = new Router();
     }
 
-    @RequestMapping(value = "/sortest/" + API_VERSION + "/")
-    public String getSortestPath(@RequestParam Map<String,String> params){
-        String algorithm = params.get("algorithm");
-        Double startNodeLat = Double.parseDouble(params.get("sLat"));
-        Double startNodeLon = Double.parseDouble(params.get("sLon"));
-        Double goalLat = Double.parseDouble(params.get("gLat"));
-        Double goalLon = Double.parseDouble(params.get("gLon"));
-        String city = params.get("city");
-        return this.router.visualizeAlgorithm(city,algorithm,new Node(-1,startNodeLat,startNodeLon),new Node(-1,goalLat,goalLon)).getJson();
+    @ExceptionHandler({ Exception.class })
+    public void handleError(HttpServletRequest req, Exception ex){
+        System.out.println(req.toString());
+        ex.printStackTrace();
+    }
+
+    @RequestMapping(value = "/shortest/" + API_VERSION + "/")
+    public String getShortestPath(@RequestBody int[] json){
+        return this.router.visualizeAlgorithm(json).getJson();
+    }
+
+    @RequestMapping(value = "/randompoints/" + API_VERSION + "/")
+    public String getRandomPoints(){
+        return this.router.randomPoints();
     }
 }

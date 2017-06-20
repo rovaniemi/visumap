@@ -12,7 +12,7 @@ public class Node{
     private int id;
     private double lat;
     private double lon;
-    private Set<Weight> edges;
+    private Set<Weight> edges = new HashSet<>();
 
     /**
      * Node -luokalle annettaan id, lat ja lon.
@@ -21,11 +21,16 @@ public class Node{
      * @param lon longitude arvo koordinaatistoon.
      */
 
+
     public Node(int id, double lat, double lon) {
         this.id = id;
         this.lat = lat;
         this.lon = lon;
-        this.edges = new HashSet<>();
+    }
+
+    public boolean hasEdges(){
+        if(this.edges == null) return false;
+        return !edges.isEmpty();
     }
 
     public int getId() {
