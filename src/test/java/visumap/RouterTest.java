@@ -2,16 +2,8 @@ package visumap;
 
 import com.google.gson.Gson;
 import org.junit.*;
-import visumap.Graph.Node;
-import visumap.Statistic.Stats;
 import visumap.Statistic.StatsJson;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class RouterTest {
@@ -64,9 +56,6 @@ public class RouterTest {
         Router router = new Router();
         Gson gson = new Gson();
         for (int i = 0; i < 100; i++) {
-            if(i % 100 == 0){
-                System.out.println(i);
-            }
             int[] points = gson.fromJson(router.randomPoints(), int[].class);
             StatsJson dijkstra = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{points[0],points[1]}), StatsJson.class);
             StatsJson astar = gson.fromJson(router.visualizeAlgorithm("astar",new int[]{points[0],points[1]}), StatsJson.class);

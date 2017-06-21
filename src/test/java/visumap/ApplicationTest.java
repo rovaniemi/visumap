@@ -1,30 +1,18 @@
 package visumap;
 
-import org.junit.*;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
+@RunWith(MockitoJUnitRunner.class)
 public class ApplicationTest {
 
-    public ApplicationTest(){
+    @InjectMocks
+    private Application app = new Application();
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testNoArgs() throws Exception {
+        app.main(null);
     }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-    
 }
