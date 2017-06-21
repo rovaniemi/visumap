@@ -43,16 +43,16 @@ public class PathfindControllerTest {
 
 
     @Test
-    public void responseTypeApplicationJson() throws Exception {
-        mockMvc.perform(get("/" + API_VERSION + "/getShortestPath/"))
+    public void shortestResponseTypeApplicationJson() throws Exception {
+        mockMvc.perform(get("/" + API_VERSION + "/shortest/"))
                 .andReturn().getResponse().getContentAsString().contains("[");
 
 
     }
 
     @Test
-    public void mainApiWorkOk() throws Exception {
-        mockMvc.perform(get("/" + API_VERSION + "/getShortestPath/"))
+    public void randompointsResponseTypeApplicationJson() throws Exception {
+        mockMvc.perform(get("/" + API_VERSION + "/randompoints/"))
                 .andReturn().getResponse().getContentAsString().contains("[");
     }
 }

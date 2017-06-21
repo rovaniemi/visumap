@@ -37,7 +37,6 @@ public class RouterTest {
         Router router = new Router();
         Gson gson = new Gson();
         StatsJson answer = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{51150,243784}), StatsJson.class);
-        System.out.println(answer.getDistance());
         assertTrue(3600 <= answer.getDistance() && answer.getDistance() <= 3800);
     }
 

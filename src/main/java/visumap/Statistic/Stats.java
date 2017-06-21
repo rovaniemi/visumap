@@ -37,14 +37,6 @@ public class Stats {
         this.everyNode.add(node);
     }
 
-    public void addNodeS(Node node){
-        this.shortestPath.add(node);
-    }
-
-    public void setDistance(long distance) {
-        this.distance = distance;
-    }
-
     public long getDistance() {
         return distance;
     }
@@ -58,7 +50,7 @@ public class Stats {
         int next = goal;
         while(true){
             if(path[next] == -1){
-                this.distance = 0;
+                this.distance = -1;
                 return;
             }
             this.shortestPath.add(nodes[next]);
@@ -74,6 +66,7 @@ public class Stats {
     }
 
     public void createDistance(){
+        if(this.shortestPath.isEmpty()) distance = 0;
         if(distance == -1) return;
         CoordinateDistance coordinateDistance = new CoordinateDistance();
         for (int i = 1; i < this.shortestPath.size(); i++) {

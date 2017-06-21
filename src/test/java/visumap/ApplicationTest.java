@@ -25,6 +25,12 @@ public class ApplicationTest {
 
     @After
     public void tearDown() {
+
     }
-    
+
+    @Test(expected = IllegalArgumentException.class)
+    public void mainTest(){
+        Application application = new Application();
+        application.main(null);
+    }
 }

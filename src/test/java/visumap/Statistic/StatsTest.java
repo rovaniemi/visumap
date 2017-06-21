@@ -36,4 +36,16 @@ public class StatsTest {
         }
         assertEquals(10000, stats.getEveryNode().size());
     }
+
+    @Test
+    public void ifMinusDistanceReturnMinusOne(){
+        Stats stats = new Stats();
+        Node[] nodes = new Node[6];
+        nodes[0] = new Node(12,12, new Weight[12]);
+        nodes[1] = new Node(12,12, new Weight[12]);
+
+        stats.shortestPath(nodes,new int[]{-1,5,1,2,3,-1},0,1);
+        stats.createStats();
+        assertEquals(-1, stats.getDistance());
+    }
 }
