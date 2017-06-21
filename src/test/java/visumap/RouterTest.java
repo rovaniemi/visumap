@@ -42,7 +42,7 @@ public class RouterTest {
 
     @Test
     public void distanceIsRightWithDijkstra(){
-        Router router = new Router("maps/test");
+        Router router = new Router();
         Gson gson = new Gson();
         StatsJson answer = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{51150,243784}), StatsJson.class);
         assertTrue(360000 <= answer.getDistance() && answer.getDistance() <= 380000);
@@ -53,7 +53,7 @@ public class RouterTest {
     // Google maps: 3.7km
     @Test
     public void distanceIsRightWithAstar(){
-        Router router = new Router("maps/test");
+        Router router = new Router();
         Gson gson = new Gson();
         StatsJson answer = gson.fromJson(router.visualizeAlgorithm("astar",new int[]{51150,243784}), StatsJson.class);
         assertTrue(360000 <= answer.getDistance() && answer.getDistance() <= 380000);
@@ -61,7 +61,7 @@ public class RouterTest {
 
     @Test
     public void everyAlgorithmGiveSameAnswer(){
-        Router router = new Router("maps/test");
+        Router router = new Router();
         Gson gson = new Gson();
         for (int i = 0; i < 100; i++) {
             int[] points = gson.fromJson(router.randomPoints(), int[].class);
@@ -72,8 +72,19 @@ public class RouterTest {
     }
 
     @Test
+    public void ifSameGoalAndStart(){
+        Router router = new Router();
+        Gson gson = new Gson();
+        for (int i = 0; i < 100; i++) {
+            StatsJson dijkstra = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{i,i}), StatsJson.class);
+            StatsJson astar = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{i,i}), StatsJson.class);
+            Assert.assertEquals(dijkstra.getDistance(), astar.getDistance());
+        }
+    }
+
+    @Test
     public void sameAnswerIfStartAndGoalNodeIsSame(){
-        Router router = new Router("maps/test");
+        Router router = new Router();
         Gson gson = new Gson();
         for (int i = 0; i < 100; i++) {
             StatsJson dijkstra = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{i,i}), StatsJson.class);
@@ -84,7 +95,7 @@ public class RouterTest {
 
     @Test
     public void ifCityIsNotInMapReturnInvalidCity(){
-        Router router = new Router("maps/test");
+        Router router = new Router();
         Gson gson = new Gson();
         StatsJson answer = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{-1,243784}), StatsJson.class);
         Assert.assertEquals("Invalid points", answer.getMessage());
@@ -98,7 +109,7 @@ public class RouterTest {
 
     @Test
     public void ifAlgorithIsNotValidReturnInvalidCity(){
-        Router router = new Router("maps/test");
+        Router router = new Router();
         Gson gson = new Gson();
         StatsJson answer = gson.fromJson(router.visualizeAlgorithm("dijkstdfra",new int[]{51150,243784}), StatsJson.class);
         Assert.assertEquals("Invalid algorithm", answer.getMessage());

@@ -26,10 +26,6 @@ public class StatsJson {
         this.everyNode = everyNode;
     }
 
-    public int getSize() {
-        return size;
-    }
-
     public long getDistance() {
         return distance;
     }

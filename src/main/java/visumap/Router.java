@@ -18,16 +18,12 @@ public class Router {
 
     private static final String DIJKSTRA = "dijkstra";
     private static final String ASTAR = "astar";
-    private static final String JSON = "maps/graph.json";
+    private static final String JSON = "maps/test";
 
     private static Node[] graph;
 
-    public Router(String filename){
-        this.graph = new GraphBuilder().createGraph(filename);
-    }
-
     public Router(){
-        this(JSON);
+        this.graph = new GraphBuilder().createGraph(JSON);
     }
 
     public String visualizeAlgorithm(String algorithm, int[] points){
