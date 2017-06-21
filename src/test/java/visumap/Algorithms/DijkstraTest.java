@@ -15,17 +15,13 @@ public class DijkstraTest {
 
     public void smallTest(int n, int[] where, int[] to, long[] distance, long realResult) {
         Dijkstra dijkstra = new Dijkstra(greateList(n, where, to, distance), 1, n);
-        long algorithmResult = dijkstra.getStats().getDistance();
-        if(realResult != algorithmResult){
-            System.out.println("real " + realResult);
-            System.out.println("algo " + algorithmResult);
-        }
+        long algorithmResult = dijkstra.getTestDist();
         assertTrue(realResult == algorithmResult);
     }
 
     public void bigTest(int n, int[] where, int[] to, long[] distance, long realResult) {
         Dijkstra dijkstra = new Dijkstra(greateList(n, where, to, distance), 1, n);
-        long algorithmResult = dijkstra.getStats().getDistance();
+        long algorithmResult = dijkstra.getTestDist();
         assertTrue(realResult == algorithmResult);
     }
 

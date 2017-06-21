@@ -7,6 +7,7 @@ import visumap.Structures.MinHeap;
 public class Dijkstra {
 
     private Stats stats;
+    private long testDist;
 
     public Dijkstra(Node[] nodes, int start, int goal){
         this.stats = new Stats();
@@ -57,30 +58,20 @@ public class Dijkstra {
         }
 
         if (dist[goal] == Integer.MAX_VALUE){
+            this.testDist = -1;
             return -1;
-        }
+        } else this.testDist = dist[goal];
 
-        this.stats.setDistance(dist[goal]);
-        shortestPath(nodes,path,start,goal);
-        return dist[goal];
-    }
-
-
-    private void shortestPath(Node[] nodes, int[] path, int start, int goal){
-        int next = goal;
-        while(true){
-            if(path[next] == -1){
-                return;
-            }
-            this.stats.addNodeS(nodes[next]);
-            next = path[next];
-            if(next == start) {
-                return;
-            }
-        }
+        this.stats.shortestPath(nodes,path,start,goal);
+        this.stats.createStats();
+        return this.stats.getDistance();
     }
 
     public Stats getStats(){
         return this.stats;
+    }
+
+    public long getTestDist() {
+        return testDist;
     }
 }

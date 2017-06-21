@@ -43,8 +43,8 @@ public class AStar implements ShortestPathAlgorithm{
         int[] path = new int[nodes.length];
 
         for (int i = 0; i < nodes.length; i++) {
-            toStart[i] = Integer.MAX_VALUE - (Integer.MAX_VALUE / 10);
-            toGoal[i] = tool.distance(nodes[i].getLa(), nodes[i].getLo(), nodes[goal].getLa(),nodes[goal].getLo());
+            toStart[i] = Integer.MAX_VALUE;
+            toGoal[i] = tool.distance(nodes[i].getLa(), nodes[i].getLo(), nodes[goal].getLa(), nodes[goal].getLo());
             path[i] = -1;
         }
 
@@ -56,11 +56,11 @@ public class AStar implements ShortestPathAlgorithm{
             minHeap.add(new AStarNode(i,toStart[i],toGoal[i]));
         }
 
-        Set<Integer> set = new HashSet<>();
-        while(!set.contains(goal)){
+        boolean[] set = new boolean[nodes.length];
+        while(!set[goal]){
             AStarNode node = minHeap.poll();
             int nodeid = node.getId();
-            set.add(nodeid);
+            set[nodeid] = true;
             for (int i = 0; i < nodes[nodeid].getE().length; i++) {
                 Weight nextNode = nodes[nodeid].getE()[i];
                 if(toStart[nextNode.getI()] > toStart[nodeid] + nextNode.getW()){
@@ -70,35 +70,10 @@ public class AStar implements ShortestPathAlgorithm{
                 }
             }
         }
-        long shortestPath = shortestPath(nodes, path, start, goal);
-        this.stats.setDistance(shortestPath);
-        return shortestPath;
-    }
 
-    /**
-     * ShortestPath hoitaa path taulukosta lopullisen pituuden laskemisen.
-     * @param goal maalisolmun id.
-     * @param start lähtösolmun id.
-     * @param nodes nodemap, josta saa latituden ja longituden.
-     * @return lyhin reitti senttimetreissä.
-     */
-
-    private long shortestPath(Node[] nodes, int[] path, int start, int goal){
-        CoordinateDistance tool = new CoordinateDistance();
-        long distance = 0;
-        int next = goal;
-
-        while(true){
-            if(path[next] == -1){
-                return -1;
-            }
-            distance += tool.distance(nodes[next].getLa(),nodes[next].getLo(),nodes[(path[next])].getLa(),nodes[(path[next])].getLo());
-            this.stats.addNodeS(nodes[next]);
-            next = path[next];
-            if(next == start) {
-                return distance;
-            }
-        }
+        this.stats.shortestPath(nodes, path, start, goal);
+        this.stats.createStats();
+        return this.stats.getDistance();
     }
 
     public Stats getStats(){

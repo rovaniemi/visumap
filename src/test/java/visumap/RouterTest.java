@@ -60,27 +60,20 @@ public class RouterTest {
     }
 
     @Test
-    public void everyAlgorithmGiveSameAnswer(){
+    public void dijkstraAndAstarGiveSameAnswer(){
         Router router = new Router();
         Gson gson = new Gson();
         for (int i = 0; i < 100; i++) {
+            if(i % 100 == 0){
+                System.out.println(i);
+            }
             int[] points = gson.fromJson(router.randomPoints(), int[].class);
             StatsJson dijkstra = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{points[0],points[1]}), StatsJson.class);
-            StatsJson astar = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{points[0],points[1]}), StatsJson.class);
+            StatsJson astar = gson.fromJson(router.visualizeAlgorithm("astar",new int[]{points[0],points[1]}), StatsJson.class);
             Assert.assertEquals(dijkstra.getDistance(), astar.getDistance());
         }
     }
 
-    @Test
-    public void ifSameGoalAndStart(){
-        Router router = new Router();
-        Gson gson = new Gson();
-        for (int i = 0; i < 100; i++) {
-            StatsJson dijkstra = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{i,i}), StatsJson.class);
-            StatsJson astar = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{i,i}), StatsJson.class);
-            Assert.assertEquals(dijkstra.getDistance(), astar.getDistance());
-        }
-    }
 
     @Test
     public void sameAnswerIfStartAndGoalNodeIsSame(){
@@ -88,27 +81,27 @@ public class RouterTest {
         Gson gson = new Gson();
         for (int i = 0; i < 100; i++) {
             StatsJson dijkstra = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{i,i}), StatsJson.class);
-            StatsJson astar = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{i,i}), StatsJson.class);
+            StatsJson astar = gson.fromJson(router.visualizeAlgorithm("astar",new int[]{i,i}), StatsJson.class);
             Assert.assertEquals(dijkstra.getDistance(), astar.getDistance());
         }
     }
 
     @Test
-    public void ifCityIsNotInMapReturnInvalidCity(){
+    public void ifPointsIsNotInArray(){
         Router router = new Router();
         Gson gson = new Gson();
         StatsJson answer = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{-1,243784}), StatsJson.class);
         Assert.assertEquals("Invalid points", answer.getMessage());
         answer = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{2,-1}), StatsJson.class);
         Assert.assertEquals("Invalid points", answer.getMessage());
-        answer = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{200030004,243784}), StatsJson.class);
+        answer = gson.fromJson(router.visualizeAlgorithm("astar",new int[]{200030004,243784}), StatsJson.class);
         Assert.assertEquals("Invalid points", answer.getMessage());
         answer = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{3,243784940}), StatsJson.class);
         Assert.assertEquals("Invalid points", answer.getMessage());
     }
 
     @Test
-    public void ifAlgorithIsNotValidReturnInvalidCity(){
+    public void ifAlgorithmIsNotValidReturnInvalidAlgorithm(){
         Router router = new Router();
         Gson gson = new Gson();
         StatsJson answer = gson.fromJson(router.visualizeAlgorithm("dijkstdfra",new int[]{51150,243784}), StatsJson.class);

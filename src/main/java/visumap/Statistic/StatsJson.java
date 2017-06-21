@@ -33,4 +33,8 @@ public class StatsJson {
     public String getMessage() {
         return message;
     }
+
+    public List<NodeJson> getShortestPath() {
+        return shortestPath;
+    }
 }

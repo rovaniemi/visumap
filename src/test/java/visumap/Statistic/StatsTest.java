@@ -3,11 +3,7 @@ package visumap.Statistic;
 import org.junit.*;
 import visumap.Graph.Node;
 import visumap.Graph.Weight;
-
-import java.util.concurrent.atomic.AtomicLong;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 public class StatsTest {
 
