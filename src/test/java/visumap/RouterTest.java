@@ -37,7 +37,8 @@ public class RouterTest {
         Router router = new Router();
         Gson gson = new Gson();
         StatsJson answer = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{51150,243784}), StatsJson.class);
-        assertTrue(360000 <= answer.getDistance() && answer.getDistance() <= 380000);
+        System.out.println(answer.getDistance());
+        assertTrue(3600 <= answer.getDistance() && answer.getDistance() <= 3800);
     }
 
     // "id":"51150","la": "60.227325439453125", "lo" : "25.01201820373535"
@@ -48,14 +49,14 @@ public class RouterTest {
         Router router = new Router();
         Gson gson = new Gson();
         StatsJson answer = gson.fromJson(router.visualizeAlgorithm("astar",new int[]{51150,243784}), StatsJson.class);
-        assertTrue(360000 <= answer.getDistance() && answer.getDistance() <= 380000);
+        assertTrue(3600 <= answer.getDistance() && answer.getDistance() <= 3800);
     }
 
     @Test
     public void dijkstraAndAstarGiveSameAnswer(){
         Router router = new Router();
         Gson gson = new Gson();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             int[] points = gson.fromJson(router.randomPoints(), int[].class);
             StatsJson dijkstra = gson.fromJson(router.visualizeAlgorithm("dijkstra",new int[]{points[0],points[1]}), StatsJson.class);
             StatsJson astar = gson.fromJson(router.visualizeAlgorithm("astar",new int[]{points[0],points[1]}), StatsJson.class);

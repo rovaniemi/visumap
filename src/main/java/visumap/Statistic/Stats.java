@@ -26,7 +26,7 @@ public class Stats {
         this.shortestPath = new ArrayList<>();
         this.message = message;
         this.startTime = System.currentTimeMillis();
-        this.distance = -1;
+        this.distance = 0;
     }
 
     public Stats(){
@@ -58,7 +58,7 @@ public class Stats {
         int next = goal;
         while(true){
             if(path[next] == -1){
-                this.distance = -1;
+                this.distance = 0;
                 return;
             }
             this.shortestPath.add(nodes[next]);
