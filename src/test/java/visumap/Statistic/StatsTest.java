@@ -27,16 +27,7 @@ public class StatsTest {
     @After
     public void tearDown() {
     }
-
-    @Test
-    public void addNodeWorks(){
-        Stats stats = new Stats();
-        for (int i = 0; i < 10000; i++) {
-            stats.addNodeE(new Node(12.12222,12.12222, new Weight[12]));
-        }
-        assertEquals(10000, stats.getEveryNode().size());
-    }
-
+    
     @Test
     public void ifMinusDistanceReturnMinusOne(){
         Stats stats = new Stats();

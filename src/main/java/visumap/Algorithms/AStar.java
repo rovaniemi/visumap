@@ -73,6 +73,7 @@ public class AStar implements ShortestPathAlgorithm{
 
         this.stats.shortestPath(nodes, path, start, goal);
         this.stats.createStats();
+        new PathConverter().convertPathToPaths(nodes,path,stats);
         return this.stats.getDistance();
     }
 

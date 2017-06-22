@@ -23,11 +23,13 @@ public class PathfindController {
 
     @RequestMapping(value = "/" + API_VERSION + "/shortest/")
     public String getShortestPath(@RequestBody ShortestJsonRequest json){
-        return this.router.visualizeAlgorithm(json.algorithm, json.points);
+        String get = this.router.visualizeAlgorithm(json.algorithm, json.points);
+        return get;
     }
 
     @RequestMapping(value = "/" + API_VERSION + "/randompoints/")
     public String getRandomPoints(){
-        return this.router.randomPoints();
+        String get = this.router.randomPoints();
+        return get;
     }
 }

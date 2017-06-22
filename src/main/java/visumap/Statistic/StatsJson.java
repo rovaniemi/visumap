@@ -10,14 +10,14 @@ import java.util.List;
 
 public class StatsJson {
 
-    private long time;
+    public long time;
     private int size;
-    private long distance;
+    public long distance;
     private String message;
-    private List<NodeJson> shortestPath;
-    private List<Node> everyNode;
+    public List<NodeJson> shortestPath;
+    private List<NodeJson> everyNode;
 
-    public StatsJson(long time, int size, long distance, String message, List<NodeJson> shortestPath, List<Node> everyNode ){
+    public StatsJson(long time, int size, long distance, String message, List<NodeJson> shortestPath, List<NodeJson> everyNode ){
         this.time = time;
         this.size = size;
         this.distance = distance;
@@ -33,4 +33,5 @@ public class StatsJson {
     public String getMessage() {
         return message;
     }
+
 }

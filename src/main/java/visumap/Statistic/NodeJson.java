@@ -2,10 +2,10 @@ package visumap.Statistic;
 
 public class NodeJson {
 
-    private double lat;
-    private double lng;
+    private float lat;
+    private float lng;
 
-    public NodeJson(double lat, double lng){
+    public NodeJson(float lat, float lng){
         this.lat = lat;
         this.lng = lng;
     }

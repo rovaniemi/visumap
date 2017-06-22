@@ -33,8 +33,8 @@ public class Stats {
         this("");
     }
 
-    public void addNodeE(Node node){
-        this.everyNode.add(node);
+    public void setEveryNode(List<Node> everyNode) {
+        this.everyNode = everyNode;
     }
 
     public long getDistance() {
@@ -42,7 +42,6 @@ public class Stats {
     }
 
     public List<Node> getEveryNode(){
-        shortestPath.stream().forEach(e -> this.everyNode.remove(e));
         return this.everyNode;
     }
 
@@ -80,11 +79,15 @@ public class Stats {
 
     public String getJson(){
         long time = System.currentTimeMillis() - this.startTime;
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().create();
         List<NodeJson> path = new ArrayList<>();
         for (int i = 0; i < this.shortestPath.size(); i++) {
-            path.add(new NodeJson(this.shortestPath.get(i).getLa(),this.shortestPath.get(i).getLo()));
+            path.add(new NodeJson((float)this.shortestPath.get(i).getLa(),(float)this.shortestPath.get(i).getLo()));
         }
-        return gson.toJson(new StatsJson(time,this.everyNode.size() + this.shortestPath.size(), distance, this.message, path, this.everyNode )).toString();
+        List<NodeJson> ePath = new ArrayList<>();
+        for (int i = 0; i < this.everyNode.size(); i++) {
+            ePath.add(new NodeJson((float)this.everyNode.get(i).getLa(),(float)this.everyNode.get(i).getLo()));
+        }
+        return gson.toJson(new StatsJson(time, this.shortestPath.size(), distance, this.message, path, ePath)).toString();
     }
 }

@@ -37,14 +37,14 @@ public class Dijkstra {
         MinHeap<Weight> minHeap = new MinHeap(new DijkstraComparator());
         minHeap.add(new Weight(start, 0));
 
-        while(!minHeap.isEmpty()){
+        while(!minHeap.isEmpty() && !handled[goal]){
             Weight weight = minHeap.poll();
             int id = weight.getI();
             int distance = weight.getW();
 
             if(handled[id]){
                 continue;
-            }
+            } else if (handled[goal]) break;
 
             handled[id] = true;
 
@@ -64,6 +64,7 @@ public class Dijkstra {
 
         this.stats.shortestPath(nodes,path,start,goal);
         this.stats.createStats();
+        new PathConverter().convertPathToPaths(nodes,path,stats);
         return this.stats.getDistance();
     }
 
