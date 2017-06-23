@@ -11,11 +11,13 @@ public class GraphBuilder {
 
     private Node[] readJson(String fileName){
         List<Node> list = new ArrayList<>(10806049);
+        int i = 0;
         try {
             JsonReader reader = new JsonReader(new InputStreamReader(new FileInputStream(fileName), "UTF-8"));
             Gson gson = createGson();
             reader.beginArray();
             while (reader.hasNext()){
+                if(i++ % 10000 == 0) System.out.println("Reading nodes: " + (i - 1));
                 list.add(gson.fromJson(reader,Node.class));
             }
             reader.close();

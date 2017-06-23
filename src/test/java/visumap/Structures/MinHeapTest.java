@@ -49,7 +49,7 @@ public class MinHeapTest {
 
     @Before
     public void setUp() {
-        this.heap = new MinHeap(new AStarComparator());
+        this.heap = new MinHeap(new AStarComparator(this.map.get(5).getLa(),this.map.get(5).getLo()));
     }
 
     @After
@@ -64,13 +64,10 @@ public class MinHeapTest {
 
     @Test
     public void testAddingMultipleItems() {
-        CoordinateDistance tool = new CoordinateDistance();
-        double goalLat = this.map.get(5).getLa();
-        double goalLon = this.map.get(5).getLo();
-        AStarNode node = new AStarNode(1, 0, tool.distance(this.map.get(1).getLa(), this.map.get(1).getLo(), goalLat, goalLon));
+        AStarNode node = new AStarNode(1, 0, this.map.get(1).getLa(), this.map.get(1).getLo());
         heap.add(node);
         for (int i = 2; i <= 5; i++) {
-            AStarNode n = new AStarNode(i, Integer.MAX_VALUE, tool.distance(this.map.get(i).getLa(), this.map.get(i).getLo(), goalLat, goalLon));
+            AStarNode n = new AStarNode(i, Integer.MAX_VALUE, this.map.get(i).getLa(), this.map.get(i).getLo());
             heap.add(n);
         }
         assertEquals(1, heap.poll().getId());
@@ -82,14 +79,13 @@ public class MinHeapTest {
 
     @Test
     public void testAddingMillionItems(){
-        MinHeap<AStarNode> heap1 = new MinHeap(new AStarComparator());
+        MinHeap<AStarNode> heap1 = new MinHeap(new AStarComparator(14.00, 14.00));
         for (int i = 1; i <= 1000000; i++) {
-            AStarNode node = new AStarNode(i,i,Integer.MAX_VALUE - i * 2);
+            AStarNode node = new AStarNode(i,i,12.22+(0.000001 * i), 12.22+(0.000001 * i));
             heap1.add(node);
         }
-
         for (int i = 0; i < 1000000; i++) {
-            assertEquals(1000000 - i, heap1.poll().getId());
+            assertEquals(1000000- i, heap1.poll().getId());
         }
         assertNull(heap1.poll());
     }
@@ -109,15 +105,15 @@ public class MinHeapTest {
 
     @Test
     public void minHeapIsNotTwoTimesSlowerThanPriorityQueue(){
-        MinHeap<AStarNode> minHeap = new MinHeap(new AStarComparator());
-        PriorityQueue<AStarNode> priorityQueue = new PriorityQueue<>(new AStarComparator());
+        MinHeap<AStarNode> minHeap = new MinHeap(new AStarComparator(14.00, 14.00));
+        PriorityQueue<AStarNode> priorityQueue = new PriorityQueue<>(new AStarComparator(14.00, 14.00));
         int repeat = 1000;
         long minHeapSum = 0;
         long priorityQueueSum = 0;
         for (int j = 0; j < repeat; j++) {
             long start = System.currentTimeMillis();
             for (int i = 0; i < 10000; i++) {
-                AStarNode node = new AStarNode(i,i,Integer.MAX_VALUE - i * 2);
+                AStarNode node = new AStarNode(i,i,12.22+(0.000001 * i), 12.22-(0.000001 * i));
                 minHeap.add(node);
             }
             for (int i = 0; i < 10000; i++) {
@@ -127,7 +123,7 @@ public class MinHeapTest {
             minHeapSum += end - start;
             start = System.currentTimeMillis();
             for (int i = 0; i < 10000; i++) {
-                AStarNode node = new AStarNode(i,i,Integer.MAX_VALUE - i * 2);
+                AStarNode node = new AStarNode(i,i,12.22+(0.000001 * i), 12.22-(0.000001 * i));
                 priorityQueue.add(node);
             }
             for (int i = 0; i < 10000; i++) {

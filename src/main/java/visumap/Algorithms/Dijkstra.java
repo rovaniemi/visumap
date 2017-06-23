@@ -4,7 +4,7 @@ import visumap.Graph.*;
 import visumap.Statistic.Stats;
 import visumap.Structures.MinHeap;
 
-public class Dijkstra {
+public class Dijkstra implements ShortestPathAlgorithm{
 
     private Stats stats;
     private long testDist;
@@ -37,17 +37,13 @@ public class Dijkstra {
         MinHeap<Weight> minHeap = new MinHeap(new DijkstraComparator());
         minHeap.add(new Weight(start, 0));
 
-        while(!minHeap.isEmpty() && !handled[goal]){
+        while(!minHeap.isEmpty()){
             Weight weight = minHeap.poll();
             int id = weight.getI();
             int distance = weight.getW();
-
-            if(handled[id]){
-                continue;
-            } else if (handled[goal]) break;
-
+            if (handled[goal]) break;
+            if(handled[id]) continue;
             handled[id] = true;
-
             for (Weight next:nodes[id].getE()) {
                 if(dist[next.getI()] > distance + next.getW()){
                     dist[next.getI()] = distance + next.getW();
@@ -61,10 +57,7 @@ public class Dijkstra {
             this.testDist = -1;
             return -1;
         } else this.testDist = dist[goal];
-
-        this.stats.shortestPath(nodes,path,start,goal);
-        this.stats.createStats();
-        new PathConverter().convertPathToPaths(nodes,path,stats);
+        this.stats.createStats(nodes,path,start,goal,handled);
         return this.stats.getDistance();
     }
 

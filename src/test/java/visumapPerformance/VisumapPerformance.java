@@ -89,7 +89,7 @@ public class VisumapPerformance extends Application {
 
     public LineChart<Number, Number> getTimeChart(){
         NumberAxis x = new NumberAxis(-25, 3025, 150);
-        NumberAxis y = new NumberAxis(0, 200, 100);
+        NumberAxis y = new NumberAxis(0, 400, 100);
         x.setLabel("Nodes in shortest path");
         y.setLabel("Time");
         LineChart<Number, Number> time = new LineChart<>(x, y);
@@ -99,7 +99,7 @@ public class VisumapPerformance extends Application {
 
     public LineChart<Number, Number> getMemoryChart(){
         NumberAxis x = new NumberAxis(-25, 3025, 150);
-        NumberAxis y = new NumberAxis(0, 1000, 100);
+        NumberAxis y = new NumberAxis(0, 400, 100);
         x.setLabel("Nodes in shortest path");
         y.setLabel("Memory");
         LineChart<Number, Number> memory = new LineChart<>(x, y);
@@ -130,10 +130,10 @@ public class VisumapPerformance extends Application {
         int[] randomPoints = new Gson().fromJson(router.randomPoints(),int[].class);
         StatsJson dijkstra = new Gson().fromJson(router.visualizeAlgorithm("dijkstra",randomPoints), StatsJson.class);
         StatsJson astar = new Gson().fromJson(router.visualizeAlgorithm("astar", randomPoints), StatsJson.class);
-        if(dijkstra.shortestPath.size() < 3050 && dijkstra.time < 200){
+        if(dijkstra.shortestPath.size() < 3050 && dijkstra.time < 400){
             dijkstraTimeList.get(dijkstra.shortestPath.size()).addTime((int) dijkstra.time);
         }
-        if(astar.shortestPath.size() < 3050 && astar.time < 200){
+        if(astar.shortestPath.size() < 3050 && astar.time < 400){
             astarTimeList.get(astar.shortestPath.size()).addTime((int) astar.time);
         }
     }

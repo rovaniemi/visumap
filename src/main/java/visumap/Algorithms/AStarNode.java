@@ -4,12 +4,17 @@ public class AStarNode {
 
     private int id;
     private long toStart;
-    private long toGoal;
+    private double lat;
+    private double lng;
+    private int toGoal;
 
-    public AStarNode (int id, int toStart, int toGoal) {
+
+    public AStarNode (int id, int toStart, double lat, double lng) {
         this.id = id;
         this.toStart = toStart;
-        this.toGoal = toGoal;
+        this.lat = lat;
+        this.lng = lng;
+        this.toGoal = -1;
     }
 
     public int getId() {
@@ -20,7 +25,19 @@ public class AStarNode {
         return toStart;
     }
 
-    public long getToGoal() {
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLon() {
+        return lng;
+    }
+
+    public int getToGoal() {
         return toGoal;
+    }
+
+    public void setToGoal(int toGoal) {
+        this.toGoal = toGoal;
     }
 }

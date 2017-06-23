@@ -27,7 +27,8 @@ public class StatsTest {
     @After
     public void tearDown() {
     }
-    
+
+
     @Test
     public void ifMinusDistanceReturnMinusOne(){
         Stats stats = new Stats();
@@ -36,7 +37,6 @@ public class StatsTest {
         nodes[1] = new Node(12,12, new Weight[12]);
 
         stats.shortestPath(nodes,new int[]{-1,5,1,2,3,-1},0,1);
-        stats.createStats();
         assertEquals(-1, stats.getDistance());
     }
 }

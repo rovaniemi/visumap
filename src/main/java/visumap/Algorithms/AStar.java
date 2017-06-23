@@ -6,9 +6,6 @@ import visumap.Statistic.Stats;
 import visumap.Structures.MinHeap;
 import visumap.Tools.CoordinateDistance;
 
-import java.util.HashSet;
-import java.util.Set;
-
 
 /**
  * Astar luokka hoitaa getShortestPath algoritmin lyhyimmän polun etsinnän.
@@ -39,41 +36,35 @@ public class AStar implements ShortestPathAlgorithm{
         if(start == goal) return 0;
 
         int[] toStart = new int[nodes.length];
-        int[] toGoal = new int[nodes.length];
         int[] path = new int[nodes.length];
 
         for (int i = 0; i < nodes.length; i++) {
             toStart[i] = Integer.MAX_VALUE;
-            toGoal[i] = tool.distance(nodes[i].getLa(), nodes[i].getLo(), nodes[goal].getLa(), nodes[goal].getLo());
             path[i] = -1;
         }
 
         toStart[start] = 0;
 
-        MinHeap<AStarNode> minHeap = new MinHeap<>(nodes.length, new AStarComparator());
+        MinHeap<AStarNode> minHeap = new MinHeap<>(nodes.length, new AStarComparator(nodes[goal].getLa(), nodes[goal].getLo()));
+        minHeap.add(new AStarNode(start,toStart[start],nodes[start].getLa(),nodes[start].getLo()));
 
-        for (int i = 0; i < nodes.length; i++) {
-            minHeap.add(new AStarNode(i,toStart[i],toGoal[i]));
-        }
-
-        boolean[] set = new boolean[nodes.length];
-        while(!set[goal]){
+        boolean[] handled = new boolean[nodes.length];
+        while(!minHeap.isEmpty()){
             AStarNode node = minHeap.poll();
             int nodeid = node.getId();
-            set[nodeid] = true;
+            if(handled[goal]) break;
+            if(handled[nodeid]) continue;
+            handled[nodeid] = true;
             for (int i = 0; i < nodes[nodeid].getE().length; i++) {
                 Weight nextNode = nodes[nodeid].getE()[i];
                 if(toStart[nextNode.getI()] > toStart[nodeid] + nextNode.getW()){
                     toStart[nextNode.getI()] = toStart[nodeid] + nextNode.getW();
-                    minHeap.add(new AStarNode(nextNode.getI(), toStart[nextNode.getI()],toGoal[nextNode.getI()]));
+                    minHeap.add(new AStarNode(nextNode.getI(), toStart[nextNode.getI()], nodes[nextNode.getI()].getLa(), nodes[nextNode.getI()].getLo()));
                     path[nextNode.getI()] = nodeid;
                 }
             }
         }
-
-        this.stats.shortestPath(nodes, path, start, goal);
-        this.stats.createStats();
-        new PathConverter().convertPathToPaths(nodes,path,stats);
+        this.stats.createStats(nodes,path,start,goal,handled);
         return this.stats.getDistance();
     }
 

@@ -2,6 +2,7 @@ package visumap.Statistic;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import visumap.Algorithms.PathConverter;
 import visumap.Graph.Node;
 import visumap.Tools.CoordinateDistance;
 
@@ -19,7 +20,8 @@ public class Stats {
     private List<Node> shortestPath;
     private String message;
     private long distance;
-
+    private long time;
+    private int nodeVisited;
 
     public Stats(String message){
         this.everyNode = new ArrayList<>();
@@ -27,6 +29,7 @@ public class Stats {
         this.message = message;
         this.startTime = System.currentTimeMillis();
         this.distance = 0;
+        this.nodeVisited = 0;
     }
 
     public Stats(){
@@ -41,27 +44,30 @@ public class Stats {
         return distance;
     }
 
-    public List<Node> getEveryNode(){
-        return this.everyNode;
-    }
-
     public void shortestPath(Node[] nodes, int[] path, int start, int goal){
         int next = goal;
         while(true){
             if(path[next] == -1){
                 this.distance = -1;
-                return;
+                break;
             }
             this.shortestPath.add(nodes[next]);
             next = path[next];
             if(next == start) {
-                return;
+                break;
             }
+        }
+        createDistance();
+    }
+
+    public void calcNodeVisited(boolean[] visited){
+        for (int i = 0; i < visited.length; i++) {
+            if(visited[i]) this.nodeVisited++;
         }
     }
 
-    public void createStats(){
-        createDistance();
+    public void stopAlgoTimeCalc(){
+        this.time = System.currentTimeMillis() - this.startTime;
     }
 
     public void createDistance(){
@@ -73,12 +79,9 @@ public class Stats {
             Node b = this.shortestPath.get(i);
             distance += coordinateDistance.distance(a.getLa(),a.getLo(),b.getLa(),b.getLo());
         }
-        // change distance cm -> m
-        distance = distance / 100;
     }
 
     public String getJson(){
-        long time = System.currentTimeMillis() - this.startTime;
         Gson gson = new GsonBuilder().create();
         List<NodeJson> path = new ArrayList<>();
         for (int i = 0; i < this.shortestPath.size(); i++) {
@@ -89,5 +92,12 @@ public class Stats {
             ePath.add(new NodeJson((float)this.everyNode.get(i).getLa(),(float)this.everyNode.get(i).getLo()));
         }
         return gson.toJson(new StatsJson(time, this.shortestPath.size(), distance, this.message, path, ePath)).toString();
+    }
+
+    public void createStats(Node[] nodes, int[] path, int start, int goal, boolean[] handled){
+        stopAlgoTimeCalc();
+        shortestPath(nodes,path,start,goal);
+        calcNodeVisited(handled);
+        new PathConverter().convertPathArrayToCircle(nodes,path,this);
     }
 }

@@ -11,7 +11,7 @@ public class PathConverter {
 
     private HashSet<Integer> first = new HashSet<>();
 
-    public void convertPathToPaths(Node[] nodes, int[] path, Stats stats) {
+    public void convertPathArrayToCircle(Node[] nodes, int[] path, Stats stats) {
         createSet(path);
         List<Node> nodeList = new ArrayList<>();
         for (int i = 0; i < path.length; i++) {

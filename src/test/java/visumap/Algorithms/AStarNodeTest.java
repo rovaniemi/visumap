@@ -51,7 +51,7 @@ public class AStarNodeTest {
     @After
     public void tearDown() {
     }
-
+/*
     @Test
     public void minHeapWorks() {
         CoordinateDistance tool = new CoordinateDistance();
@@ -70,4 +70,6 @@ public class AStarNodeTest {
         assertEquals(2, minHeap.poll().getId());
         assertEquals(3, minHeap.poll().getId());
     }
+
+    */
 }
