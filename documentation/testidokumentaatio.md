@@ -17,7 +17,7 @@ Määrä | operaatio | MinHeap | PriorityQuoeue
 100000 | Weightin lisäys ja poisto|  62 ms | 59 ms
 1000000 | Weightin lisäys ja poisto|  911 ms | 1010 ms
 
-Huomasin testeistä että javan oma priorityQueue toimii melkein yhtänopeaa kuin tekemäni MinHeap. Testasin saman asian molemmilla algoritmeillä, ja testit olivat melkein yksi yhteen prioirityHeapin kanssa.
+Huomasin testeistä että javan oma priorityQueue toimii melkein yhtänopeaa kuin tekemäni MinHeap. Testasin saman asian molemmilla algoritmeillä, ja testit olivat melkein yksi yhteen priorityQueuen kanssa.
 
 ### Astar ja Dijkstra - algoritmit
 
@@ -31,6 +31,8 @@ Iteraatioita satunnaisluvuilla on tehty noin pari tuhatta. Epätasaisuudet kuvaa
 
 <img src="http://i.imgur.com/79hTtwS.png" width="200">
 <img src="http://i.imgur.com/m4nUdXW.png" width="200">
+
+Kuvista huomaamme miten eritavalla algoritmit käyttäytyvät. Dijkstra ottaa aina vain lyhyimmän reitin. AStar taas painattaa kokoajan oikeaan suuntaan vaikka väärässä suunnassa olisi pienemmällä painolla oleva kaari.
 
 #### Läpikäytyjen solmujen määrä
 ![Imgur](http://imgur.com/MSwAt4N.png)
