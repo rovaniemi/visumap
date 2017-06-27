@@ -27,7 +27,7 @@ Astaria ja Dijkstraa on testattu koko suomen maantieverkostolla. Testejä on aje
 
 ![Imgur](http://i.imgur.com/cU6I6Ev.png)
 
-Iteraatioita satunnaisluvuilla on tehty noin pari tuhatta. Epätasaisuudet kuvaajassa johtuu iteraatioden pienestä määrästä. Huomaamme että mitä suurempi solmujen määrä lyhyimmässä reitissä on sitä hitaampi dijkstra on verrattuna astariin. Tämä johtuu siitä että astar osaa heurestiikka funktion avusta ohjata laskennan heti alusta oikeaan suuntaan. Alemmista kuvista vasemmanpuolinen on dijkstra ja oikeanpuolinen on astar. Aloituspiste on Oulun kohdilla ja lopetuspiste Helsingissä.
+Iteraatioita satunnaisluvuilla on tehty noin pari tuhatta. Epätasaisuudet kuvaajassa johtuu iteraatioden pienestä määrästä. Huomaamme että mitä suurempi solmujen määrä lyhyimmässä reitissä on sitä hitaampi dijkstra on verrattuna astariin. Tämä johtuu siitä että astar osaa heurestiikka funktion avusta ohjata laskennan heti alusta oikeaan suuntaan. Alemmista kuvista ylempi on dijkstra ja alempi on astar. Aloituspiste on Oulun kohdilla ja lopetuspiste Helsingissä.
 
 <img src="http://i.imgur.com/79hTtwS.png" width="200">
 <img src="http://i.imgur.com/m4nUdXW.png" width="200">
