@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Stats luokka on statistiikan luomista varten.
+ * Stats luokka on statistiikan luomista varten. Statistiikka menee front-endille.
+ * Front-end ei vielä tue kaikkea statistiikkaa, joten en ole kommentoinut luokkaa hirveästi.
+ * EveryNode lista edustaa ympyrää joka tulee Quickhullilta ja piirretään läpikäytyjen nodejen ympärille.
  */
 
 public class Stats {

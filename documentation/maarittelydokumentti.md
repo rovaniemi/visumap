@@ -15,9 +15,8 @@ Algoritmien aikavaativuuksissa |E| tarkoittaa kaarien lukumäärää ja |V| tark
 Algoritmi | Aikavaativuus              | Tilavaativuus
 ----------|----------------------------|--------------
 Dijkstra  | O(\|E\| + \|V\| log \|V\|) | O(\|V\|) 
-A*        | O(\|E\|)                   | O(\|V\|)
-BFS       | O(\|V\| + \|E\|)           | O(\|V\|)
-Thorup    | O(\|E\|)                   | O(\|V\|)
+A*        | O(\|E\| + \|V\| log \|V\|) | O(\|V\|)
+
 
 Kyseiset aika- ja tilavaativuudet on mitoitettu suuntaamattomille verkoille. Lisään verkkoon myöhemmin mahdollisesti myös yksisuuntaiset tiet, jolloin aika- sekä tilavaativuudet muuttuvat.
 

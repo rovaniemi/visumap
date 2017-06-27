@@ -7,6 +7,10 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.util.*;
 
+/**
+ * GraphBuilder hoitaa json tiedoston lukemisen tiedostosta ja sen muokkaamisen verkoksi.
+ */
+
 public class GraphBuilder {
 
     private Node[] readJson(String fileName){
@@ -26,6 +30,8 @@ public class GraphBuilder {
         }
         return (list.toArray(new Node[list.size()]));
     }
+
+    // Määritellään kaikki gsonille itse niin saadaan lukemisnopeutta optimoitua.
 
     private static Gson createGson() {
         return new GsonBuilder()

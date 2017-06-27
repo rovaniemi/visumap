@@ -16,9 +16,10 @@ public class Dijkstra implements ShortestPathAlgorithm{
 
     /**
      * getShortestPath hoitaa algoritmin ja palauttaa lyhyimmän polun.
+     * Algoritmi tallentaa suorituksen aikana tietoja stats luokkaan.
      * @param goal maalisolmun id.
      * @param start lähtösolmun id.
-     * @param nodes nodemap, josta saa latituden ja longituden.
+     * @param nodes vieruslista.
      * @return lyhin reitti senttimetreissä.
      */
 

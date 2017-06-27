@@ -8,7 +8,7 @@ import visumap.Tools.CoordinateDistance;
 
 
 /**
- * Astar luokka hoitaa getShortestPath algoritmin lyhyimmän polun etsinnän.
+ * Astar luokka hoitaa astar algoritmin lyhyimmän polun etsinnän.
  */
 
 public class AStar implements ShortestPathAlgorithm{
@@ -24,10 +24,10 @@ public class AStar implements ShortestPathAlgorithm{
 
     /**
      * getShortestPath hoitaa algoritmin ja palauttaa lyhyimmän polun.
+     * Algoritmi tallentaa suorituksen aikana tietoja stats luokkaan.
      * @param goal maalisolmun id.
      * @param start lähtösolmun id.
-     * @param graph vieruslista.
-     * @param nodes nodemap, josta saa latituden ja longituden.
+     * @param nodes vieruslista.
      * @return lyhin reitti senttimetreissä.
      */
 

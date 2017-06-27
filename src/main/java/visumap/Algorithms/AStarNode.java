@@ -8,6 +8,14 @@ public class AStarNode {
     private double lng;
     private int toGoal;
 
+    /**
+     * AstarNode luokka auttaa Astar luokkaa.
+     * AStarNodella on tieto omasta sijainnista, ja matkasta alkusolmuun.
+     * @param id noden id.
+     * @param toStart matka alkuun.
+     * @param lat noden lat.
+     * @param lng noden lng.
+     */
 
     public AStarNode (int id, int toStart, double lat, double lng) {
         this.id = id;

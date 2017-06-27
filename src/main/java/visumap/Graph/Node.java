@@ -1,5 +1,9 @@
 package visumap.Graph;
 
+/**
+ * Node on verkon yksi solmu. Nodella on latitude ja longitude.
+ */
+
 public class Node {
 
     private double la;

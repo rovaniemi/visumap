@@ -5,11 +5,23 @@ import visumap.Graph.Node;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Toteutin convexHull ongelman ratkaisemisen jarvins march algoritmillä jota muokkasin vähän.
+ * Tarkka tieto algoritmistä löytyy Cormenin toisen painoksen sivulta 955.
+ * Luokka QuickHull saa itselleen Listan nodeja joista kauimmaisten ympärille pitäisi piirtää ympärä.
+ */
+
 public class QuickHull {
+
+
     public List<Node> quickHull(List<Node> points) {
         List<Node> convexHull = new ArrayList<>();
+
+        //jos pointteja on vähemmän kuin kolme palautetaan ne suoraan.
         if (points.size() < 3) return points;
 
+        // etsitään piste jolla on suurin ja pienin X arvo.
         int minPoint = -1, maxPoint = -1;
         Double minX = Double.MAX_VALUE;
         Double maxX = Double.MIN_VALUE;
@@ -23,9 +35,13 @@ public class QuickHull {
                 maxPoint = i;
             }
         }
+
+        // jos tälläistä pointtia ei löytynyt palautetaan, kyseessä on virhetilanne.
         if(maxPoint < 0 || minPoint < 0){
             return convexHull;
         }
+
+        // valitaan kyseiset pisteet ja lisätään ne ConvexHull listaan, jonka jälkeen lähdetään liikkumaan molempiin suuntiin.
         Node A = points.get(minPoint);
         Node B = points.get(maxPoint);
         convexHull.add(A);
@@ -49,6 +65,8 @@ public class QuickHull {
         return convexHull;
     }
 
+    // etäisyyden laskemiseen käytettävä funktio.
+
     public double distance(Node A, Node B, Node C) {
         double ABx = B.getLa() - A.getLa();
         double ABy = B.getLo() - A.getLo();
@@ -56,6 +74,8 @@ public class QuickHull {
         if (num < 0) num = -num;
         return num;
     }
+
+
 
     public void hullSet(Node A, Node B, List<Node> set, List<Node> hull) {
         int insertPosition = hull.indexOf(B);
@@ -80,7 +100,6 @@ public class QuickHull {
         set.remove(furthestPoint);
         hull.add(insertPosition, N);
 
-        // Determine who's to the left of AP
         ArrayList<Node> leftSetAP = new ArrayList<Node>();
         for (int i = 0; i < set.size(); i++) {
             Node M = set.get(i);
@@ -89,7 +108,6 @@ public class QuickHull {
             }
         }
 
-        // Determine who's to the left of PB
         ArrayList<Node> leftSetPB = new ArrayList<Node>();
         for (int i = 0; i < set.size(); i++) {
             Node M = set.get(i);

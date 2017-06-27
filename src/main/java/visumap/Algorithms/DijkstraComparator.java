@@ -4,7 +4,7 @@ import visumap.Graph.Weight;
 import java.util.Comparator;
 
 /**
- * DijkstraComparator luokka hoitaa kahden weightin vertailun keskenään.
+ * DijkstraComparator luokka hoitaa kahden Weight olion vertailun keskenään.
  */
 
 public class DijkstraComparator implements Comparator{
